@@ -20,19 +20,50 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { settings } = useData();
 
-  // Defaults used until settings load / if a field is empty
+  // Dynamic contact info from settings (with fallbacks)
   const phone = settings?.contact_phone || '+256 743040345';
   const email = settings?.contact_email || 'ismaelnuwamanya19@gmail.com';
   const location = settings?.contact_location || 'Kampala, Uganda';
 
-  const socials = {
-    facebook: settings?.facebook_url || 'https://www.facebook.com/share/17x86iQxkq/?mibextid=wwXIfr',
-    twitter: settings?.twitter_url || '#',
-    instagram: settings?.instagram_url || 'https://www.instagram.com/geekbrands01',
-    tiktok: settings?.tiktok_url || 'https://www.tiktok.com/@geekbrands',
-    linkedin: settings?.linkedin_url || 'https://www.linkedin.com/in/nuwamanya-ismael',
-    youtube: settings?.youtube_url || '#'
-  };
+  // Social links — only render ones with a real URL
+  const socials = [
+    {
+      name: 'Facebook',
+      url:
+        settings?.facebook_url ||
+        'https://www.facebook.com/share/17x86iQxkq/?mibextid=wwXIfr',
+      icon: FaFacebookF
+    },
+    {
+      name: 'Twitter',
+      url: settings?.twitter_url,
+      icon: FaTwitter
+    },
+    {
+      name: 'Instagram',
+      url:
+        settings?.instagram_url ||
+        'https://www.instagram.com/geekbrands01',
+      icon: FaInstagram
+    },
+    {
+      name: 'TikTok',
+      url: settings?.tiktok_url || 'https://www.tiktok.com/@geekbrands',
+      icon: FaTiktok
+    },
+    {
+      name: 'LinkedIn',
+      url:
+        settings?.linkedin_url ||
+        'https://www.linkedin.com/in/nuwamanya-ismael',
+      icon: FaLinkedinIn
+    },
+    {
+      name: 'YouTube',
+      url: settings?.youtube_url,
+      icon: FaYoutube
+    }
+  ].filter((s) => s.url && s.url.trim() !== '' && s.url !== '#'); // 👈 hide empty ones
 
   return (
     <footer className={styles.footer}>
@@ -52,24 +83,17 @@ const Footer = () => {
           </p>
 
           <div className={styles.socialList}>
-            <a href={socials.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-              <FaFacebookF />
-            </a>
-            <a href={socials.twitter} aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-              <FaTwitter />
-            </a>
-            <a href={socials.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-              <FaInstagram />
-            </a>
-            <a href={socials.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-              <FaTiktok />
-            </a>
-            <a href={socials.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-              <FaLinkedinIn />
-            </a>
-            <a href={socials.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-              <FaYoutube />
-            </a>
+            {socials.map(({ name, url, icon: Icon }) => (
+              <a
+                key={name}
+                href={url}
+                aria-label={name}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -111,11 +135,11 @@ const Footer = () => {
             </li>
             <li>
               <FaPhoneAlt />
-              <span>{phone}</span>
+              <a href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
             </li>
             <li>
               <FaEnvelope />
-              <span>{email}</span>
+              <a href={`mailto:${email}`}>{email}</a>
             </li>
           </ul>
         </div>
@@ -124,7 +148,8 @@ const Footer = () => {
       <div className={styles.footerBottom}>
         <p>&copy; {currentYear} Geek Brands. All rights reserved.</p>
         <p>
-          <Link to="/privacy">Privacy Policy</Link> | <Link to="/terms">Terms of Use</Link>
+          <Link to="/privacy">Privacy Policy</Link> |{' '}
+          <Link to="/terms">Terms of Use</Link>
         </p>
       </div>
     </footer>

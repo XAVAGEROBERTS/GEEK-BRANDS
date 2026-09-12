@@ -1,4 +1,6 @@
-/* ===== FOOTER CONTAINER ===== */
+/* ============================================================
+   FOOTER CONTAINER
+   ============================================================ */
 .footer {
   background: #1a1a1a;
   color: #ccc;
@@ -14,7 +16,9 @@
   gap: 2.5rem;
 }
 
-/* ===== LOGO ===== */
+/* ============================================================
+   LOGO
+   ============================================================ */
 .logo {
   display: inline-block;
   text-decoration: none;
@@ -32,7 +36,9 @@
   filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(173, 19, 128, 0.3));
 }
 
-/* ===== DESCRIPTION ===== */
+/* ============================================================
+   DESCRIPTION
+   ============================================================ */
 .description {
   font-size: 0.9rem;
   line-height: 1.7;
@@ -41,7 +47,9 @@
   max-width: 300px;
 }
 
-/* ===== SOCIAL ICONS ===== */
+/* ============================================================
+   SOCIAL ICONS
+   ============================================================ */
 .socialList {
   display: flex;
   gap: 0.8rem;
@@ -62,7 +70,7 @@
   text-decoration: none;
 }
 
-/* Default hover — brand pink */
+/* Default hover — Geek Brands pink */
 .socialList a:hover {
   background: var(--primary, #ad1380);
   color: #fff;
@@ -120,7 +128,9 @@
   box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
 }
 
-/* ===== FOOTER COLUMNS ===== */
+/* ============================================================
+   FOOTER COLUMNS
+   ============================================================ */
 .footerCol h3 {
   color: #fff;
   font-size: 1rem;
@@ -146,7 +156,9 @@
   color: #fff;
 }
 
-/* ===== CONTACT LIST ===== */
+/* ============================================================
+   CONTACT LIST — with clickable phone/email
+   ============================================================ */
 .contactList li {
   display: flex;
   align-items: center;
@@ -161,7 +173,21 @@
   min-width: 18px;
 }
 
-/* ===== FOOTER BOTTOM ===== */
+/* Clickable phone/email links — match footer text style */
+.contactList li a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  word-break: break-word;
+}
+
+.contactList li a:hover {
+  color: #fff;
+}
+
+/* ============================================================
+   FOOTER BOTTOM
+   ============================================================ */
 .footerBottom {
   max-width: 1200px;
   margin: 2rem auto 0;
@@ -183,7 +209,9 @@
   color: #fff;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 992px) {
   .footerContent {
     grid-template-columns: 1fr 1fr;
