@@ -134,7 +134,7 @@ const OrderPage = () => {
     let cleaned = value;
 
     if (name === 'name') cleaned = sanitizeName(value);
-    else if (name === 'business') cleaned = value; // allow anything
+    else if (name === 'business') cleaned = value;
     else if (name === 'phone') cleaned = sanitizePhone(value);
     else if (name === 'email') cleaned = sanitizeEmail(value);
     else if (name === 'quantity') cleaned = sanitizeNumeric(value);
@@ -166,7 +166,6 @@ const OrderPage = () => {
       const err = validateField(f, formData[f]);
       if (err) errors[f] = err;
     });
-    // optional but validated fields
     ['business', 'quantity'].forEach((f) => {
       const err = validateField(f, formData[f]);
       if (err) errors[f] = err;
@@ -244,6 +243,7 @@ const OrderPage = () => {
       return;
     }
 
+    // 🚫 NOT LOGGED IN → save draft, open login modal, STOP
     if (!user) {
       const draft = { ...formData, artwork: null, artworkUrl };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -305,6 +305,7 @@ const OrderPage = () => {
     if (input) input.value = '';
   };
 
+  // ===== LOGIN HANDLERS (redirect BACK to /order) =====
   const handleGoogle = async () => {
     const draft = { ...formData, artwork: null, artworkUrl };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));

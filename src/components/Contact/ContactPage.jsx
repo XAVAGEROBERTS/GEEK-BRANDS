@@ -243,7 +243,7 @@ const ContactPage = () => {
       return;
     }
 
-    // 🚫 NOT LOGGED IN → redirect to login (like OrderPage)
+    // 🚫 NOT LOGGED IN → save draft, open login modal, STOP
     if (!user) {
       const draft = { ...formData, artwork: null, artworkUrl };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -305,7 +305,7 @@ const ContactPage = () => {
     if (input) input.value = '';
   };
 
-  // ===== LOGIN HANDLERS =====
+  // ===== LOGIN HANDLERS (redirect BACK to /contact) =====
   const handleGoogle = async () => {
     const draft = { ...formData, artwork: null, artworkUrl };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
