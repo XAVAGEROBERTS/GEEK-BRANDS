@@ -1,8 +1,16 @@
+/* src/components/Home/WhyUs.module.css */
+
+/* ============================================================
+   SECTION
+   ============================================================ */
 .whyUs {
   padding: 4rem 1.5rem;
-  background: var(--gray-bg);
+  background: var(--gray-bg, #f8f8f8);
 }
 
+/* ============================================================
+   FEATURES GRID — 4 cols desktop
+   ============================================================ */
 .featuresGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -14,13 +22,15 @@
   padding: 2rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.06));
+  border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
 }
 
 .featureCard:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  border-color: var(--primary, #ad1380);
 }
 
 .featureIcon {
@@ -32,30 +42,100 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
-  font-size: 1.5rem;
-  color: var(--primary);
+  font-size: 1.6rem;
+  color: var(--primary, #ad1380);
 }
 
 .featureCard h3 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: var(--text-dark, #1a1a1a);
+  line-height: 1.3;
 }
 
 .featureCard p {
-  font-size: 0.9rem;
-  color: var(--text-light);
+  font-size: 0.88rem;
+  color: var(--text-light, #555);
   line-height: 1.6;
 }
 
+/* ============================================================
+   RESPONSIVE — 992px (tablet): 2 columns
+   ============================================================ */
 @media (max-width: 992px) {
+  .whyUs {
+    padding: 3.5rem 1.5rem;
+  }
+
   .featuresGrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — 576px (mobile): STILL 2 COLUMNS ✅
+   ============================================================ */
 @media (max-width: 576px) {
+  .whyUs {
+    padding: 3rem 1rem;
+  }
+
+  /* ✅ 2×2 grid */
   .featuresGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+
+  .featureCard {
+    padding: 1.4rem 0.9rem;
+    border-radius: 14px;
+  }
+
+  .featureIcon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .featureCard h3 {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+  }
+
+  .featureCard p {
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 380px (very small): tighten further
+   ============================================================ */
+@media (max-width: 380px) {
+  .featuresGrid {
+    gap: 0.7rem;
+  }
+
+  .featureCard {
+    padding: 1.1rem 0.7rem;
+  }
+
+  .featureIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .featureCard h3 {
+    font-size: 0.78rem;
+  }
+
+  .featureCard p {
+    font-size: 0.68rem;
   }
 }

@@ -1,6 +1,7 @@
 // src/components/Home/HomePage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../../lib/supabase';
 import Hero from './Hero';
 import ServicesPreview from './ServicesPreview';
 import WhyUs from './WhyUs';
@@ -12,34 +13,64 @@ import styles from './HomePage.module.css';
 
 const HomePage = () => {
   const [showBar, setShowBar] = useState(true);
+  const [user, setUser] = useState(null);
 
-  // ✅ Hide the bar once the user scrolls past 120px
+  // Hide bar on scroll (desktop only — CSS handles mobile)
   useEffect(() => {
     const handleScroll = () => {
       setShowBar(window.scrollY < 120);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // run once on mount
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Track auth state to show correct Check-in link
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
   return (
     <div className={styles.homePage}>
+      {/* ===== HERO SLIDER ===== */}
       <Hero />
 
-      {/* ===== ABSOLUTE BAR - LEFT SIDE (hides on scroll) ===== */}
+      {/* ===== ACTION BAR (desktop floating / mobile stacked) ===== */}
       <div
         className={`${styles.absoluteBar} ${!showBar ? styles.absoluteBarHidden : ''}`}
       >
         <div className={styles.barContent}>
-          <div className={styles.barText}>
-            <h3>Manage Your Branding Projects</h3>
+         
+          {/* Action buttons */}
+          <div className={styles.barActions}>
+            <Link to="/order" className={styles.barButtonPrimary}>
+              Order
+            </Link>
+
+            {user ? (
+              <Link to="/manage" className={styles.barButton}>
+                Check In
+              </Link>
+            ) : (
+              <Link to="/login" className={styles.barButton}>
+                Check In
+              </Link>
+            )}
+
+            <Link to="/manage" className={styles.barButton}>
+              Manage Booking
+            </Link>
           </div>
-          <Link to="/manage" className={styles.barButton}>
-            Manage My Booking
-          </Link>
         </div>
       </div>
 
@@ -55,40 +86,14 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* ===== INTRODUCTION SECTION ===== */}
-      <section className={styles.introSection}>
-        <div className="container">
-          <div className={styles.introContent}>
-            <span className="badge">Who We Are</span>
-            <h2>Your brand deserves to stand out.</h2>
-            <p>
-              A great business can easily get lost in a sea of ordinary branding.
-              That's where Geek Brands comes in.
-            </p>
-            <p>
-              We combine creative design, quality printing and professional
-              branding to help businesses, organizations, schools and individuals
-              turn ideas into things people can actually see, remember and talk
-              about.
-            </p>
-            <p>
-              From a small product sticker to a fully branded vehicle, we make
-              sure your brand looks the part.
-            </p>
-            <Link to="/order" className="btn-primary">
-              Let's Brand Your Business
-            </Link>
-          </div>
-        </div>
-      </section>
-
+      {/* ===== SECTIONS ===== */}
       <ServicesPreview />
       <FeaturedStatement />
       <ProcessPreview />
       <WhyUs />
       <FinalCTA />
 
-      {/* ===== FLOATING WHATSAPP BUTTON ===== */}
+      {/* ===== FLOATING WHATSAPP ===== */}
       <WhatsAppFloat />
     </div>
   );

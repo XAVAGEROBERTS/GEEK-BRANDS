@@ -1,3 +1,8 @@
+/* src/components/Home/ProcessPreview.module.css */
+
+/* ============================================================
+   SECTION
+   ============================================================ */
 .processPreview {
   padding: 5rem 1.5rem 4rem;
   margin-top: 2rem;
@@ -14,7 +19,9 @@
   margin: 0 auto 3rem;
 }
 
-/* ===== STEPS GRID ===== */
+/* ============================================================
+   STEPS GRID
+   ============================================================ */
 .stepsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -64,7 +71,9 @@
   line-height: 1.4;
 }
 
-/* ===== CTA ===== */
+/* ============================================================
+   CTA
+   ============================================================ */
 .processCta {
   display: flex;
   gap: 1rem;
@@ -73,18 +82,23 @@
   margin-top: 3rem;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE — 992px (tablet): 2 columns
+   ============================================================ */
 @media (max-width: 992px) {
   .processPreview {
     padding: 4rem 1.5rem 3rem;
   }
 
   .stepsGrid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — 576px (mobile): still 2 columns ✅
+   ============================================================ */
 @media (max-width: 576px) {
   .processPreview {
     padding: 3rem 1rem 2rem;
@@ -96,23 +110,68 @@
     margin-bottom: 2rem;
   }
 
+  /* ✅ 2×3 grid (2 per row) */
   .stepsGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .stepCard {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 0.9rem;
+    border-radius: 14px;
+  }
+
+  .stepIcon {
+    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .stepNumber {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.65rem;
+    margin-bottom: 0.55rem;
+    letter-spacing: 0.5px;
+  }
+
+  .stepCard h3 {
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 
   .processCta {
     flex-direction: column;
     align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
   }
 
   .processCta a {
     width: 100%;
     max-width: 250px;
     text-align: center;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 380px (very small): tighten further
+   ============================================================ */
+@media (max-width: 380px) {
+  .stepCard {
+    padding: 1.2rem 0.7rem;
+  }
+
+  .stepIcon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stepNumber {
+    font-size: 0.58rem;
+    padding: 0.15rem 0.55rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .stepCard h3 {
+    font-size: 0.75rem;
   }
 }

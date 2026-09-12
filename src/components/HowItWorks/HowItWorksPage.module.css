@@ -1,8 +1,15 @@
+/* src/components/HowItWorks/HowItWorksPage.module.css */
+
+/* ============================================================
+   PAGE
+   ============================================================ */
 .howItWorksPage {
   padding: 3rem 1.5rem 4rem;
 }
 
-/* ===== STEPS CONTAINER ===== */
+/* ============================================================
+   STEPS CONTAINER — 3 cols desktop
+   ============================================================ */
 .stepsContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -16,7 +23,7 @@
   padding: 2.5rem 2rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.06));
   border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
   position: relative;
@@ -25,7 +32,7 @@
 .stepCard:hover {
   transform: translateY(-8px);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
-  border-color: var(--primary);
+  border-color: var(--primary, #ad1380);
 }
 
 .stepNumber {
@@ -51,22 +58,26 @@
   font-size: 2.5rem;
   margin-bottom: 1rem;
   margin-top: 0.5rem;
+  display: block;
 }
 
 .stepCard h3 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-dark, #1a1a1a);
   margin-bottom: 0.6rem;
+  line-height: 1.3;
 }
 
 .stepCard p {
   font-size: 0.9rem;
-  color: var(--text-light);
+  color: var(--text-light, #555);
   line-height: 1.6;
 }
 
-/* ===== PROCESS CTA ===== */
+/* ============================================================
+   PROCESS CTA
+   ============================================================ */
 .processCta {
   text-align: center;
   margin-top: 4rem;
@@ -79,39 +90,105 @@
 .processCta h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--text-dark, #1a1a1a);
   margin-bottom: 1.5rem;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE — 992px (tablet): 2 columns
+   ============================================================ */
 @media (max-width: 992px) {
   .stepsContainer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    margin: 2.5rem 0;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — 576px (mobile): STILL 2 COLUMNS ✅
+   ============================================================ */
 @media (max-width: 576px) {
   .howItWorksPage {
     padding: 2rem 1rem 3rem;
   }
 
+  /* ✅ 2-column grid */
   .stepsContainer {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
     margin: 2rem 0;
   }
 
   .stepCard {
-    padding: 2rem 1.5rem;
+    padding: 1.8rem 0.9rem 1.4rem;
+    border-radius: 14px;
+  }
+
+  .stepNumber {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+    top: -14px;
+    border: 2.5px solid #fff;
+  }
+
+  .stepIcon {
+    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+    margin-top: 0.3rem;
+  }
+
+  .stepCard h3 {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+  }
+
+  .stepCard p {
+    font-size: 0.72rem;
+    line-height: 1.5;
   }
 
   .processCta {
     padding: 2rem 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2.5rem;
   }
 
   .processCta h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 380px (very small): tighten further
+   ============================================================ */
+@media (max-width: 380px) {
+  .stepsContainer {
+    gap: 1rem;
+  }
+
+  .stepCard {
+    padding: 1.5rem 0.7rem 1.2rem;
+  }
+
+  .stepNumber {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+    top: -12px;
+  }
+
+  .stepIcon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stepCard h3 {
+    font-size: 0.78rem;
+  }
+
+  .stepCard p {
+    font-size: 0.68rem;
   }
 }

@@ -4,7 +4,7 @@
    SECTION WRAPPER — reduced top padding
    ============================================================ */
 .servicesPreview {
-  padding: 2.5rem 0 4rem;          /* ✅ was 6rem — cut by 3.5rem */
+  padding: 8rem 0 4rem;          /* ✅ was 6rem — cut by 3.5rem */
   margin-top: 0;                    /* ✅ was 2rem */
   position: relative;
   overflow: hidden;

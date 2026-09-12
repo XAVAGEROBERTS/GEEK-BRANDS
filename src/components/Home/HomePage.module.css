@@ -1,28 +1,30 @@
-/* ===== HOME PAGE CONTAINER ===== */
+/* ============================================================
+   HOME PAGE CONTAINER
+   ============================================================ */
 .homePage {
   width: 100%;
   position: relative;
 }
 
-/* ===== ABSOLUTE BAR - LEFT SIDE (REDUCED SIZE) ===== */
+/* ============================================================
+   ABSOLUTE BAR — Desktop floating pill (HORIZONTAL)
+   ============================================================ */
 .absoluteBar {
   position: absolute;
-  top: 12%;
+  top: 16%;
   left: 1.5rem;
   transform: translateY(-50%);
   width: auto;
-  max-width: 200px;
-  min-width: 100px;
-  height: auto;
-  min-height: 50px;
+  max-width: 420px;
+  min-width: 400px;
   background: linear-gradient(135deg, #ad1380 0%, #8f0f6a 100%);
-  border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(173, 19, 128, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(173, 19, 128, 0.35);
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.9rem 1.2rem;
+  padding: 0.9rem 1.1rem;
   transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
   opacity: 1;
   visibility: visible;
@@ -43,10 +45,10 @@
   right: -2px;
   bottom: -2px;
   background: linear-gradient(135deg, #ad1380, #f5a623, #ad1380);
-  border-radius: 0 16px 16px 0;
+  border-radius: 0 18px 18px 0;
   z-index: -1;
   opacity: 0.3;
-  filter: blur(6px);
+  filter: blur(8px);
 }
 
 .barContent {
@@ -54,50 +56,86 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 0.5rem;
+  gap: 0.6rem;
+}
+
+.barText {
+  text-align: left;
+  margin-bottom: 0;
 }
 
 .barText h3 {
   color: #fff;
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.15rem;
-  line-height: 1.25;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
 }
 
 .barText p {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.68rem;
-  margin: 0;
-  line-height: 1.35;
+  display: none;
 }
 
-.barButton {
+/* ===== ACTION BUTTONS — horizontal row ===== */
+.barActions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.barButton,
+.barButtonPrimary {
   display: inline-block;
-  background: #ffffff;
-  color: #ad1380;
-  padding: 0.4rem 1.2rem;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  padding: 0.55rem 0.7rem;
   border-radius: 50px;
   font-weight: 700;
   font-size: 0.72rem;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   white-space: nowrap;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-  border: 2px solid transparent;
-  margin-top: 0.15rem;
+  line-height: 1.2;
+}
+
+/* Primary: "Order" — white bg */
+.barButtonPrimary {
+  background: #ffffff;
+  color: #ad1380;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.barButtonPrimary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+  background: #f8f8f8;
+}
+
+/* Secondary buttons — outline style */
+.barButton {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(6px);
 }
 
 .barButton:hover {
+  background: #ffffff;
+  color: #ad1380;
+  border-color: #ffffff;
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
-  background: #f5f5f5;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== TRUST STRIP ===== */
+/* ============================================================
+   TRUST STRIP — auto-scaling, single line
+   ============================================================ */
 .trustStrip {
   background: #fff;
-  padding: 1rem 0;
+  padding: clamp(0.5rem, 1.2vw, 1rem) 0;
   border-bottom: 1px solid #f0f0f0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
   position: relative;
@@ -108,18 +146,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
+  flex-wrap: nowrap;
+  gap: clamp(0.3rem, 1.5vw, 2rem);
+  padding: 0 clamp(0.2rem, 1vw, 1rem);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .trustItems span {
-  font-size: 0.85rem;
+  font-size: clamp(0.55rem, 1.4vw, 0.85rem);
   font-weight: 600;
   color: var(--text-dark, #1a1a1a);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: clamp(0.1px, 0.15vw, 1px);
   position: relative;
-  padding-left: 1.5rem;
+  padding-left: clamp(0.65rem, 1.2vw, 1.5rem);
+  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .trustItems span::before {
@@ -128,65 +173,12 @@
   left: 0;
   color: var(--primary, #ad1380);
   font-weight: 800;
+  font-size: 0.9em;
 }
 
-/* ===== INTRODUCTION SECTION — reduced bottom padding ===== */
-.introSection {
-  padding: 4rem 1.5rem 1.5rem;
-  background: #fff;
-  position: relative;
-}
-
-.introSection::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(173, 19, 128, 0.04) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.introContent {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.introContent h2 {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--text-dark, #1a1a1a);
-  line-height: 1.3;
-  margin-bottom: 1.5rem;
-}
-
-.introContent p {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--text-light, #555);
-  margin-bottom: 1.2rem;
-}
-
-.introContent p:last-of-type {
-  margin-bottom: 1.5rem;
-}
-
-.introContent :global(.btn-primary) {
-  display: inline-block;
-  padding: 0.9rem 2.5rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-/* ===== SLIDING HERO BANNER ===== */
+/* ============================================================
+   SLIDING HERO BANNER
+   ============================================================ */
 .heroBanner {
   min-height: 500px;
   display: flex;
@@ -267,7 +259,9 @@
   flex-wrap: wrap;
 }
 
-/* ===== SLIDER CONTROLS ===== */
+/* ============================================================
+   SLIDER CONTROLS
+   ============================================================ */
 .slideArrow {
   position: absolute;
   top: 50%;
@@ -331,7 +325,9 @@
   transform: scale(1.2);
 }
 
-/* ===== SEARCH PANEL ===== */
+/* ============================================================
+   SEARCH PANEL
+   ============================================================ */
 .searchPanel {
   background: #ffffff;
   margin: -1.5rem 1.5rem 2rem;
@@ -415,7 +411,9 @@
   color: #222;
 }
 
-/* ===== 3 COLUMN GRID ===== */
+/* ============================================================
+   3 COLUMN GRID
+   ============================================================ */
 .grid3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -492,50 +490,45 @@
   font-size: 1rem;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE — 1200px
+   ============================================================ */
 @media (max-width: 1200px) {
   .absoluteBar {
-    max-width: 280px;
-    min-width: 180px;
-    padding: 1.2rem 1.5rem 1.2rem 1.2rem;
+    max-width: 380px;
+    min-width: 260px;
+    padding: 0.85rem 1rem;
   }
 
   .barText h3 {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
-  .barText p {
-    font-size: 0.75rem;
-  }
-
-  .barButton {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.8rem;
-  }
-
-  .introContent h2 {
-    font-size: 1.8rem;
+  .barButton,
+  .barButtonPrimary {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.7rem;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — 992px
+   ============================================================ */
 @media (max-width: 992px) {
   .absoluteBar {
-    max-width: 240px;
-    min-width: 160px;
-    padding: 1rem 1.2rem 1rem 1rem;
+    max-width: 340px;
+    min-width: 240px;
+    padding: 0.8rem 0.9rem;
   }
 
   .barText h3 {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
-  .barText p {
-    font-size: 0.7rem;
-  }
-
-  .barButton {
-    padding: 0.4rem 1.2rem;
-    font-size: 0.75rem;
+  .barButton,
+  .barButtonPrimary {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.68rem;
   }
 
   .grid3 {
@@ -553,80 +546,72 @@
     left: auto;
     right: 0.8rem;
   }
-
-  .trustItems {
-    gap: 1.5rem;
-  }
-
-  .trustItems span {
-    font-size: 0.75rem;
-  }
-
-  .introSection {
-    padding: 3rem 1.5rem 1.2rem;
-  }
-
-  .introContent h2 {
-    font-size: 1.6rem;
-  }
-
-  .introContent p {
-    font-size: 0.95rem;
-  }
 }
 
+/* ============================================================
+   RESPONSIVE — 768px (ACTION BAR BECOMES BLOCK BELOW HERO)
+   ============================================================ */
 @media (max-width: 768px) {
+  /* ===== ACTION BAR — normal block below hero ===== */
   .absoluteBar {
     position: relative;
     top: auto;
     left: auto;
     transform: none;
-    width: 90%;
+    width: 100%;
     max-width: 100%;
     min-width: unset;
-    border-radius: 20px;
-    margin: -2rem auto 1.5rem;
-    padding: 1.2rem 1.5rem;
+    border-radius: 0;
+    margin: 0;
+    padding: 1.2rem 1rem;
     flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #ad1380 0%, #8f0f6a 100%);
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .absoluteBarHidden {
-    transform: translateY(-10px);
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
   }
 
   .absoluteBar::before {
-    border-radius: 22px;
+    display: none;
   }
 
   .barContent {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.8rem;
+    gap: 0.7rem;
+    align-items: stretch;
   }
 
   .barText {
-    text-align: center;
+    display: none;
   }
 
-  .barText h3 {
-    font-size: 1.1rem;
-  }
-
-  .barText p {
-    font-size: 0.8rem;
-  }
-
-  .barButton {
-    padding: 0.5rem 1.8rem;
-    font-size: 0.8rem;
+  .barActions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
     width: 100%;
-    max-width: 200px;
-    text-align: center;
+    flex-wrap: nowrap;
   }
 
+  .barButton,
+  .barButtonPrimary {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.72rem;
+    border-radius: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ===== HERO ===== */
   .heroContent h1 {
     font-size: 2.2rem;
   }
@@ -635,8 +620,9 @@
     font-size: 1rem;
   }
 
+  /* ===== SEARCH PANEL ===== */
   .searchPanel {
-    margin: -1rem 0.5rem 1rem;
+    margin: 1rem 0.5rem 1rem;
     padding: 0.8rem;
   }
 
@@ -649,10 +635,12 @@
     width: 100%;
   }
 
+  /* ===== GRID ===== */
   .grid3 {
     grid-template-columns: 1fr;
   }
 
+  /* ===== SLIDER ===== */
   .slideArrow {
     display: none;
   }
@@ -660,73 +648,33 @@
   .slideDots {
     bottom: 1rem;
   }
+}
 
-  .trustStrip {
-    padding: 0.8rem 0;
+/* ============================================================
+   RESPONSIVE — 480px
+   ============================================================ */
+@media (max-width: 480px) {
+  .absoluteBar {
+    padding: 1rem 0.7rem;
   }
 
-  .trustItems {
-    gap: 1rem;
+  .barActions {
+    gap: 0.35rem;
   }
 
-  .trustItems span {
-    font-size: 0.7rem;
-    padding-left: 1.2rem;
-  }
-
-  .introSection {
-    padding: 2.5rem 1rem 1rem;
-  }
-
-  .introContent h2 {
-    font-size: 1.4rem;
-  }
-
-  .introContent p {
-    font-size: 0.9rem;
-    line-height: 1.7;
+  .barButton,
+  .barButtonPrimary {
+    font-size: 0.66rem;
+    padding: 0.65rem 0.35rem;
+    letter-spacing: -0.02em;
   }
 }
 
-@media (max-width: 480px) {
-  .absoluteBar {
-    width: 95%;
-    padding: 1rem 1rem;
-    margin: -1.5rem auto 1rem;
-  }
-
-  .barText h3 {
-    font-size: 0.95rem;
-  }
-
-  .barText p {
-    font-size: 0.7rem;
-  }
-
-  .barButton {
-    padding: 0.4rem 1.2rem;
-    font-size: 0.7rem;
-    max-width: 160px;
-  }
-
-  .trustItems {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .trustItems span {
-    font-size: 0.65rem;
-  }
-
-  .introSection {
-    padding: 2rem 1rem 0.8rem;
-  }
-
-  .introContent h2 {
-    font-size: 1.2rem;
-  }
-
-  .introContent p {
-    font-size: 0.85rem;
+/* ============================================================
+   HIDE TRUST STRIP ON SMALL SCREENS
+   ============================================================ */
+@media (max-width: 490px) {
+  .trustStrip {
+    display: none;
   }
 }
