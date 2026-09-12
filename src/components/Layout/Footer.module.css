@@ -1,0 +1,222 @@
+/* ===== FOOTER CONTAINER ===== */
+.footer {
+  background: #1a1a1a;
+  color: #ccc;
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 2.5rem;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.logoImage {
+  height: 55px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+
+.logoImage:hover {
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(173, 19, 128, 0.3));
+}
+
+/* ===== DESCRIPTION ===== */
+.description {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0.8rem 0 1rem;
+  color: #aaa;
+  max-width: 300px;
+}
+
+/* ===== SOCIAL ICONS ===== */
+.socialList {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.socialList a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: #333;
+  border-radius: 50%;
+  color: #ccc;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Default hover — brand pink */
+.socialList a:hover {
+  background: var(--primary, #ad1380);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ===== BRAND-COLOR HOVERS ===== */
+
+/* Facebook — blue */
+.socialList a[aria-label="Facebook"]:hover {
+  background: #1877F2;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(24, 119, 242, 0.4);
+}
+
+/* Twitter / X — black */
+.socialList a[aria-label="Twitter"]:hover {
+  background: #000000;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* Instagram — gradient */
+.socialList a[aria-label="Instagram"]:hover {
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(220, 39, 67, 0.4);
+}
+
+/* TikTok — black with pink accent shadow */
+.socialList a[aria-label="TikTok"]:hover {
+  background: #000000;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(254, 44, 85, 0.5);
+}
+
+/* LinkedIn — blue */
+.socialList a[aria-label="LinkedIn"]:hover {
+  background: #0A66C2;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(10, 102, 194, 0.4);
+}
+
+/* YouTube — red */
+.socialList a[aria-label="YouTube"]:hover {
+  background: #FF0000;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(255, 0, 0, 0.4);
+}
+
+/* ===== FOOTER COLUMNS ===== */
+.footerCol h3 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footerCol ul {
+  list-style: none;
+}
+
+.footerCol ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footerCol ul li a {
+  color: #aaa;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footerCol ul li a:hover {
+  color: #fff;
+}
+
+/* ===== CONTACT LIST ===== */
+.contactList li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.contactList li svg {
+  color: var(--primary, #ad1380);
+  font-size: 1rem;
+  min-width: 18px;
+}
+
+/* ===== FOOTER BOTTOM ===== */
+.footerBottom {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.footerBottom a {
+  color: #aaa;
+  transition: color 0.2s ease;
+}
+
+.footerBottom a:hover {
+  color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .footerContent {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .logoImage {
+    height: 45px;
+  }
+}
+
+@media (max-width: 576px) {
+  .footerContent {
+    grid-template-columns: 1fr;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .logoImage {
+    height: 40px;
+  }
+
+  .socialList {
+    gap: 0.6rem;
+  }
+
+  .socialList a {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+  }
+}

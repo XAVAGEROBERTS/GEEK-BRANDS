@@ -1,0 +1,303 @@
+/* src/components/Manage/ManageBookingPage.module.css */
+.managePage {
+  padding: 3rem 1.5rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ===== TOP BAR ===== */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.topBar h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0.4rem 0 0.3rem;
+}
+
+.welcome {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.welcome strong {
+  color: #ad1380;
+}
+
+.signOutBtn {
+  padding: 0.6rem 1.3rem;
+  background: #fff;
+  border: 2px solid #ad1380;
+  color: #ad1380;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.signOutBtn:hover {
+  background: #ad1380;
+  color: #fff;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #888;
+}
+
+.summary {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary strong {
+  color: #ad1380;
+  font-size: 1.1rem;
+}
+
+/* ===== EMPTY STATE ===== */
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fafafa;
+  border-radius: 20px;
+  border: 2px dashed #e7e2dc;
+}
+
+.emptyIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.empty h3 {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.empty p {
+  color: #777;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== ORDERS LIST ===== */
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ===== BOOKING CARD ===== */
+.bookingCard {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.4s ease;
+}
+
+.bookingCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ad1380, #df006e, #f5a623);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bookingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 2px solid #f0f0f0;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.bookingLabel {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.bookingHeader h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* ===== STATUS BADGES ===== */
+.status {
+  padding: 0.4rem 1rem;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.Pending          { background: #fff4e5; color: #b9770e; }
+.InProduction     { background: #e8f4fd; color: #2d9cdb; }
+.AwaitingApproval { background: #fef6e7; color: #d68910; }
+.Completed        { background: #e7f8ee; color: #27ae60; }
+.Cancelled        { background: #fdecea; color: #c0392b; }
+
+/* ===== DETAILS GRID ===== */
+.bookingDetails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.detail span {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.detail p {
+  font-size: 1rem;
+  color: #1a1a1a;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ===== PROGRESS ===== */
+.progressSection {
+  margin-bottom: 1.5rem;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.progressLabel strong {
+  color: #ad1380;
+  font-weight: 700;
+}
+
+.progressBar {
+  width: 100%;
+  height: 10px;
+  background: #f0f0f0;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ad1380, #df006e);
+  border-radius: 50px;
+  transition: width 0.6s ease;
+}
+
+/* ===== NOTES ===== */
+.notes {
+  background: #fafafa;
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #ad1380;
+}
+
+.notes span {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.notes p {
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ===== BOTTOM ACTIONS ===== */
+.bottomActions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.helpLink {
+  color: #ad1380;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.helpLink:hover {
+  color: #df006e;
+  transform: translateX(4px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .managePage {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .bookingDetails {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .bookingCard {
+    padding: 1.5rem;
+  }
+
+  .bookingHeader h3 {
+    font-size: 1.15rem;
+  }
+
+  .topBar h2 {
+    font-size: 1.4rem;
+  }
+}

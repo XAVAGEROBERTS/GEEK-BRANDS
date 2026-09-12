@@ -1,0 +1,220 @@
+.aboutPage {
+  padding: 3rem 1.5rem 4rem;
+}
+
+/* ===== ABOUT SECTION ===== */
+.aboutSection {
+  max-width: 900px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.aboutSection h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 0.8rem;
+}
+
+.aboutSection h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.aboutSection p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1.2rem;
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== MISSION & VISION ===== */
+.missionVision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.missionCard,
+.visionCard {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.missionCard::before,
+.visionCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary, #ad1380), var(--gold, #f5a623));
+}
+
+.missionCard:hover,
+.visionCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+}
+
+.missionCard h3,
+.visionCard h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.missionCard p,
+.visionCard p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  margin-bottom: 0.8rem;
+}
+
+/* ===== VALUES ===== */
+.valuesSection {
+  margin: 4rem 0 3rem;
+  text-align: center;
+}
+
+.valuesSection h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 2.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.valuesSection h2::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary, #ad1380), var(--gold, #f5a623));
+  border-radius: 4px;
+  margin: 0 auto 1rem;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.valueCard {
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.valueCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary);
+}
+
+.valueIcon {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.valueCard h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.valueCard p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ===== CTA ===== */
+.aboutCta {
+  text-align: center;
+  margin-top: 4rem;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(173, 19, 128, 0.05) 0%, rgba(245, 166, 35, 0.05) 100%);
+  border-radius: 20px;
+  border: 1px solid #f0f0f0;
+}
+
+.aboutCta h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .valuesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutPage {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .aboutSection h2 {
+    font-size: 1.4rem;
+  }
+
+  .aboutSection h3 {
+    font-size: 1rem;
+  }
+
+  .missionVision {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .missionCard,
+  .visionCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .valuesSection h2 {
+    font-size: 1.4rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .aboutCta {
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .aboutCta h3 {
+    font-size: 1.2rem;
+  }
+}

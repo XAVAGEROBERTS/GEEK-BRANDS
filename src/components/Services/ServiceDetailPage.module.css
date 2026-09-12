@@ -1,0 +1,330 @@
+.serviceDetail {
+  width: 100%;
+}
+
+/* ===== HERO ===== */
+.serviceHero {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.serviceHero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(173, 19, 128, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.serviceIcon {
+  display: inline-block;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.serviceHero h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.serviceHero p {
+  font-size: 1.05rem;
+  color: var(--text-light);
+  max-width: 650px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== BODY ===== */
+.serviceBody {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  padding: 3rem 0 4rem;
+  margin-top: 2rem;
+}
+
+.serviceMain h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.serviceMain h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 2rem 0 1rem;
+}
+
+.serviceMain p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+/* ===== SERVICE LIST ===== */
+.serviceList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.serviceList li {
+  position: relative;
+  padding-left: 1.8rem;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.serviceList li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+/* ===== PROCESS STEPS ===== */
+.processSteps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.processStep {
+  background: #fff;
+  padding: 1.2rem 0.8rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.processStep:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+.processStep span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--primary, #ad1380), var(--secondary, #df006e));
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+.processStep p {
+  font-size: 0.8rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== KEY MESSAGE ===== */
+.keyMessage {
+  background: linear-gradient(135deg, rgba(173, 19, 128, 0.06), rgba(245, 166, 35, 0.06));
+  border-left: 4px solid var(--primary);
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.keyMessage p {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ===== SERVICE COPY ===== */
+.serviceCopy {
+  background: #fafafa;
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 1px solid #f0f0f0;
+}
+
+.serviceCopy p {
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ===== SIDEBAR ===== */
+.serviceSidebar {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.ctaCard {
+  background: linear-gradient(135deg, var(--primary, #ad1380), #8f0f6a);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(173, 19, 128, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.ctaCard h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaCard p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaCard :global(.btn-primary) {
+  background: #fff;
+  color: var(--primary);
+  padding: 0.8rem 2rem;
+  font-weight: 700;
+  border-radius: 40px;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaCard :global(.btn-primary):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== NOT FOUND ===== */
+.notFound {
+  text-align: center;
+  padding: 5rem 1.5rem;
+}
+
+.notFound h2 {
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .serviceBody {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .serviceSidebar {
+    position: static;
+  }
+
+  .processSteps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .serviceHero h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .serviceHero {
+    padding: 3rem 1rem;
+  }
+
+  .serviceHero h1 {
+    font-size: 1.4rem;
+  }
+
+  .serviceHero p {
+    font-size: 0.9rem;
+  }
+
+  .serviceIcon {
+    font-size: 2.5rem;
+  }
+
+  .serviceMain h2 {
+    font-size: 1.3rem;
+  }
+
+  .serviceMain h3 {
+    font-size: 1.1rem;
+  }
+
+  .serviceList {
+    grid-template-columns: 1fr;
+  }
+
+  .processSteps {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ctaCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .ctaCard h3 {
+    font-size: 1.15rem;
+  }
+}

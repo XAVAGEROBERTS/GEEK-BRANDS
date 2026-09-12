@@ -1,0 +1,13 @@
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+  background: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.03);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+}

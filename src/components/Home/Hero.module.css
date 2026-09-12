@@ -1,0 +1,364 @@
+/* ===== HERO SECTION - REDUCED HEIGHT ===== */
+.hero {
+  min-height: 400px;  /* Reduced from 550px */
+  max-height: 500px;  /* Added max height */
+  display: flex;
+  align-items: center;
+  padding: 3rem 3rem;  /* Reduced padding */
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* Smooth transition class */
+.transitioning .heroContent {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  transition: background 0.8s ease;
+}
+
+.overlayLight {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ===== HERO CONTENT - SMALLER TEXT ===== */
+.heroContent {
+  max-width: 580px;  /* Slightly smaller */
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== TEXT ALIGNMENT ===== */
+.textLeft {
+  text-align: left;
+  margin-right: auto;
+}
+
+.textRight {
+  text-align: right;
+  margin-left: auto;
+}
+
+.textCenter {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* ===== TEXT STYLES - SMALLER ===== */
+.badge {
+  display: inline-block;
+  background: rgba(173, 19, 128, 0.85);
+  color: #fff;
+  padding: 0.25rem 1rem;  /* Smaller padding */
+  border-radius: 40px;
+  font-size: 0.6rem;  /* Smaller */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem;  /* Reduced margin */
+  backdrop-filter: blur(10px);
+}
+
+.heroContent h1 {
+  font-size: 2rem;  /* Reduced from 2.5rem */
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;  /* Reduced */
+  color: #ffffff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.heroContent h1 :global(.highlight) {
+  color: #f5a623;
+  position: relative;
+}
+
+.heroContent p {
+  font-size: 0.95rem;  /* Reduced from 1.05rem */
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 500px;
+  margin-bottom: 1rem;  /* Reduced */
+  line-height: 1.6;  /* Slightly tighter */
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* For center alignment, p should be centered */
+.textCenter p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* For right alignment, p should be right-aligned */
+.textRight p {
+  margin-left: auto;
+}
+
+/* ===== BUTTONS - SMALLER ===== */
+.heroButtons {
+  display: flex;
+  gap: 0.8rem;  /* Reduced gap */
+  flex-wrap: wrap;
+}
+
+.textLeft .heroButtons {
+  justify-content: flex-start;
+}
+
+.textRight .heroButtons {
+  justify-content: flex-end;
+}
+
+.textCenter .heroButtons {
+  justify-content: center;
+}
+
+.heroButtons :global(.btn-primary) {
+  background: #ad1380;
+  color: #fff;
+  padding: 0.55rem 1.8rem;  /* Smaller padding */
+  font-size: 0.85rem;  /* Smaller */
+  border: none;
+  border-radius: 40px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.heroButtons :global(.btn-primary):hover {
+  background: #8f0f6a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(173, 19, 128, 0.4);
+}
+
+.heroButtons :global(.btn-outline) {
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 0.55rem 1.8rem;  /* Smaller padding */
+  font-size: 0.85rem;  /* Smaller */
+  background: transparent;
+  border-radius: 40px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.heroButtons :global(.btn-outline):hover {
+  background: #fff;
+  color: #ad1380;
+}
+
+/* ===== SLIDER CONTROLS - SMALLER ===== */
+.slideArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  width: 40px;  /* Reduced from 46px */
+  height: 40px;  /* Reduced from 46px */
+  border-radius: 50%;
+  font-size: 1rem;  /* Reduced */
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideArrow:hover {
+  background: #ad1380;
+  border-color: #ad1380;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.slideArrowRight {
+  left: auto;
+  right: 1.5rem;
+}
+
+/* ===== SLIDE DOTS - SMALLER ===== */
+.slideDots {
+  position: absolute;
+  bottom: 1.5rem;  /* Reduced from 2rem */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;  /* Reduced gap */
+  z-index: 10;
+}
+
+.slideDot {
+  width: 10px;  /* Reduced from 11px */
+  height: 10px;  /* Reduced from 11px */
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.slideDot:hover {
+  background: rgba(173, 19, 128, 0.6);
+  transform: scale(1.1);
+}
+
+.activeDot {
+  background: #ad1380;
+  border-color: #ad1380;
+  transform: scale(1.2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .hero {
+    min-height: 350px;  /* Reduced */
+    max-height: 450px;  /* Reduced */
+    padding: 2.5rem 2rem;
+  }
+
+  .heroContent {
+    max-width: 500px;
+  }
+
+  .heroContent h1 {
+    font-size: 1.8rem;
+  }
+
+  .heroContent p {
+    font-size: 0.9rem;
+  }
+
+  .slideArrow {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+    left: 0.8rem;
+  }
+
+  .slideArrowRight {
+    left: auto;
+    right: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 300px;  /* Reduced */
+    max-height: 400px;  /* Reduced */
+    padding: 2rem 1.5rem;
+  }
+
+  .heroContent {
+    max-width: 100%;
+  }
+
+  .heroContent h1 {
+    font-size: 1.6rem;
+  }
+
+  .heroContent p {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
+
+  .textLeft,
+  .textRight,
+  .textCenter {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .textLeft .heroButtons,
+  .textRight .heroButtons,
+  .textCenter .heroButtons {
+    justify-content: center;
+  }
+
+  .textLeft p,
+  .textRight p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .slideArrow {
+    display: none;
+  }
+
+  .slideDots {
+    bottom: 0.8rem;
+  }
+
+  .slideDot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 280px;  /* Reduced */
+    max-height: 380px;  /* Reduced */
+    padding: 1.5rem 1rem;
+  }
+
+  .heroContent h1 {
+    font-size: 1.3rem;
+  }
+
+  .heroContent p {
+    font-size: 0.75rem;
+  }
+
+  .badge {
+    font-size: 0.5rem;
+    padding: 0.15rem 0.7rem;
+  }
+
+  .heroButtons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .heroButtons :global(.btn-primary),
+  .heroButtons :global(.btn-outline) {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.75rem;
+  }
+
+  .slideDots {
+    gap: 0.4rem;
+  }
+
+  .slideDot {
+    width: 7px;
+    height: 7px;
+  }
+}
