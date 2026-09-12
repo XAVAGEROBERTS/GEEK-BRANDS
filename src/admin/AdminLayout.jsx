@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { useNotifications } from '../context/NotificationsContext';
 import {
   FaTachometerAlt,
   FaImages,
@@ -17,6 +18,7 @@ import {
   FaMoon
 } from 'react-icons/fa';
 import ConfirmModal from './ConfirmModal';
+import OrderToast from './OrderToast';
 import styles from './AdminLayout.module.css';
 
 const ADMIN_PATH = '/gb-control-7x9k';
@@ -24,6 +26,7 @@ const ADMIN_PATH = '/gb-control-7x9k';
 const AdminLayout = () => {
   const { logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const { newOrderCount, toast, clearCount, dismissToast } = useNotifications();
   const navigate = useNavigate();
   const [confirmLogout, setConfirmLogout] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
@@ -41,7 +44,13 @@ const AdminLayout = () => {
     { to: `${ADMIN_PATH}/hero`, label: 'Hero Slides', icon: FaImages },
     { to: `${ADMIN_PATH}/portfolio`, label: 'Portfolio', icon: FaBriefcase },
     { to: `${ADMIN_PATH}/services`, label: 'Services', icon: FaConciergeBell },
-    { to: `${ADMIN_PATH}/orders`, label: 'Orders', icon: FaClipboardList },
+    {
+      to: `${ADMIN_PATH}/orders`,
+      label: 'Orders',
+      icon: FaClipboardList,
+      badge: newOrderCount,
+      onOpen: clearCount
+    },
     { to: `${ADMIN_PATH}/team`, label: 'Team', icon: FaUsers },
     { to: `${ADMIN_PATH}/settings`, label: 'Settings', icon: FaCog }
   ];
@@ -55,17 +64,23 @@ const AdminLayout = () => {
         </div>
 
         <nav className={styles.nav}>
-          {links.map(({ to, label, icon: Icon, end }) => (
+          {links.map(({ to, label, icon: Icon, end, badge, onOpen }) => (
             <NavLink
               key={to}
               to={to}
               end={end}
+              onClick={() => onOpen && onOpen()}
               className={({ isActive }) =>
                 `${styles.link} ${isActive ? styles.active : ''}`
               }
             >
               <Icon />
               <span>{label}</span>
+              {badge > 0 && (
+                <span className={styles.badge}>
+                  {badge > 99 ? '99+' : badge}
+                </span>
+              )}
             </NavLink>
           ))}
         </nav>
@@ -99,6 +114,21 @@ const AdminLayout = () => {
       <main className={styles.content}>
         <Outlet />
       </main>
+
+      {/* ===== LIVE ORDER TOAST ===== */}
+      {toast && (
+        <OrderToast
+          key={toast.id}
+          title={toast.title}
+          message={toast.message}
+          orderRef={toast.orderRef}
+          onClose={dismissToast}
+          onView={() => {
+            dismissToast();
+            navigate(`${ADMIN_PATH}/orders`);
+          }}
+        />
+      )}
 
       {/* ===== LOGOUT CONFIRMATION MODAL ===== */}
       <ConfirmModal

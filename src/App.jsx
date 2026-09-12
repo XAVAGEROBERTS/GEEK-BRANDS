@@ -6,6 +6,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 
+// ===== CONTEXTS =====
+import { NotificationsProvider } from './context/NotificationsContext';
+
 // ===== PUBLIC PAGES =====
 import HomePage from './components/Home/HomePage';
 import ServicesPage from './components/Services/ServicesPage';
@@ -27,7 +30,7 @@ import RequireAuth from './admin/RequireAuth';
 import Dashboard from './admin/Dashboard';
 import ManageHero from './admin/ManageHero';
 import ManagePortfolio from './admin/ManagePortfolio';
-import ManageServices from './admin/ManageServices';   // ✅ NEW
+import ManageServices from './admin/ManageServices';
 import ManageTeam from './admin/ManageTeam';
 import ManageOrders from './admin/ManageOrders';
 import ManageSettings from './admin/ManageSettings';
@@ -50,14 +53,16 @@ function App() {
           path={ADMIN_PATH}
           element={
             <RequireAuth>
-              <AdminLayout />
+              <NotificationsProvider>
+                <AdminLayout />
+              </NotificationsProvider>
             </RequireAuth>
           }
         >
           <Route index element={<Dashboard />} />
           <Route path="hero" element={<ManageHero />} />
           <Route path="portfolio" element={<ManagePortfolio />} />
-          <Route path="services" element={<ManageServices />} />       {/* ✅ NEW */}
+          <Route path="services" element={<ManageServices />} />
           <Route path="orders" element={<ManageOrders />} />
           <Route path="team" element={<ManageTeam />} />
           <Route path="settings" element={<ManageSettings />} />

@@ -1,6 +1,7 @@
 // src/admin/ManageOrders.jsx
 import React, { useEffect, useState } from 'react';
 import { useData } from '../context/DataContext';
+import { useNotifications } from '../context/NotificationsContext';
 import { FaTrash, FaEdit, FaTimes, FaFileAlt, FaDownload } from 'react-icons/fa';
 import { SkeletonTable } from './Loaders';
 import styles from './Manage.module.css';
@@ -9,11 +10,14 @@ const statusOptions = ['Pending', 'In Production', 'Awaiting Approval', 'Complet
 
 const ManageOrders = () => {
   const { orders, loadOrders, updateOrder, deleteOrder } = useData();
+  const { lastEvent } = useNotifications();
+
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({});
   const [artworkView, setArtworkView] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // ===== INITIAL LOAD =====
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
@@ -22,6 +26,14 @@ const ManageOrders = () => {
     };
     fetchOrders();
   }, []);
+
+  // ===== AUTO-REFRESH WHEN NEW ORDER ARRIVES =====
+  useEffect(() => {
+    if (lastEvent?.type === 'new_order') {
+      // Refresh the orders list without showing the skeleton
+      loadOrders();
+    }
+  }, [lastEvent]);
 
   const openEdit = (order) => {
     setEditing(order.id);
@@ -64,7 +76,7 @@ const ManageOrders = () => {
 
   const closeArtwork = () => setArtworkView(null);
 
-  // Real download — saves to Downloads folder
+  // ===== REAL DOWNLOAD — saves to Downloads folder =====
   const downloadFile = async (url, filename) => {
     if (!url) return alert('No file URL provided.');
 
