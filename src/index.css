@@ -1,74 +1,63 @@
 /* ============================================================
-   GEEK BRANDS — Global Styles + Gotham Font System
+   GEEK BRANDS — Global Styles
    ============================================================ */
 
-/* ============================================================
-   GOTHAM FONT FACES
-   -----------------------------------------
-   If you have the licensed Gotham font files, drop them in
-   src/assets/fonts/ and uncomment these blocks.
-   If not, Montserrat loads from Google Fonts (index.html) and
-   is used as the primary font automatically.
-   ============================================================ */
+:root {
+  --font-primary: 'Montserrat', 'Gotham', -apple-system, BlinkMacSystemFont,
+                  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-/*
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Thin.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Thin.otf') format('opentype');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
+  --fw-thin: 200;
+  --fw-light: 300;
+  --fw-book: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  --primary: #ad1380;
+  --primary-dark: #8f0f6a;
+  --primary-light: #d94fa8;
+  --secondary: #df006e;
+  --gold: #f5a623;
+
+  --text-dark: #1a1a1a;
+  --text-light: #4a4a4a;
+  --gray-bg: #f8f8f8;
+  --white: #ffffff;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --bg-tertiary: #fafafa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #6a6a6a;
+  --border-color: #f0f0f0;
+  --border-strong: #ddd;
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.06);
 }
 
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Light.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Light.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+[data-theme='dark'] {
+  --bg-primary: #0f0f12;
+  --bg-secondary: #1a1a1f;
+  --bg-tertiary: #222229;
+  --text-primary: #f5f5f7;
+  --text-secondary: #c8c8d0;
+  --text-tertiary: #8a8a95;
+  --border-color: #2a2a33;
+  --border-strong: #3a3a45;
+  --card-bg: #1a1a1f;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --text-dark: #f5f5f7;
+  --text-light: #c8c8d0;
+  --gray-bg: #1a1a1f;
+  --white: #1a1a1f;
 }
-
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Book.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Book.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Medium.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Bold.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Gotham';
-  src: url('./assets/fonts/Gotham-Black.woff2') format('woff2'),
-       url('./assets/fonts/Gotham-Black.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-*/
 
 /* ============================================================
-   GLOBAL RESET
+   RESET
    ============================================================ */
 * {
   margin: 0;
@@ -90,97 +79,99 @@ ul, ol {
   list-style: none;
 }
 
-/* ============================================================
-   FONT VARIABLES
-   -----------------------------------------
-   Font priority:
-     1. Real Gotham (if you own the license + added the files)
-     2. Montserrat (free Google Font — nearly identical to Gotham)
-     3. System fallbacks
-   ============================================================ */
-:root {
-  --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont,
-                  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
-  /* Gotham weight names → CSS weights */
-  --fw-thin: 200;      /* Gotham Thin */
-  --fw-light: 300;     /* Gotham Light */
-  --fw-book: 400;      /* Gotham Book — default body text */
-  --fw-medium: 500;    /* Gotham Medium */
-  --fw-bold: 700;      /* Gotham Bold — headings */
-  --fw-black: 900;     /* Gotham Black — big statements */
-}
-
-/* ============================================================
-   BODY
-   ============================================================ */
-body {
-  font-family: var(--font-primary);
-  font-weight: var(--fw-book);
-  background: #f5f5f5;
-  color: #1a1a1a;
+html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ============================================================
-   HEADINGS — Gotham Black / Bold
+   BODY — weight bumped to 500
    ============================================================ */
-h1, h2, h3, h4, h5, h6 {
+body {
   font-family: var(--font-primary);
-  color: var(--text-primary, #1a1a1a);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-weight: 500;                  /* ✅ BOLDER than 400 */
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
+/* Force Montserrat on EVERY element */
+h1, h2, h3, h4, h5, h6,
+p, li, span, div, a, strong, em, small,
+button, input, select, textarea, label {
+  font-family: var(--font-primary);
+}
+
+/* ============================================================
+   HEADINGS
+   ============================================================ */
 h1 {
-  font-weight: var(--fw-black);       /* Gotham Black */
+  font-weight: 900;
   letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 h2 {
-  font-weight: var(--fw-bold);        /* Gotham Bold */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 h3 {
-  font-weight: var(--fw-bold);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
-h4, h5, h6 {
-  font-weight: var(--fw-medium);      /* Gotham Medium */
+h4 {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h5, h6 {
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 /* ============================================================
    BODY TEXT
    ============================================================ */
 p {
-  font-weight: var(--fw-book);
+  font-weight: 500;
   line-height: 1.7;
 }
 
-strong, b {
-  font-weight: var(--fw-bold);
+small {
+  font-weight: 500;
 }
 
-small {
-  font-weight: var(--fw-book);
+strong, b {
+  font-weight: 700;
 }
 
 /* ============================================================
-   BUTTONS & FORM ELEMENTS
+   BUTTONS & INPUTS
    ============================================================ */
-button,
+button {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+
 input,
 select,
 textarea {
-  font-family: inherit;
-  font-weight: var(--fw-medium);
+  font-family: var(--font-primary);
+  font-weight: 500;
 }
 
-button {
-  cursor: pointer;
+input::placeholder,
+textarea::placeholder {
+  font-weight: 400;
+  color: var(--text-tertiary);
 }
 
 /* ============================================================
@@ -197,22 +188,19 @@ code, pre, kbd, samp {
   width: 10px;
   height: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary, #f5f5f7);
+  background: var(--bg-secondary);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong, #ddd);
+  background: var(--border-strong);
   border-radius: 6px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary, #ad1380);
+  background: var(--primary);
 }
 
 ::selection {
-  background: var(--primary, #ad1380);
+  background: var(--primary);
   color: #fff;
 }
 
@@ -226,78 +214,7 @@ code, pre, kbd, samp {
 }
 
 /* ============================================================
-   COLOR VARIABLES
-   ============================================================ */
-:root {
-  /* Brand */
-  --primary: #ad1380;
-  --primary-dark: #8f0f6a;
-  --primary-light: #d94fa8;
-  --secondary: #df006e;
-  --gold: #f5a623;
-
-  /* Text */
-  --text-dark: #1a1a1a;
-  --text-light: #555;
-
-  /* Backgrounds */
-  --gray-bg: #f8f8f8;
-  --white: #ffffff;
-
-  /* Shadow */
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-
-  /* Theme tokens (light) */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f7;
-  --bg-tertiary: #fafafa;
-  --text-primary: #1a1a1a;
-  --text-secondary: #555;
-  --text-tertiary: #888;
-  --border-color: #f0f0f0;
-  --border-strong: #ddd;
-  --card-bg: #ffffff;
-  --shadow-color: rgba(0, 0, 0, 0.06);
-}
-
-/* ============================================================
-   DARK MODE
-   ============================================================ */
-[data-theme='dark'] {
-  --bg-primary: #0f0f12;
-  --bg-secondary: #1a1a1f;
-  --bg-tertiary: #222229;
-  --text-primary: #f5f5f7;
-  --text-secondary: #b8b8c0;
-  --text-tertiary: #7a7a85;
-  --border-color: #2a2a33;
-  --border-strong: #3a3a45;
-  --card-bg: #1a1a1f;
-  --shadow-color: rgba(0, 0, 0, 0.5);
-
-  --text-dark: #f5f5f7;
-  --text-light: #b8b8c0;
-  --gray-bg: #1a1a1f;
-  --white: #1a1a1f;
-}
-
-/* ============================================================
-   APPLY DARK MODE
-   ============================================================ */
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-}
-
-*, *::before, *::after {
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
-}
-
-/* ============================================================
-   BUTTONS
+   GLOBAL BUTTONS
    ============================================================ */
 .btn-primary {
   display: inline-block;
@@ -305,14 +222,13 @@ body {
   color: #fff;
   padding: 0.8rem 2.5rem;
   border-radius: 40px;
-  font-weight: var(--fw-bold);
+  font-weight: 700;
   font-size: 0.95rem;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
   font-family: var(--font-primary);
-  letter-spacing: 0.01em;
 }
 
 .btn-primary:hover {
@@ -327,7 +243,7 @@ body {
   color: var(--primary);
   padding: 0.8rem 2.5rem;
   border-radius: 40px;
-  font-weight: var(--fw-bold);
+  font-weight: 700;
   font-size: 0.95rem;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -350,7 +266,7 @@ body {
 
 .section-title .badge {
   color: var(--primary);
-  font-weight: var(--fw-bold);
+  font-weight: 800;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -360,36 +276,27 @@ body {
 
 .section-title h2 {
   font-size: 2.5rem;
-  font-weight: var(--fw-bold);
+  font-weight: 800;
   color: var(--text-dark);
-  font-family: var(--font-primary);
 }
 
 .section-title p {
   color: var(--text-light);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
   max-width: 600px;
   margin: 0.5rem auto 0;
-  font-weight: var(--fw-book);
 }
 
 /* ============================================================
-   RESPONSIVE TYPOGRAPHY
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-  .section-title h2 {
-    font-size: 1.8rem;
-  }
-  .section-title p {
-    font-size: 1rem;
-  }
+  .section-title h2 { font-size: 1.8rem; }
+  .section-title p { font-size: 1rem; }
 }
 
 @media (max-width: 480px) {
-  .section-title h2 {
-    font-size: 1.4rem;
-  }
-  .section-title p {
-    font-size: 0.9rem;
-  }
+  .section-title h2 { font-size: 1.4rem; }
+  .section-title p { font-size: 0.9rem; }
 }
