@@ -1,6 +1,6 @@
 // src/pages/LoginPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import styles from './LoginPage.module.css';
 
@@ -14,20 +14,26 @@ const LoginPage = () => {
   const [message, setMessage] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ Read ?redirect= from URL, default to /my-orders
+  const redirectTo =
+    new URLSearchParams(location.search).get('redirect') || '/my-orders';
 
   // If already logged in, redirect
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) navigate('/my-orders');
+      if (session?.user) navigate(redirectTo);
     });
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   const handleGoogle = async () => {
     setError('');
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/my-orders`
+        // ✅ Google returns to the redirect target
+        redirectTo: `${window.location.origin}${redirectTo}`
       }
     });
     if (err) setError(err.message);
@@ -46,7 +52,7 @@ const LoginPage = () => {
           password,
           options: {
             data: { full_name: name },
-            emailRedirectTo: `${window.location.origin}/my-orders`
+            emailRedirectTo: `${window.location.origin}${redirectTo}`
           }
         });
         if (err) throw err;
@@ -54,7 +60,7 @@ const LoginPage = () => {
         if (data.user && !data.session) {
           setMessage('✅ Check your email to confirm your account, then log in.');
         } else {
-          navigate('/my-orders');
+          navigate(redirectTo);
         }
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({
@@ -62,7 +68,7 @@ const LoginPage = () => {
           password
         });
         if (err) throw err;
-        navigate('/my-orders');
+        navigate(redirectTo);
       }
     } catch (err) {
       setError(err.message || 'Something went wrong');

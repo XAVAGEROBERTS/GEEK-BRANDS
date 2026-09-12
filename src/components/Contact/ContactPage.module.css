@@ -576,3 +576,53 @@
 .removeArtwork:hover {
   background: #fee2e2;
 }
+/* ============================================================
+   FIELD VALIDATION
+   ============================================================ */
+.inputError {
+  border-color: #e74c3c !important;
+  background: #fff8f8 !important;
+}
+
+.inputError:focus {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.12) !important;
+}
+
+.fieldErrorMsg {
+  display: block;
+  font-size: 0.75rem;
+  color: #e74c3c;
+  font-weight: 600;
+  margin-top: 0.35rem;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.charCount {
+  display: block;
+  font-size: 0.72rem;
+  color: #999;
+  margin-top: 0.35rem;
+  text-align: right;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme='dark'] .inputError {
+  border-color: #e74c3c !important;
+  background: #2a1a1a !important;
+}
+
+[data-theme='dark'] .fieldErrorMsg {
+  color: #ff6b6b;
+}
+
+[data-theme='dark'] .charCount {
+  color: #7a7a85;
+}
