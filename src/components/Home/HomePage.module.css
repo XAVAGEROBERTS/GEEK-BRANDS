@@ -28,7 +28,6 @@
   visibility: visible;
 }
 
-/* ✅ Hidden state — fades out when user scrolls */
 .absoluteBarHidden {
   opacity: 0;
   visibility: hidden;
@@ -98,7 +97,7 @@
 /* ===== TRUST STRIP ===== */
 .trustStrip {
   background: #fff;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   border-bottom: 1px solid #f0f0f0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
   position: relative;
@@ -131,9 +130,9 @@
   font-weight: 800;
 }
 
-/* ===== INTRODUCTION SECTION ===== */
+/* ===== INTRODUCTION SECTION — reduced bottom padding ===== */
 .introSection {
-  padding: 5rem 1.5rem 4rem;
+  padding: 4rem 1.5rem 1.5rem;
   background: #fff;
   position: relative;
 }
@@ -174,7 +173,7 @@
 }
 
 .introContent p:last-of-type {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .introContent :global(.btn-primary) {
@@ -517,10 +516,6 @@
   .introContent h2 {
     font-size: 1.8rem;
   }
-
-  .featuredStatement h2 {
-    font-size: 1.7rem;
-  }
 }
 
 @media (max-width: 992px) {
@@ -568,7 +563,7 @@
   }
 
   .introSection {
-    padding: 4rem 1.5rem 3rem;
+    padding: 3rem 1.5rem 1.2rem;
   }
 
   .introContent h2 {
@@ -595,7 +590,6 @@
     flex-direction: column;
   }
 
-  /* ✅ Mobile hidden state */
   .absoluteBarHidden {
     transform: translateY(-10px);
     opacity: 0;
@@ -668,7 +662,7 @@
   }
 
   .trustStrip {
-    padding: 1rem 0;
+    padding: 0.8rem 0;
   }
 
   .trustItems {
@@ -681,7 +675,7 @@
   }
 
   .introSection {
-    padding: 3rem 1rem 2.5rem;
+    padding: 2.5rem 1rem 1rem;
   }
 
   .introContent h2 {
@@ -691,18 +685,6 @@
   .introContent p {
     font-size: 0.9rem;
     line-height: 1.7;
-  }
-
-  .featuredStatement {
-    padding: 3rem 1rem;
-  }
-
-  .featuredStatement h2 {
-    font-size: 1.3rem;
-  }
-
-  .featuredStatement p {
-    font-size: 0.9rem;
   }
 }
 
@@ -737,7 +719,7 @@
   }
 
   .introSection {
-    padding: 2.5rem 1rem 2rem;
+    padding: 2rem 1rem 0.8rem;
   }
 
   .introContent h2 {
@@ -746,17 +728,5 @@
 
   .introContent p {
     font-size: 0.85rem;
-  }
-
-  .featuredStatement {
-    padding: 2.5rem 1rem;
-  }
-
-  .featuredStatement h2 {
-    font-size: 1.1rem;
-  }
-
-  .featuredStatement p {
-    font-size: 0.8rem;
   }
 }

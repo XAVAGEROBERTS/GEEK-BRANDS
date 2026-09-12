@@ -1,8 +1,11 @@
 /* src/components/Home/ServicesPreview.module.css */
 
+/* ============================================================
+   SECTION WRAPPER — reduced top padding
+   ============================================================ */
 .servicesPreview {
-  padding: 6rem 0 4rem;
-  margin-top: 2rem;
+  padding: 2.5rem 0 4rem;          /* ✅ was 6rem — cut by 3.5rem */
+  margin-top: 0;                    /* ✅ was 2rem */
   position: relative;
   overflow: hidden;
 }
@@ -14,7 +17,7 @@
   height: 4px;
   background: linear-gradient(90deg, var(--primary, #ad1380), var(--secondary, #df006e), var(--gold, #f5a623));
   border-radius: 4px;
-  margin: 0 auto 3rem;
+  margin: 0 auto 2rem;              /* ✅ was 3rem */
 }
 
 /* ============================================================
@@ -29,7 +32,7 @@
 
 .track {
   display: flex;
-  gap: 1.5rem;                     /* = 24px, matches CARD_GAP_PX */
+  gap: 1.5rem;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.5rem 0.25rem 1.5rem;
@@ -38,7 +41,6 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  /* Snap active by default; JS disables it during programmatic scroll */
   scroll-snap-type: x mandatory;
 }
 
@@ -55,8 +57,6 @@
   text-decoration: none;
   color: inherit;
   display: block;
-
-  /* Formula ensures exactly 3 cards + their gaps fit in the track */
   flex: 0 0 calc((100% - (1.5rem * 2)) / 3);
   scroll-snap-align: start;
   min-width: 0;
@@ -153,8 +153,13 @@
   box-shadow: 0 12px 30px rgba(173, 19, 128, 0.35);
 }
 
-.navArrowLeft { left: 0; }
-.navArrowRight { right: 0; }
+.navArrowLeft {
+  left: 0;
+}
+
+.navArrowRight {
+  right: 0;
+}
 
 /* ============================================================
    DOTS
@@ -218,8 +223,12 @@
   background: #1a1a1f;
   border-color: #2a2a33;
 }
-[data-theme='dark'] .card h3 { color: #f5f5f7; }
-[data-theme='dark'] .card p { color: #b8b8c0; }
+[data-theme='dark'] .card h3 {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .card p {
+  color: #b8b8c0;
+}
 
 [data-theme='dark'] .navArrow {
   background: #1a1a1f;
@@ -231,7 +240,9 @@
   border-color: #ad1380;
 }
 
-[data-theme='dark'] .dot { background: #3a3a45; }
+[data-theme='dark'] .dot {
+  background: #3a3a45;
+}
 [data-theme='dark'] .dotActive {
   background: linear-gradient(90deg, #ad1380, #df006e);
 }
@@ -243,18 +254,18 @@
 /* Tablet: 2 cards visible */
 @media (max-width: 1023px) {
   .cardLink {
-    flex: 0 0 calc((100% - 1.5rem) / 2);   /* 2 cards + 1 gap */
+    flex: 0 0 calc((100% - 1.5rem) / 2);
   }
 }
 
 /* Mobile: 1 card visible */
 @media (max-width: 639px) {
   .servicesPreview {
-    padding: 4rem 0 2.5rem;
+    padding: 2rem 0 2rem;          /* ✅ was 4rem 0 2.5rem */
   }
   .servicesPreview::before {
     width: 60px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;         /* ✅ was 2rem */
   }
 
   .carouselWrap {
@@ -271,26 +282,47 @@
     scroll-snap-align: start;
   }
 
-  .card { padding: 1.6rem 1.4rem; }
-  .cardIcon { width: 54px; height: 54px; font-size: 1.5rem; }
+  .card {
+    padding: 1.6rem 1.4rem;
+  }
+  .cardIcon {
+    width: 54px;
+    height: 54px;
+    font-size: 1.5rem;
+  }
 
   .navArrow {
     width: 38px;
     height: 38px;
     font-size: 0.85rem;
   }
-  .navArrowLeft { left: 4px; }
-  .navArrowRight { right: 4px; }
+  .navArrowLeft {
+    left: 4px;
+  }
+  .navArrowRight {
+    right: 4px;
+  }
 
-  .dot { width: 8px; height: 8px; }
-  .dotActive { width: 24px; }
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  .dotActive {
+    width: 24px;
+  }
 }
 
 /* ============================================================
    REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  .track { scroll-behavior: auto; }
-  .navArrow { transition: none; }
-  .card { transition: none; }
+  .track {
+    scroll-behavior: auto;
+  }
+  .navArrow {
+    transition: none;
+  }
+  .card {
+    transition: none;
+  }
 }

@@ -28,6 +28,8 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
+  padding-left: 10.2rem;
+  transition: padding 0.2s ease;
 }
 
 .logoImage {
@@ -103,14 +105,16 @@
   transform: rotate(180deg);
 }
 
-/* ===== DROPDOWN ===== */
+/* ============================================================
+   DROPDOWN — hover-friendly
+   ============================================================ */
 .dropdownItem {
   position: relative;
 }
 
 .dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem);
+  top: calc(100% + 0.3rem);
   left: 0;
   min-width: 220px;
   background: #fff;
@@ -120,6 +124,17 @@
   padding: 0.5rem;
   z-index: 100;
   animation: dropdownIn 0.2s ease;
+}
+
+/* ✅ Invisible bridge — fills the gap so hover doesn't break */
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+  background: transparent;
 }
 
 @keyframes dropdownIn {
@@ -163,7 +178,6 @@
   flex-shrink: 0;
 }
 
-/* Login link */
 .loginLink {
   font-size: 0.9rem;
   font-weight: 600;
@@ -181,7 +195,7 @@
 }
 
 /* ============================================================
-   USER AVATAR — Circle only, no name text
+   USER AVATAR
    ============================================================ */
 .userMenuWrap {
   position: relative;
@@ -210,7 +224,6 @@
   box-shadow: 0 4px 14px rgba(173, 19, 128, 0.2);
 }
 
-/* If user has a Google profile picture */
 .userAvatarImg {
   width: 100%;
   height: 100%;
@@ -219,7 +232,6 @@
   display: block;
 }
 
-/* Fallback: first letter in a circle */
 .userAvatarLetter {
   width: 100%;
   height: 100%;
@@ -231,10 +243,8 @@
   font-weight: 800;
   font-size: 1rem;
   border-radius: 50%;
-  letter-spacing: 0;
 }
 
-/* User dropdown */
 .userDropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -332,7 +342,6 @@
   box-shadow: 0 8px 22px rgba(173, 19, 128, 0.4);
 }
 
-/* Mobile toggle */
 .mobileToggle {
   display: none;
   background: none;
@@ -350,7 +359,6 @@
   color: #ad1380;
 }
 
-/* ===== MOBILE NAV (hidden on desktop) ===== */
 .mobileNav {
   display: none;
 }
@@ -369,6 +377,10 @@
   .orderBtn {
     padding: 0.55rem 1.1rem;
     font-size: 0.8rem;
+  }
+
+  .logo {
+    padding-left: 4rem;
   }
 }
 
@@ -393,7 +405,10 @@
     display: none;
   }
 
-  /* Keep the avatar visible on mobile too */
+  .logo {
+    padding-left: 1rem;
+  }
+
   .userBtn {
     width: 36px;
     height: 36px;
@@ -403,7 +418,6 @@
     font-size: 0.9rem;
   }
 
-  /* Mobile menu panel */
   .mobileNav {
     display: flex;
     flex-direction: column;
@@ -507,6 +521,10 @@
 @media (max-width: 480px) {
   .header {
     padding: 0.5rem 1rem;
+  }
+
+  .logo {
+    padding-left: 0;
   }
 
   .logoImage {

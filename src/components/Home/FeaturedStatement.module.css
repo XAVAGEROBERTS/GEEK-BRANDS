@@ -1,3 +1,4 @@
+/* src/components/Home/FeaturedStatement.module.css */
 .featuredStatement {
   padding: 4rem 1.5rem;
   background: linear-gradient(135deg, rgba(173, 19, 128, 0.04) 0%, rgba(245, 166, 35, 0.04) 100%);
@@ -24,7 +25,7 @@
 .featuredStatement h2 {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--text-dark);
+  color: var(--text-dark, #1a1a1a);
   line-height: 1.3;
   margin-bottom: 1rem;
   position: relative;
@@ -34,19 +35,11 @@
   margin-right: auto;
 }
 
-.featuredStatement h2::before {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary, #ad1380), var(--gold, #f5a623));
-  border-radius: 4px;
-  margin: 0 auto 1.5rem;
-}
+/* ✅ The dash rule was removed here */
 
 .featuredStatement p {
   font-size: 1.05rem;
-  color: var(--text-light);
+  color: var(--text-light, #555);
   max-width: 550px;
   margin: 0 auto;
   line-height: 1.7;
@@ -54,16 +47,13 @@
   z-index: 1;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .featuredStatement {
     padding: 3rem 1.5rem;
   }
-
   .featuredStatement h2 {
     font-size: 1.5rem;
   }
-
   .featuredStatement p {
     font-size: 0.95rem;
   }
@@ -73,11 +63,9 @@
   .featuredStatement {
     padding: 2.5rem 1rem;
   }
-
   .featuredStatement h2 {
     font-size: 1.2rem;
   }
-
   .featuredStatement p {
     font-size: 0.85rem;
   }

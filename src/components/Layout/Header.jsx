@@ -162,13 +162,15 @@ const Header = () => {
               </NavLink>
             </li>
 
-            <li className={styles.dropdownItem}>
+            {/* ===== SERVICES DROPDOWN — HOVER ===== */}
+            <li
+              className={styles.dropdownItem}
+              onMouseEnter={() => setOpenDropdown('services')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
               <button
                 type="button"
                 className={`${styles.dropdownTrigger} ${isServiceActive ? styles.active : ''}`}
-                onClick={() =>
-                  setOpenDropdown(openDropdown === 'services' ? null : 'services')
-                }
                 aria-expanded={openDropdown === 'services'}
               >
                 Services <FaChevronDown className={styles.chevron} />
@@ -201,13 +203,15 @@ const Header = () => {
               </NavLink>
             </li>
 
-            <li className={styles.dropdownItem}>
+            {/* ===== COMPANY DROPDOWN — HOVER ===== */}
+            <li
+              className={styles.dropdownItem}
+              onMouseEnter={() => setOpenDropdown('company')}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
               <button
                 type="button"
                 className={`${styles.dropdownTrigger} ${isCompanyActive ? styles.active : ''}`}
-                onClick={() =>
-                  setOpenDropdown(openDropdown === 'company' ? null : 'company')
-                }
                 aria-expanded={openDropdown === 'company'}
               >
                 Company <FaChevronDown className={styles.chevron} />
@@ -313,6 +317,7 @@ const Header = () => {
           </button>
         </div>
 
+        {/* ===== MOBILE NAV ===== */}
         <nav
           className={`${styles.mobileNav} ${mobileOpen ? styles.mobileNavOpen : ''}`}
         >
