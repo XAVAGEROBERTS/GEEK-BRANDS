@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
-// 🔒 Secret admin path — dark mode only applies inside this
+// 🔒 Secret admin path — dark mode ONLY applies inside this
 const ADMIN_PATH = '/gb-control-7x9k';
 
 export const ThemeProvider = ({ children }) => {
@@ -13,15 +13,13 @@ export const ThemeProvider = ({ children }) => {
     return 'light';
   });
 
-  // Apply or remove the dark theme based on current route
+  // Apply or remove dark theme based on current route
   const applyThemeForRoute = () => {
     const isAdminRoute = window.location.pathname.startsWith(ADMIN_PATH);
 
     if (isAdminRoute) {
-      // Inside admin → respect the user's choice
       document.documentElement.setAttribute('data-theme', theme);
     } else {
-      // Public site → always force light
       document.documentElement.setAttribute('data-theme', 'light');
     }
   };
@@ -33,12 +31,10 @@ export const ThemeProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
-  // Reapply on route change
+  // Reapply on every route change
   useEffect(() => {
-    // Listen to popstate (back/forward buttons)
     window.addEventListener('popstate', applyThemeForRoute);
 
-    // Patch pushState and replaceState to fire custom events on Link navigation
     const originalPush = window.history.pushState;
     const originalReplace = window.history.replaceState;
 

@@ -4,7 +4,7 @@
    ============================================================ */
 
 /* ============================================================
-   ROOT VARIABLES
+   ROOT VARIABLES — LIGHT (default for public site)
    ============================================================ */
 :root {
   --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont,
@@ -44,9 +44,10 @@
 }
 
 /* ============================================================
-   DARK MODE
+   DARK MODE — only when html has data-theme="dark"
+   (ThemeContext only sets this inside /gb-control-7x9k/*)
    ============================================================ */
-[data-theme='dark'] {
+html[data-theme='dark'] {
   --bg-primary: #0f0f12;
   --bg-secondary: #1a1a1f;
   --bg-tertiary: #222229;
