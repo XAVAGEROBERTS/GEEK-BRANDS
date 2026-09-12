@@ -1,8 +1,12 @@
 // src/components/Contact/ContactPage.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaGoogle, FaLock, FaTimes } from 'react-icons/fa';
 import { supabase } from '../../lib/supabase';
 import { useData } from '../../context/DataContext';
 import styles from './ContactPage.module.css';
+
+const STORAGE_KEY = 'gb_pending_order';
 
 // ============================================================
 // VALIDATION HELPERS
@@ -18,6 +22,7 @@ const isValidName = (v) => v.trim().length >= 2;
 
 const ContactPage = () => {
   const { settings, services = [] } = useData();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,24 +42,59 @@ const ContactPage = () => {
   const [uploadError, setUploadError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
+  const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const [submitting, setSubmitting] = useState(false);
   const [successRef, setSuccessRef] = useState(null);
   const [successName, setSuccessName] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // AUTO-FILL
+  // ===== CHECK AUTH + RESTORE DRAFT =====
   useEffect(() => {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      try {
+        const saved = JSON.parse(raw);
+        setFormData((prev) => ({ ...prev, ...saved, artwork: null }));
+        if (saved.artworkUrl) setArtworkUrl(saved.artworkUrl);
+      } catch (e) {
+        console.warn('Bad draft', e);
+      }
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setAuthChecked(true);
       if (session?.user) {
         setFormData((prev) => ({
           ...prev,
-          email: session.user.email || prev.email,
-          name: session.user.user_metadata?.full_name || prev.name
+          email: prev.email || session.user.email || '',
+          name:
+            prev.name ||
+            session.user.user_metadata?.full_name ||
+            session.user.user_metadata?.name ||
+            ''
         }));
       }
     });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
+
+  // ===== SAVE DRAFT =====
+  useEffect(() => {
+    if (!authChecked) return;
+    if (user && submitting) return;
+    const draft = { ...formData, artwork: null, artworkUrl };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+  }, [formData, artworkUrl, authChecked, user, submitting]);
 
   // VALIDATION
   const validateField = (name, value) => {
@@ -203,6 +243,14 @@ const ContactPage = () => {
       return;
     }
 
+    // 🚫 NOT LOGGED IN → redirect to login (like OrderPage)
+    if (!user) {
+      const draft = { ...formData, artwork: null, artworkUrl };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+      setShowLoginModal(true);
+      return;
+    }
+
     setSubmitting(true);
 
     const bookingRef = generateBookingRef();
@@ -229,12 +277,14 @@ const ContactPage = () => {
     setSubmitting(false);
 
     if (insertError) {
+      console.error('Insert error:', insertError);
       setError('Could not submit your order. Please try again.');
       return;
     }
 
     setSuccessName(customerName);
     setSuccessRef(bookingRef);
+    localStorage.removeItem(STORAGE_KEY);
     setFieldErrors({});
 
     const { data: { session } } = await supabase.auth.getSession();
@@ -253,6 +303,23 @@ const ContactPage = () => {
     setArtworkUrl('');
     const input = document.getElementById('artwork-input');
     if (input) input.value = '';
+  };
+
+  // ===== LOGIN HANDLERS =====
+  const handleGoogle = async () => {
+    const draft = { ...formData, artwork: null, artworkUrl };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/contact` }
+    });
+    if (error) alert('Google sign-in failed: ' + error.message);
+  };
+
+  const handleEmailLogin = () => {
+    const draft = { ...formData, artwork: null, artworkUrl };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+    navigate('/login?redirect=/contact');
   };
 
   const closeSuccess = () => {
@@ -302,6 +369,12 @@ const ContactPage = () => {
         <div className={styles.contactContent}>
           <div className={styles.orderForm}>
             <h3>Tell us what you need</h3>
+
+            {user && (
+              <div className={styles.loggedInBanner}>
+                ✅ Signed in as <strong>{user.email}</strong>
+              </div>
+            )}
 
             {error && <div className={styles.errorBox}>❌ {error}</div>}
 
@@ -555,6 +628,83 @@ const ContactPage = () => {
         </div>
       </div>
 
+      {/* LOGIN MODAL */}
+      {showLoginModal && (
+        <div
+          className={styles.successOverlay}
+          onClick={() => setShowLoginModal(false)}
+        >
+          <div
+            className={styles.successModal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className={styles.closeModalBtn}
+              onClick={() => setShowLoginModal(false)}
+              aria-label="Close"
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                width: 32,
+                height: 32,
+                padding: 0,
+                borderRadius: '50%',
+                background: '#f5f5f5'
+              }}
+            >
+              <FaTimes />
+            </button>
+
+            <div className={styles.successIconWrap}>
+              <div
+                className={styles.successIcon}
+                style={{ background: 'linear-gradient(135deg, #ad1380, #df006e)' }}
+              >
+                <FaLock />
+              </div>
+            </div>
+
+            <h2 className={styles.successTitle}>Sign in to submit your order</h2>
+            <p className={styles.successSubtitle}>
+              Your details are <strong>saved</strong>. Log in to finish submitting — we'll bring you right back.
+            </p>
+
+            <div className={styles.successActions} style={{ flexDirection: 'column' }}>
+              <button
+                type="button"
+                onClick={handleGoogle}
+                className={styles.trackBtn}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.6rem',
+                  background: '#fff',
+                  color: '#1a1a1a',
+                  border: '2px solid #e7e7e7'
+                }}
+              >
+                <FaGoogle style={{ color: '#4285f4' }} /> Continue with Google
+              </button>
+              <button
+                type="button"
+                onClick={handleEmailLogin}
+                className={styles.trackBtn}
+              >
+                Continue with Email
+              </button>
+            </div>
+
+            <p className={styles.refHint} style={{ marginTop: '1rem' }}>
+              🔒 We only use your account to track your orders.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* SUCCESS MODAL */}
       {successRef && (
         <div className={styles.successOverlay} onClick={closeSuccess}>
           <div
