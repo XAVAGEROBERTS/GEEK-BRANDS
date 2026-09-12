@@ -59,7 +59,7 @@ const HomePage = () => {
 
             {user ? (
               <Link to="/manage" className={styles.barButton}>
-                Check In
+                Sign In
               </Link>
             ) : (
               <Link to="/login" className={styles.barButton}>
@@ -68,7 +68,7 @@ const HomePage = () => {
             )}
 
             <Link to="/manage" className={styles.barButton}>
-              Manage Booking
+              Track your orders
             </Link>
           </div>
         </div>
