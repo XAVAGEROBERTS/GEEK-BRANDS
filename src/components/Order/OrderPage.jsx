@@ -107,20 +107,22 @@ const OrderPage = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="budget">Budget Range</label>
-                  <select
-                    id="budget"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select budget range</option>
-                    <option value="10k-50k">KES 10,000 - 50,000</option>
-                    <option value="50k-100k">KES 50,000 - 100,000</option>
-                    <option value="100k-200k">KES 100,000 - 200,000</option>
-                    <option value="200k+">KES 200,000+</option>
-                  </select>
-                </div>
+  <label htmlFor="budget">Budget Range (UGX)</label>
+  <select
+    id="budget"
+    name="budget"
+    value={formData.budget}
+    onChange={handleChange}
+  >
+    <option value="">Select budget range</option>
+    <option value="under-100k">Under UGX 100,000</option>
+    <option value="100k-500k">UGX 100,000 - 500,000</option>
+    <option value="500k-1m">UGX 500,000 - 1,000,000</option>
+    <option value="1m-5m">UGX 1,000,000 - 5,000,000</option>
+    <option value="5m+">UGX 5,000,000+</option>
+    <option value="not-sure">Not sure yet</option>
+  </select>
+</div>
                 <div className={styles.formGroup}>
                   <label htmlFor="timeline">Expected Timeline</label>
                   <select

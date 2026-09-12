@@ -1,11 +1,12 @@
-/* ===== SERVICES PREVIEW - ENHANCED SPACING ===== */
+/* src/components/Home/ServicesPreview.module.css */
+
 .servicesPreview {
-  padding: 7rem 1.5rem 4rem;
-  margin-top: 3rem;
+  padding: 6rem 0 4rem;
+  margin-top: 2rem;
   position: relative;
+  overflow: hidden;
 }
 
-/* Decorative top border with gradient */
 .servicesPreview::before {
   content: '';
   display: block;
@@ -16,134 +17,280 @@
   margin: 0 auto 3rem;
 }
 
-/* Optional: Subtle background pattern */
-.servicesPreview::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(173, 19, 128, 0.02) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;  /* Increased gap */
+/* ============================================================
+   CAROUSEL
+   ============================================================ */
+.carouselWrap {
   position: relative;
-  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
 }
 
-.serviceCard {
-  background: #fff;
-  padding: 2.5rem 2rem;
+.track {
+  display: flex;
+  gap: 1.5rem;                     /* = 24px, matches CARD_GAP_PX */
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.25rem 1.5rem;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* Snap active by default; JS disables it during programmatic scroll */
+  scroll-snap-type: x mandatory;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ============================================================
+   CARD — 3 per view on desktop
+   ============================================================ */
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  /* Formula ensures exactly 3 cards + their gaps fit in the track */
+  flex: 0 0 calc((100% - (1.5rem * 2)) / 3);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.card {
+  background: var(--card-bg, #fff);
+  padding: 2rem 1.8rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.06));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--border-color, #f0f0f0);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.serviceCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
   border-color: var(--primary, #ad1380);
 }
 
-.serviceIcon {
+.cardIcon {
   width: 64px;
   height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
-.serviceCard h3 {
+.card h3 {
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: var(--text-dark, #1a1a1a);
+  color: var(--text-primary, #1a1a1a);
 }
 
-.serviceCard p {
+.card p {
   font-size: 0.9rem;
-  color: var(--text-light, #555);
+  color: var(--text-secondary, #555);
   line-height: 1.6;
+  margin: 0 0 1rem;
+  flex: 1;
 }
 
+.learnMore {
+  display: inline-block;
+  color: var(--primary, #ad1380);
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .learnMore {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   ARROWS
+   ============================================================ */
+.navArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  color: #1a1a1a;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.25s ease;
+}
+
+.navArrow:hover {
+  background: #ad1380;
+  color: #fff;
+  border-color: #ad1380;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 12px 30px rgba(173, 19, 128, 0.35);
+}
+
+.navArrowLeft { left: 0; }
+.navArrowRight { right: 0; }
+
+/* ============================================================
+   DOTS
+   ============================================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #d5d5d5;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: #ad1380;
+  opacity: 0.6;
+  transform: scale(1.2);
+}
+
+.dotActive {
+  width: 32px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ad1380, #df006e);
+  box-shadow: 0 4px 12px rgba(173, 19, 128, 0.35);
+}
+
+.dotActive:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ============================================================
+   VIEW ALL
+   ============================================================ */
 .viewAll {
   text-align: center;
-  margin-top: 3rem;  /* Increased from 2.5rem */
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-  .servicesPreview {
-    padding: 6rem 1.5rem 3rem;
-    margin-top: 2rem;
-  }
-
-  .servicesGrid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .servicesPreview::before {
-    width: 80px;
-    margin-bottom: 2.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .servicesPreview {
-    padding: 5rem 1rem 2.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .servicesPreview::before {
-    width: 60px;
-    margin-bottom: 2rem;
-  }
-
-  .viewAll {
-    margin-top: 2.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .servicesPreview {
-    padding: 4rem 1rem 2rem;
-    margin-top: 1rem;
-  }
-
-  .servicesGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .servicesPreview::before {
-    width: 50px;
-    margin-bottom: 1.5rem;
-  }
-
-  .viewAll {
-    margin-top: 2rem;
-  }
-}
-.serviceCardLink {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+  margin-top: 1rem;
 }
 
 .empty {
   text-align: center;
   padding: 3rem;
   color: #888;
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme='dark'] .card {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .card h3 { color: #f5f5f7; }
+[data-theme='dark'] .card p { color: #b8b8c0; }
+
+[data-theme='dark'] .navArrow {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .navArrow:hover {
+  background: #ad1380;
+  border-color: #ad1380;
+}
+
+[data-theme='dark'] .dot { background: #3a3a45; }
+[data-theme='dark'] .dotActive {
+  background: linear-gradient(90deg, #ad1380, #df006e);
+}
+
+/* ============================================================
+   RESPONSIVE — MUST match JS visibleCount
+   ============================================================ */
+
+/* Tablet: 2 cards visible */
+@media (max-width: 1023px) {
+  .cardLink {
+    flex: 0 0 calc((100% - 1.5rem) / 2);   /* 2 cards + 1 gap */
+  }
+}
+
+/* Mobile: 1 card visible */
+@media (max-width: 639px) {
+  .servicesPreview {
+    padding: 4rem 0 2.5rem;
+  }
+  .servicesPreview::before {
+    width: 60px;
+    margin-bottom: 2rem;
+  }
+
+  .carouselWrap {
+    padding: 0 48px;
+  }
+
+  .track {
+    gap: 1rem;
+    padding: 0.5rem 0.25rem 1.2rem;
+  }
+
+  .cardLink {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .card { padding: 1.6rem 1.4rem; }
+  .cardIcon { width: 54px; height: 54px; font-size: 1.5rem; }
+
+  .navArrow {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+  .navArrowLeft { left: 4px; }
+  .navArrowRight { right: 4px; }
+
+  .dot { width: 8px; height: 8px; }
+  .dotActive { width: 24px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .track { scroll-behavior: auto; }
+  .navArrow { transition: none; }
+  .card { transition: none; }
 }
