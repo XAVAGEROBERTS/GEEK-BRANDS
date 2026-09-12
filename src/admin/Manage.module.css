@@ -112,6 +112,7 @@
   font-weight: 600;
   margin-bottom: 0.3rem;
   font-family: 'Courier New', monospace;
+  word-break: break-all;
 }
 
 .actions {
@@ -133,6 +134,7 @@
   justify-content: center;
   transition: all 0.2s ease;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .editBtn {
   background: #e8f4fd;
@@ -235,6 +237,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  z-index: 2;
 }
 .closeBtn:hover {
   background: #f5f5f5;
@@ -245,6 +248,7 @@
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid #f0f0f0;
+  padding-right: 2.5rem;
 }
 .modalHeader h2 {
   font-size: 1.35rem;
@@ -400,7 +404,7 @@
 }
 
 /* ============================================================
-   SLUG PREVIEW — FIXED
+   SLUG PREVIEW
    ============================================================ */
 .slugPreview {
   display: flex;
@@ -435,7 +439,6 @@
   border-right: 1px solid #ddd;
 }
 
-/* Override generic .form input styles for slug */
 .slugPreview .slugInput,
 .form input.slugInput {
   flex: 1;
@@ -638,9 +641,13 @@
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #f0f0f0;
+  overflow-x: auto;              /* ✅ allow horizontal scroll on small screens */
+  -webkit-overflow-scrolling: touch;
 }
+
 .table {
   width: 100%;
+  min-width: 700px;              /* ✅ keep columns readable; enables scroll */
   border-collapse: collapse;
 }
 .table th {
@@ -653,6 +660,7 @@
   color: #888;
   font-weight: 700;
   border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
 }
 .table td {
   padding: 1rem;
@@ -681,6 +689,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .Pending {
   background: #fff4e5;
@@ -750,6 +759,8 @@
   background: var(--bg-primary, #fff);
   color: var(--text-primary, #1a1a1a);
   transition: all 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .settingsForm input::placeholder,
@@ -764,33 +775,28 @@
   box-shadow: 0 0 0 3px rgba(173, 19, 128, 0.15);
 }
 
-/* ===== DARK MODE — explicit overrides ===== */
+/* Dark mode explicit overrides */
 [data-theme='dark'] .settingsForm {
   background: #1a1a1f;
   border-color: #2a2a33;
 }
-
 [data-theme='dark'] .settingsForm h2 {
   color: #f5f5f7;
   border-bottom-color: #2a2a33;
 }
-
 [data-theme='dark'] .settingsForm label {
   color: #f5f5f7;
 }
-
 [data-theme='dark'] .settingsForm input,
 [data-theme='dark'] .settingsForm textarea {
   background: #222229;
   border-color: #2a2a33;
   color: #f5f5f7;
 }
-
 [data-theme='dark'] .settingsForm input::placeholder,
 [data-theme='dark'] .settingsForm textarea::placeholder {
   color: #6a6a75;
 }
-
 [data-theme='dark'] .settingsForm input:focus,
 [data-theme='dark'] .settingsForm textarea:focus {
   border-color: #ad1380;
@@ -956,179 +962,6 @@
 }
 
 /* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 768px) {
-  .artworkModal {
-    padding: 1.5rem 1.2rem;
-    border-radius: 14px;
-  }
-  .artworkModal h2 {
-    font-size: 1rem;
-  }
-  .artworkPreview {
-    min-height: 200px;
-    max-height: 55vh;
-    padding: 0.6rem;
-  }
-  .artworkActions {
-    flex-direction: column-reverse;
-  }
-  .downloadBtn,
-  .downloadBtnOutline {
-    width: 100%;
-  }
-}
-
-@media (max-width: 640px) {
-  .tabsNav {
-    grid-template-columns: 1fr 1fr;
-  }
-  .tabBtn strong {
-    font-size: 0.75rem;
-  }
-  .tabBtn span {
-    display: none;
-  }
-  .modalContentLarge {
-    padding: 1.5rem 1.2rem;
-  }
-  .slugPrefix {
-    font-size: 0.75rem;
-    padding: 0 0.6rem;
-  }
-  .row {
-    grid-template-columns: 1fr;
-  }
-}
-/* ============================================================
-   DARK MODE — MANAGE PAGES
-   ============================================================ */
-
-/* Dark theme header */
-[data-theme='dark'] .header h1 { color: #f5f5f7; }
-[data-theme='dark'] .header p { color: #b8b8c0; }
-
-/* Dark items/cards */
-[data-theme='dark'] .item,
-[data-theme='dark'] .modalContent,
-[data-theme='dark'] .modalContentLarge,
-[data-theme='dark'] .settingsForm,
-[data-theme='dark'] .tableWrap,
-[data-theme='dark'] .artworkModal {
-  background: #1a1a1f;
-  border-color: #2a2a33;
-  color: #f5f5f7;
-}
-
-[data-theme='dark'] .info h3 { color: #f5f5f7; }
-[data-theme='dark'] .info p { color: #b8b8c0; }
-
-/* Dark form inputs */
-[data-theme='dark'] .form input,
-[data-theme='dark'] .form textarea,
-[data-theme='dark'] .form select,
-[data-theme='dark'] .settingsForm input,
-[data-theme='dark'] .settingsForm textarea {
-  background: #222229;
-  border-color: #2a2a33;
-  color: #f5f5f7;
-}
-
-[data-theme='dark'] .form input::placeholder,
-[data-theme='dark'] .form textarea::placeholder,
-[data-theme='dark'] .settingsForm input::placeholder {
-  color: #6a6a75;
-}
-
-/* Dark slug preview */
-[data-theme='dark'] .slugPreview {
-  background: #222229;
-  border-color: #2a2a33;
-}
-
-[data-theme='dark'] .slugPrefix {
-  background: #2a2a33;
-  border-color: #3a3a45;
-  color: #b8b8c0;
-}
-
-[data-theme='dark'] .slugPreview .slugInput,
-[data-theme='dark'] .form input.slugInput {
-  color: #f5f5f7 !important;
-}
-
-/* Dark modal headers */
-[data-theme='dark'] .modalHeader {
-  border-bottom-color: #2a2a33;
-}
-[data-theme='dark'] .modalHeader h2 { color: #f5f5f7; }
-[data-theme='dark'] .modalSubtitle { color: #b8b8c0; }
-
-/* Dark tabs */
-[data-theme='dark'] .tabsNav {
-  background: #222229;
-}
-[data-theme='dark'] .tabBtn strong { color: #b8b8c0; }
-[data-theme='dark'] .tabBtn span { color: #7a7a85; }
-[data-theme='dark'] .tabActive { background: #2a2a33 !important; }
-[data-theme='dark'] .tabActive strong,
-[data-theme='dark'] .tabActive span { color: #ad1380; }
-
-/* Dark field hints */
-[data-theme='dark'] .fieldGroup label { color: #f5f5f7; }
-[data-theme='dark'] .fieldGroup small { color: #7a7a85; }
-
-/* Dark preview boxes */
-[data-theme='dark'] .previewBox {
-  background: #222229;
-  border-color: #3a3a45;
-}
-
-/* Dark table */
-[data-theme='dark'] .table th {
-  background: #222229;
-  color: #b8b8c0;
-  border-color: #2a2a33;
-}
-[data-theme='dark'] .table td {
-  border-color: #2a2a33;
-  color: #f5f5f7;
-}
-[data-theme='dark'] .table tr:hover td {
-  background: #222229;
-}
-
-/* Dark empty state */
-[data-theme='dark'] .empty {
-  background: #1a1a1f;
-  color: #7a7a85;
-}
-
-/* Dark modal backdrop */
-[data-theme='dark'] .modal {
-  background: rgba(0, 0, 0, 0.75);
-}
-
-/* Dark close button */
-[data-theme='dark'] .closeBtn { color: #7a7a85; }
-[data-theme='dark'] .closeBtn:hover {
-  background: #2a2a33;
-  color: #f5f5f7;
-}
-
-/* Dark footer actions */
-[data-theme='dark'] .formActions {
-  border-top-color: #2a2a33;
-}
-[data-theme='dark'] .cancelBtn {
-  background: #2a2a33;
-  color: #f5f5f7;
-}
-[data-theme='dark'] .cancelBtn:hover {
-  background: #3a3a45;
-}
-/* ============================================================
    SETTINGS SECTIONS
    ============================================================ */
 .settingsTabs {
@@ -1226,7 +1059,6 @@
   box-shadow: 0 8px 24px rgba(173, 19, 128, 0.15);
 }
 
-/* Mini preview */
 .themePreview {
   height: 90px;
   border-radius: 10px;
@@ -1333,8 +1165,119 @@
 }
 
 /* ============================================================
-   DARK MODE — settings tabs + theme cards
+   DARK MODE — MANAGE PAGES
    ============================================================ */
+[data-theme='dark'] .header h1 { color: #f5f5f7; }
+[data-theme='dark'] .header p { color: #b8b8c0; }
+
+[data-theme='dark'] .item,
+[data-theme='dark'] .modalContent,
+[data-theme='dark'] .modalContentLarge,
+[data-theme='dark'] .settingsForm,
+[data-theme='dark'] .tableWrap,
+[data-theme='dark'] .artworkModal {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .info h3 { color: #f5f5f7; }
+[data-theme='dark'] .info p { color: #b8b8c0; }
+
+[data-theme='dark'] .form input,
+[data-theme='dark'] .form textarea,
+[data-theme='dark'] .form select,
+[data-theme='dark'] .settingsForm input,
+[data-theme='dark'] .settingsForm textarea {
+  background: #222229;
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .form input::placeholder,
+[data-theme='dark'] .form textarea::placeholder,
+[data-theme='dark'] .settingsForm input::placeholder {
+  color: #6a6a75;
+}
+
+[data-theme='dark'] .slugPreview {
+  background: #222229;
+  border-color: #2a2a33;
+}
+
+[data-theme='dark'] .slugPrefix {
+  background: #2a2a33;
+  border-color: #3a3a45;
+  color: #b8b8c0;
+}
+
+[data-theme='dark'] .slugPreview .slugInput,
+[data-theme='dark'] .form input.slugInput {
+  color: #f5f5f7 !important;
+}
+
+[data-theme='dark'] .modalHeader {
+  border-bottom-color: #2a2a33;
+}
+[data-theme='dark'] .modalHeader h2 { color: #f5f5f7; }
+[data-theme='dark'] .modalSubtitle { color: #b8b8c0; }
+
+[data-theme='dark'] .tabsNav {
+  background: #222229;
+}
+[data-theme='dark'] .tabBtn strong { color: #b8b8c0; }
+[data-theme='dark'] .tabBtn span { color: #7a7a85; }
+[data-theme='dark'] .tabActive { background: #2a2a33 !important; }
+[data-theme='dark'] .tabActive strong,
+[data-theme='dark'] .tabActive span { color: #ad1380; }
+
+[data-theme='dark'] .fieldGroup label { color: #f5f5f7; }
+[data-theme='dark'] .fieldGroup small { color: #7a7a85; }
+
+[data-theme='dark'] .previewBox {
+  background: #222229;
+  border-color: #3a3a45;
+}
+
+[data-theme='dark'] .table th {
+  background: #222229;
+  color: #b8b8c0;
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .table td {
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .table tr:hover td {
+  background: #222229;
+}
+
+[data-theme='dark'] .empty {
+  background: #1a1a1f;
+  color: #7a7a85;
+}
+
+[data-theme='dark'] .modal {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+[data-theme='dark'] .closeBtn { color: #7a7a85; }
+[data-theme='dark'] .closeBtn:hover {
+  background: #2a2a33;
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .formActions {
+  border-top-color: #2a2a33;
+}
+[data-theme='dark'] .cancelBtn {
+  background: #2a2a33;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .cancelBtn:hover {
+  background: #3a3a45;
+}
+
 [data-theme='dark'] .settingsTabs {
   background: #222229;
 }
@@ -1373,18 +1316,710 @@
   color: #7a7a85;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-  .themeOptions {
-    grid-template-columns: 1fr;
+/* ============================================================
+   RESPONSIVE — 768px (tablet)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Header */
+  .header {
+    margin-bottom: 1.5rem;
   }
+  .header h1 {
+    font-size: 1.35rem;
+  }
+  .header p {
+    font-size: 0.85rem;
+  }
+
+  /* Item cards */
+  .item {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    padding: 0.85rem;
+  }
+  .thumb {
+    width: 80px;
+    height: 60px;
+  }
+  .thumbRound {
+    width: 50px;
+    height: 50px;
+  }
+  .serviceIconBox {
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+
+  /* Actions move to their own row */
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.3rem;
+  }
+
+  /* Artwork modal */
+  .artworkModal {
+    padding: 1.5rem 1.2rem;
+    border-radius: 14px;
+  }
+  .artworkModal h2 {
+    font-size: 1rem;
+  }
+  .artworkPreview {
+    min-height: 200px;
+    max-height: 55vh;
+    padding: 0.6rem;
+  }
+  .artworkActions {
+    flex-direction: column-reverse;
+  }
+  .downloadBtn,
+  .downloadBtnOutline {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 640px (small tablet / large phone)
+   ============================================================ */
+@media (max-width: 640px) {
+  /* Form modal */
+  .modal {
+    padding: 1rem;
+    align-items: flex-end;
+  }
+  .modalContent,
+  .modalContentLarge {
+    padding: 1.5rem 1.2rem;
+    border-radius: 14px;
+    max-height: 90vh;
+  }
+  .modalContentLarge {
+    max-width: 100%;
+  }
+
+  /* Form rows → single column */
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Form */
+  .form label {
+    font-size: 0.78rem;
+  }
+  .form input,
+  .form textarea,
+  .form select {
+    font-size: 0.88rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  /* Slug */
+  .slugPrefix {
+    font-size: 0.72rem;
+    padding: 0 0.5rem;
+  }
+  .slugPreview .slugInput,
+  .form input.slugInput {
+    font-size: 0.85rem;
+    padding: 0.65rem 0.7rem !important;
+  }
+
+  /* Tabs in modal */
+  .tabsNav {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .tabBtn {
+    padding: 0.6rem 0.7rem;
+  }
+  .tabBtn strong {
+    font-size: 0.75rem;
+  }
+  .tabBtn span {
+    display: none;
+  }
+
+  /* Form actions stacked */
+  .formActions {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+  .formActions .cancelBtn,
+  .formActions .submitBtn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Settings tabs */
   .settingsTab {
     min-width: auto;
     flex: 1 1 auto;
-    font-size: 0.75rem;
-    padding: 0.65rem 0.7rem;
+    font-size: 0.72rem;
+    padding: 0.55rem 0.6rem;
+    gap: 0.35rem;
   }
   .settingsTab span {
     display: none;
+  }
+
+  /* Theme options */
+  .themeOptions {
+    grid-template-columns: 1fr;
+  }
+
+  /* Settings form */
+  .settingsForm {
+    padding: 1.3rem 1rem;
+    border-radius: 14px;
+  }
+  .settingsForm h2 {
+    font-size: 1rem;
+    margin-top: 1.2rem;
+  }
+  .settingsForm label {
+    font-size: 0.78rem;
+  }
+  .settingsForm input,
+  .settingsForm textarea {
+    font-size: 0.88rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  /* Header */
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  .addBtn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Item cards — tighter */
+  .item {
+    padding: 0.75rem;
+    gap: 0.7rem;
+  }
+  .info h3 {
+    font-size: 0.92rem;
+  }
+  .info p {
+    font-size: 0.78rem;
+  }
+
+  /* Table — smaller font for phone */
+  .table {
+    min-width: 640px;
+  }
+  .table th {
+    font-size: 0.7rem;
+    padding: 0.75rem 0.8rem;
+  }
+  .table td {
+    font-size: 0.82rem;
+    padding: 0.8rem;
+  }
+
+  /* Preview images */
+  .preview {
+    height: 120px;
+  }
+  .previewRound {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 480px (small phone)
+   ============================================================ */
+@media (max-width: 480px) {
+  /* Header stacks */
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+  .header h1 {
+    font-size: 1.15rem;
+  }
+  .header p {
+    font-size: 0.8rem;
+  }
+  .addBtn {
+    align-self: flex-start;
+    padding: 0.55rem 1rem;
+    font-size: 0.78rem;
+  }
+
+  /* Item cards — tighter */
+  .item {
+    padding: 0.7rem;
+    gap: 0.6rem;
+  }
+  .thumb {
+    width: 70px;
+    height: 50px;
+  }
+  .thumbRound {
+    width: 44px;
+    height: 44px;
+  }
+  .serviceIconBox {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .info h3 {
+    font-size: 0.88rem;
+  }
+  .info p {
+    font-size: 0.72rem;
+  }
+  .badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.55rem;
+  }
+
+  /* Action buttons — smaller */
+  .editBtn,
+  .deleteBtn,
+  .viewBtn {
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+  }
+  .actions {
+    gap: 0.4rem;
+  }
+
+  /* Form modal full-screen */
+  .modal {
+    padding: 0.5rem;
+  }
+  .modalContent,
+  .modalContentLarge {
+    padding: 1.2rem 1rem;
+    border-radius: 12px;
+  }
+  .modalHeader {
+    padding-right: 2rem;
+    margin-bottom: 1rem;
+  }
+  .modalHeader h2 {
+    font-size: 1.1rem;
+  }
+  .modalSubtitle {
+    font-size: 0.78rem;
+  }
+
+  /* Close button */
+  .closeBtn {
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+
+  /* Form inputs */
+  .form label {
+    font-size: 0.75rem;
+  }
+  .form input,
+  .form textarea,
+  .form select {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 7px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Field groups */
+  .fieldGroup label {
+    font-size: 0.78rem;
+  }
+  .fieldGroup small {
+    font-size: 0.7rem;
+  }
+
+  /* Slug — smaller prefix */
+  .slugPrefix {
+    font-size: 0.7rem;
+    padding: 0 0.4rem;
+  }
+  .slugPreview .slugInput,
+  .form input.slugInput {
+    font-size: 0.82rem;
+    padding: 0.6rem 0.6rem !important;
+  }
+
+  /* Icon row */
+  .iconPreview {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+  }
+
+  /* Color row */
+  .colorPicker {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Tabs in modal */
+  .tabsNav {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    padding: 0.3rem;
+    border-radius: 10px;
+  }
+  .tabBtn {
+    padding: 0.55rem 0.6rem;
+    gap: 0.1rem;
+  }
+  .tabBtn strong {
+    font-size: 0.7rem;
+  }
+
+  /* Preview box */
+  .previewBox {
+    padding: 0.8rem;
+  }
+  .previewHero {
+    padding: 1rem 0.9rem;
+  }
+  .previewIcon {
+    font-size: 1.6rem;
+  }
+  .previewHero h3 {
+    font-size: 0.92rem;
+  }
+  .previewHero p {
+    font-size: 0.78rem;
+  }
+  .previewBtn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.78rem;
+  }
+
+  /* Settings tabs */
+  .settingsTabs {
+    padding: 0.3rem;
+    gap: 0.3rem;
+    border-radius: 10px;
+  }
+  .settingsTab {
+    padding: 0.5rem 0.55rem;
+    font-size: 0.7rem;
+  }
+
+  /* Theme cards */
+  .themePreview {
+    height: 70px;
+  }
+  .themeLabel strong {
+    font-size: 0.82rem;
+  }
+  .themeLabel span {
+    font-size: 0.68rem;
+  }
+  .themeCheck {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.5rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  /* Artwork */
+  .artworkModal {
+    padding: 1.2rem 1rem;
+    border-radius: 12px;
+  }
+  .artworkModal h2 {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+  .artworkPreview {
+    min-height: 180px;
+    max-height: 50vh;
+    padding: 0.5rem;
+  }
+  .artworkPreview img {
+    max-height: 45vh;
+  }
+  .pdfFrame {
+    height: 50vh;
+  }
+
+  /* Empty */
+  .empty {
+    padding: 2rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 380px (very small phone)
+   ============================================================ */
+@media (max-width: 380px) {
+  .header h1 {
+    font-size: 1.05rem;
+  }
+  .addBtn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.72rem;
+  }
+
+  .info h3 {
+    font-size: 0.82rem;
+  }
+  .info p {
+    font-size: 0.68rem;
+  }
+
+  .editBtn,
+  .deleteBtn,
+  .viewBtn {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+  }
+
+  .modalContent,
+  .modalContentLarge {
+    padding: 1rem 0.8rem;
+  }
+
+  .form input,
+  .form textarea,
+  .form select {
+    font-size: 0.8rem;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .tabBtn strong {
+    font-size: 0.65rem;
+  }
+
+  .settingsTab {
+    font-size: 0.65rem;
+    padding: 0.45rem 0.5rem;
+  }
+}
+/* ============================================================
+   ORDER CARD VIEW — hidden on desktop, shown on mobile
+   ============================================================ */
+.ordersCards {
+  display: none;                  /* hidden on desktop */
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.orderCard {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Header row */
+.orderCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.orderRefBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.orderRefLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  font-weight: 700;
+}
+
+.orderRef {
+  font-size: 1rem;
+  color: #1a1a1a;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+  font-weight: 800;
+}
+
+/* Generic row */
+.orderCardRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.orderCardLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 700;
+}
+
+.orderCardValue {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  word-break: break-word;
+}
+
+.orderCardValue strong {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.orderCardValue small {
+  font-size: 0.78rem;
+  color: #888;
+  font-weight: 400;
+}
+
+/* Two-column row */
+.orderCardTwoCols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Actions row */
+.orderCardActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.orderCardEditBtn,
+.orderCardDeleteBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.orderCardEditBtn {
+  background: #e8f4fd;
+  color: #2d9cdb;
+}
+.orderCardEditBtn:hover {
+  background: #2d9cdb;
+  color: #fff;
+}
+
+.orderCardDeleteBtn {
+  background: #fff3f3;
+  color: #e74c3c;
+}
+.orderCardDeleteBtn:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* Artwork button row (reused in card + edit modal) */
+.artworkBtnRow {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   DARK MODE — order cards
+   ============================================================ */
+[data-theme='dark'] .orderCard {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .orderCardHeader {
+  border-bottom-color: #2a2a33;
+}
+[data-theme='dark'] .orderRef {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .orderCardValue {
+  color: #b8b8c0;
+}
+[data-theme='dark'] .orderCardValue strong {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .orderCardValue small {
+  color: #7a7a85;
+}
+[data-theme='dark'] .orderCardActions {
+  border-top-color: #2a2a33;
+}
+
+/* ============================================================
+   RESPONSIVE — switch to cards below 768px
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Hide the table, show the card view */
+  .tableWrap {
+    display: none;
+  }
+  .ordersCards {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .orderCard {
+    padding: 0.85rem;
+    gap: 0.65rem;
+  }
+  .orderRef {
+    font-size: 0.92rem;
+  }
+  .orderCardValue {
+    font-size: 0.85rem;
+  }
+  .orderCardTwoCols {
+    gap: 0.6rem;
+  }
+  .orderCardEditBtn,
+  .orderCardDeleteBtn {
+    padding: 0.55rem 0.8rem;
+    font-size: 0.78rem;
   }
 }

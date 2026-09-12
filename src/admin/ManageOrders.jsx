@@ -17,7 +17,7 @@ const ManageOrders = () => {
   const [artworkView, setArtworkView] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ===== INITIAL LOAD =====
+  // Initial load
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
@@ -27,10 +27,9 @@ const ManageOrders = () => {
     fetchOrders();
   }, []);
 
-  // ===== AUTO-REFRESH WHEN NEW ORDER ARRIVES =====
+  // Auto-refresh when new order arrives
   useEffect(() => {
     if (lastEvent?.type === 'new_order') {
-      // Refresh the orders list without showing the skeleton
       loadOrders();
     }
   }, [lastEvent]);
@@ -76,7 +75,7 @@ const ManageOrders = () => {
 
   const closeArtwork = () => setArtworkView(null);
 
-  // ===== REAL DOWNLOAD — saves to Downloads folder =====
+  // Real download
   const downloadFile = async (url, filename) => {
     if (!url) return alert('No file URL provided.');
 
@@ -132,7 +131,7 @@ const ManageOrders = () => {
   };
 
   return (
-    <div>
+    <div className={styles.page}>
       <div className={styles.header}>
         <div>
           <h1>Orders</h1>
@@ -142,8 +141,8 @@ const ManageOrders = () => {
 
       {/* EDIT MODAL */}
       {editing && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
+        <div className={styles.modal} onClick={closeForm}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <button onClick={closeForm} className={styles.closeBtn}><FaTimes /></button>
             <h2>Update Order {form.booking_ref || form.customer}</h2>
 
@@ -172,7 +171,7 @@ const ManageOrders = () => {
               {form.artwork_url && (
                 <div className={styles.artworkBlock}>
                   <label>Customer Artwork</label>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <div className={styles.artworkBtnRow}>
                     <button
                       type="button"
                       onClick={() => openArtwork(form)}
@@ -240,14 +239,15 @@ const ManageOrders = () => {
         </div>
       )}
 
-      {/* ORDERS TABLE */}
+      {/* ORDERS — table on desktop, cards on mobile */}
       {loading ? (
         <SkeletonTable rows={5} />
+      ) : orders.length === 0 ? (
+        <p className={styles.empty}>No orders yet. New orders appear here.</p>
       ) : (
-        <div className={styles.tableWrap}>
-          {orders.length === 0 ? (
-            <p className={styles.empty}>No orders yet. New orders appear here.</p>
-          ) : (
+        <>
+          {/* ===== DESKTOP / TABLET: TABLE ===== */}
+          <div className={styles.tableWrap}>
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -280,7 +280,7 @@ const ManageOrders = () => {
                     <td>{o.deadline || '—'}</td>
                     <td>
                       {o.artwork_url ? (
-                        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                        <div className={styles.artworkBtnRow}>
                           <button
                             onClick={() => openArtwork(o)}
                             className={styles.artworkBtn}
@@ -310,8 +310,96 @@ const ManageOrders = () => {
                 ))}
               </tbody>
             </table>
-          )}
-        </div>
+          </div>
+
+          {/* ===== MOBILE: CARD LIST ===== */}
+          <div className={styles.ordersCards}>
+            {orders.map((o) => (
+              <div key={o.id} className={styles.orderCard}>
+                {/* Header */}
+                <div className={styles.orderCardHeader}>
+                  <div className={styles.orderRefBlock}>
+                    <span className={styles.orderRefLabel}>Ref</span>
+                    <strong className={styles.orderRef}>
+                      {o.booking_ref || '—'}
+                    </strong>
+                  </div>
+                  <span className={`${styles.status} ${styles[o.status?.replace(/\s/g, '')] || ''}`}>
+                    {o.status}
+                  </span>
+                </div>
+
+                {/* Customer */}
+                <div className={styles.orderCardRow}>
+                  <span className={styles.orderCardLabel}>Customer</span>
+                  <div className={styles.orderCardValue}>
+                    <strong>{o.customer}</strong>
+                    {o.phone && <small>{o.phone}</small>}
+                  </div>
+                </div>
+
+                {/* Service */}
+                <div className={styles.orderCardRow}>
+                  <span className={styles.orderCardLabel}>Service</span>
+                  <span className={styles.orderCardValue}>{o.service || '—'}</span>
+                </div>
+
+                {/* Progress + Deadline */}
+                <div className={styles.orderCardTwoCols}>
+                  <div className={styles.orderCardRow}>
+                    <span className={styles.orderCardLabel}>Progress</span>
+                    <span className={styles.orderCardValue}>{o.progress || 0}%</span>
+                  </div>
+                  <div className={styles.orderCardRow}>
+                    <span className={styles.orderCardLabel}>Deadline</span>
+                    <span className={styles.orderCardValue}>{o.deadline || '—'}</span>
+                  </div>
+                </div>
+
+                {/* Artwork */}
+                {o.artwork_url && (
+                  <div className={styles.orderCardRow}>
+                    <span className={styles.orderCardLabel}>Artwork</span>
+                    <div className={styles.artworkBtnRow}>
+                      <button
+                        onClick={() => openArtwork(o)}
+                        className={styles.artworkBtn}
+                        title="View artwork"
+                      >
+                        {isImage(o.artwork_url) ? '🖼️ View' : '📄 Open'}
+                      </button>
+                      <button
+                        onClick={() =>
+                          downloadFile(o.artwork_url, `artwork-${o.booking_ref || o.customer}`)
+                        }
+                        className={styles.artworkBtn}
+                        title="Download"
+                      >
+                        ⬇️ Download
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className={styles.orderCardActions}>
+                  <button
+                    onClick={() => openEdit(o)}
+                    className={styles.orderCardEditBtn}
+                  >
+                    <FaEdit /> Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(o.id)}
+                    className={styles.orderCardDeleteBtn}
+                  >
+                    <FaTrash /> Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
