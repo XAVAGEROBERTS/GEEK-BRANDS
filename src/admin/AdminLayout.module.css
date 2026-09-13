@@ -12,7 +12,7 @@
 }
 
 /* ============================================================
-   SIDEBAR — theme-aware
+   SIDEBAR
    ============================================================ */
 .sidebar {
   background: #ffffff;
@@ -34,7 +34,6 @@
   margin-bottom: 1rem;
   transition: border-color 0.3s ease;
 }
-
 .brand span {
   display: block;
   color: #1a1a1a;
@@ -42,7 +41,6 @@
   font-size: 1.1rem;
   transition: color 0.3s ease;
 }
-
 .brand small {
   color: #ad1380;
   font-size: 0.7rem;
@@ -71,19 +69,17 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  position: relative;
 }
-
 .link:hover {
   background: #faf5fb;
   color: #ad1380;
 }
-
 .link.active {
   background: #ad1380;
   color: #fff;
   box-shadow: 0 4px 14px rgba(173, 19, 128, 0.3);
 }
-
 .link.active:hover {
   background: #8f0f6a;
   color: #fff;
@@ -116,12 +112,10 @@
   font-family: inherit;
   transition: all 0.2s ease;
 }
-
 .themeToggle:hover {
   background: #f5e8f3;
   transform: translateX(2px);
 }
-
 .themeToggle svg {
   font-size: 1rem;
   color: #ad1380;
@@ -144,7 +138,6 @@
   font-family: inherit;
   transition: all 0.2s ease;
 }
-
 .logout:hover {
   background: #fff3f3;
   color: #c0392b;
@@ -159,121 +152,7 @@
 }
 
 /* ============================================================
-   DARK MODE
-   ============================================================ */
-[data-theme='dark'] .layout {
-  background: #0f0f12;
-}
-
-[data-theme='dark'] .sidebar {
-  background: #1a1a1f;
-  border-right-color: #2a2a33;
-  color: #b8b8c0;
-}
-
-[data-theme='dark'] .brand {
-  border-bottom-color: #2a2a33;
-}
-
-[data-theme='dark'] .brand span {
-  color: #f5f5f7;
-}
-
-[data-theme='dark'] .brand small {
-  color: #ad1380;
-}
-
-[data-theme='dark'] .link {
-  color: #b8b8c0;
-}
-
-[data-theme='dark'] .link:hover {
-  background: #2a2a33;
-  color: #fff;
-}
-
-[data-theme='dark'] .link.active {
-  background: #ad1380;
-  color: #fff;
-}
-
-[data-theme='dark'] .link.active:hover {
-  background: #8f0f6a;
-}
-
-[data-theme='dark'] .bottom {
-  border-top-color: #2a2a33;
-}
-
-/* Dark theme toggle */
-[data-theme='dark'] .themeToggle {
-  background: #2a2a33;
-  border-color: #3a3a45;
-  color: #f5f5f7;
-}
-
-[data-theme='dark'] .themeToggle:hover {
-  background: #33334a;
-}
-
-[data-theme='dark'] .themeToggle svg {
-  color: #f5c451;
-}
-
-/* Dark logout */
-[data-theme='dark'] .logout {
-  color: #ff6b6b;
-}
-
-[data-theme='dark'] .logout:hover {
-  background: #2a1a1a;
-  color: #ff8080;
-}
-
-/* Dark content */
-[data-theme='dark'] .content {
-  background: #0f0f12;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 768px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: relative;
-    height: auto;
-  }
-
-  .nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow-x: auto;
-  }
-
-  .link span {
-    display: none;
-  }
-
-  .link {
-    justify-content: center;
-    padding: 0.7rem;
-  }
-
-  .themeToggle span,
-  .logout span {
-    display: inline;
-  }
-
-  .content {
-    padding: 1rem;
-  }
-}
-/* ============================================================
-   NOTIFICATION BADGE on sidebar links
+   NOTIFICATION BADGE
    ============================================================ */
 .badge {
   margin-left: auto;
@@ -305,6 +184,312 @@
   }
 }
 
-[data-theme='dark'] .badge {
-  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.7);
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme='dark'] .layout { background: #0f0f12; }
+[data-theme='dark'] .sidebar {
+  background: #1a1a1f;
+  border-right-color: #2a2a33;
+  color: #b8b8c0;
+}
+[data-theme='dark'] .brand { border-bottom-color: #2a2a33; }
+[data-theme='dark'] .brand span { color: #f5f5f7; }
+[data-theme='dark'] .brand small { color: #ad1380; }
+
+[data-theme='dark'] .link { color: #b8b8c0; }
+[data-theme='dark'] .link:hover { background: #2a2a33; color: #fff; }
+[data-theme='dark'] .link.active { background: #ad1380; color: #fff; }
+[data-theme='dark'] .link.active:hover { background: #8f0f6a; }
+
+[data-theme='dark'] .bottom { border-top-color: #2a2a33; }
+
+[data-theme='dark'] .themeToggle {
+  background: #2a2a33;
+  border-color: #3a3a45;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .themeToggle:hover { background: #33334a; }
+[data-theme='dark'] .themeToggle svg { color: #f5c451; }
+
+[data-theme='dark'] .logout { color: #ff6b6b; }
+[data-theme='dark'] .logout:hover { background: #2a1a1a; color: #ff8080; }
+
+[data-theme='dark'] .content { background: #0f0f12; }
+[data-theme='dark'] .badge { box-shadow: 0 2px 8px rgba(231, 76, 60, 0.7); }
+
+/* ============================================================
+   RESPONSIVE — 1024px (small tablet)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 200px 1fr;
+  }
+  .sidebar {
+    padding: 1.25rem 0.75rem;
+  }
+  .link {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  .content {
+    padding: 1.5rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 768px (tablet / mobile)
+   ============================================================ */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: auto;
+    padding: 0.85rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid #ececec;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+  }
+  [data-theme='dark'] .sidebar {
+    border-bottom-color: #2a2a33;
+  }
+
+  /* Brand row */
+  .brand {
+    padding: 0 0.25rem 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .brand span { font-size: 1rem; }
+  .brand small { font-size: 0.65rem; letter-spacing: 1.5px; }
+
+  /* ===== NAV: wrap into rows, no horizontal scroll ===== */
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-direction: initial;
+    gap: 0.4rem;
+    overflow: visible;
+    flex: initial;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ✅ Each link is a compact vertical chip with visible label */
+  .link {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.55rem 0.35rem;
+    min-width: 0;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.15;
+    box-sizing: border-box;
+  }
+
+  /* ✅ Label stays visible */
+  .link span {
+    display: block;
+    font-size: 0.68rem;
+    line-height: 1.15;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .link svg {
+    font-size: 1.05rem;
+  }
+
+  /* Badge floats over the icon corner */
+  .badge {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    margin-left: 0;
+    min-width: 16px;
+    height: 16px;
+    font-size: 0.58rem;
+    padding: 0 0.28rem;
+  }
+
+  /* ===== BOTTOM: full-width grid row ===== */
+  .bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.4rem;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 0.75rem;
+    margin-top: 0;
+  }
+  [data-theme='dark'] .bottom {
+    border-top-color: #2a2a33;
+  }
+
+  .themeToggle,
+  .logout,
+  .bottom .link {
+    justify-content: center;
+    padding: 0.55rem 0.4rem;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    text-align: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .themeToggle svg,
+  .logout svg,
+  .bottom .link svg {
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .themeToggle span,
+  .logout span,
+  .bottom .link span {
+    font-size: 0.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 480px (small phone)
+   ============================================================ */
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .brand span { font-size: 0.95rem; }
+  .brand small { font-size: 0.6rem; }
+
+  /* Still 4 columns, tighter gaps and text */
+  .nav {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.3rem;
+  }
+
+  .link {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.62rem;
+    gap: 0.2rem;
+  }
+
+  .link span {
+    font-size: 0.6rem;
+  }
+
+  .link svg {
+    font-size: 0.95rem;
+  }
+
+  .badge {
+    min-width: 14px;
+    height: 14px;
+    font-size: 0.55rem;
+    padding: 0 0.25rem;
+  }
+
+  /* Bottom actions stay in one row */
+  .bottom {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.3rem;
+  }
+
+  .themeToggle,
+  .logout,
+  .bottom .link {
+    font-size: 0.62rem;
+    padding: 0.5rem 0.3rem;
+    gap: 0.25rem;
+  }
+
+  .themeToggle svg,
+  .logout svg,
+  .bottom .link svg {
+    font-size: 0.85rem;
+  }
+
+  .themeToggle span,
+  .logout span,
+  .bottom .link span {
+    font-size: 0.62rem;
+  }
+
+  .content {
+    padding: 0.75rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — 380px (very small phone)
+   ============================================================ */
+@media (max-width: 380px) {
+  .sidebar {
+    padding: 0.6rem 0.55rem;
+  }
+
+  .brand {
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .brand span { font-size: 0.9rem; }
+
+  /* Still 4 columns but ultra compact */
+  .nav {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+  }
+
+  .link {
+    padding: 0.45rem 0.15rem;
+    font-size: 0.58rem;
+    gap: 0.15rem;
+    border-radius: 8px;
+  }
+
+  .link span {
+    font-size: 0.55rem;
+  }
+
+  .link svg {
+    font-size: 0.85rem;
+  }
+
+  .themeToggle span,
+  .logout span,
+  .bottom .link span {
+    display: none;   /* last resort: icons only below 380px */
+  }
+
+  .themeToggle,
+  .logout,
+  .bottom .link {
+    padding: 0.5rem 0.25rem;
+    gap: 0;
+  }
+
+  .themeToggle svg,
+  .logout svg,
+  .bottom .link svg {
+    font-size: 1rem;
+  }
 }

@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // ===== LAYOUT =====
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
+import CTASection from './components/Layout/CTASection';   // ✅ new
 
 // ===== CONTEXTS =====
 import { NotificationsProvider } from './context/NotificationsContext';
@@ -69,7 +70,7 @@ function App() {
         </Route>
 
         {/* ============================================================
-            PUBLIC — with header/footer
+            PUBLIC — with header/footer + CTA band
             ============================================================ */}
         <Route
           path="*"
@@ -93,6 +94,10 @@ function App() {
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </main>
+
+              {/* ✅ CTA band sits right above the footer on every public page */}
+              <CTASection />
+
               <Footer />
             </>
           }

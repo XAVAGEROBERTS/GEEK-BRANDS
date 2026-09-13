@@ -1,11 +1,11 @@
 /* src/components/Home/ServicesPreview.module.css */
 
 /* ============================================================
-   SECTION WRAPPER — reduced top padding
+   SECTION WRAPPER
    ============================================================ */
 .servicesPreview {
-  padding: 8rem 0 4rem;          /* ✅ was 6rem — cut by 3.5rem */
-  margin-top: 0;                    /* ✅ was 2rem */
+  padding: 8rem 0 4rem;
+  margin-top: 0;
   position: relative;
   overflow: hidden;
 }
@@ -17,7 +17,7 @@
   height: 4px;
   background: linear-gradient(90deg, var(--primary, #ad1380), var(--secondary, #df006e), var(--gold, #f5a623));
   border-radius: 4px;
-  margin: 0 auto 2rem;              /* ✅ was 3rem */
+  margin: 0 auto 2rem;
 }
 
 /* ============================================================
@@ -37,7 +37,6 @@
   overflow-y: hidden;
   padding: 0.5rem 0.25rem 1.5rem;
 
-  /* Hide scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -64,16 +63,15 @@
 
 .card {
   background: var(--card-bg, #fff);
-  padding: 2rem 1.8rem;
+  padding: 0.85rem 0.85rem 1.2rem;
   border-radius: 16px;
-  text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
   border: 1px solid var(--border-color, #f0f0f0);
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -82,31 +80,46 @@
   border-color: var(--primary, #ad1380);
 }
 
-.cardIcon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+/* ============================================================
+   CARD IMAGE — dominant
+   ============================================================ */
+.cardImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+  background: #f3f3f3;
 }
 
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .cardImage img {
+  transform: scale(1.06);
+}
+
+/* ============================================================
+   CARD TEXT
+   ============================================================ */
 .card h3 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.4rem;
   color: var(--text-primary, #1a1a1a);
+  line-height: 1.3;
 }
 
 .card p {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-secondary, #555);
-  line-height: 1.6;
-  margin: 0 0 1rem;
+  line-height: 1.5;
+  margin: 0 0 0.9rem;
   flex: 1;
 }
 
@@ -115,6 +128,7 @@
   color: var(--primary, #ad1380);
   font-weight: 700;
   font-size: 0.85rem;
+  margin-top: auto;
   transition: transform 0.2s ease;
 }
 
@@ -229,6 +243,9 @@
 [data-theme='dark'] .card p {
   color: #b8b8c0;
 }
+[data-theme='dark'] .cardImage {
+  background: #222229;
+}
 
 [data-theme='dark'] .navArrow {
   background: #1a1a1f;
@@ -258,57 +275,95 @@
   }
 }
 
-/* Mobile: 1 card visible */
+/* Mobile: 2 cards visible (not 1) ✅ */
 @media (max-width: 639px) {
   .servicesPreview {
-    padding: 2rem 0 2rem;          /* ✅ was 4rem 0 2.5rem */
+    padding: 2rem 0 2rem;
   }
   .servicesPreview::before {
     width: 60px;
-    margin-bottom: 1.5rem;         /* ✅ was 2rem */
+    margin-bottom: 1.5rem;
   }
 
   .carouselWrap {
-    padding: 0 48px;
+    padding: 0 40px;
   }
 
   .track {
-    gap: 1rem;
+    gap: 1rem;                          /* ✅ matches gapPx = 16 in JS */
     padding: 0.5rem 0.25rem 1.2rem;
   }
 
+  /* ✅ 2 cards per view on mobile */
   .cardLink {
-    flex: 0 0 100%;
+    flex: 0 0 calc((100% - 1rem) / 2);
     scroll-snap-align: start;
   }
 
   .card {
-    padding: 1.6rem 1.4rem;
+    padding: 0.55rem 0.55rem 0.8rem;
+    border-radius: 14px;
   }
-  .cardIcon {
-    width: 54px;
-    height: 54px;
-    font-size: 1.5rem;
+
+  .cardImage {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .card h3 {
+    font-size: 0.78rem;
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+  }
+
+  .card p {
+    font-size: 0.66rem;
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+  }
+
+  .learnMore {
+    font-size: 0.68rem;
   }
 
   .navArrow {
-    width: 38px;
-    height: 38px;
-    font-size: 0.85rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
   }
   .navArrowLeft {
-    left: 4px;
+    left: 0;
   }
   .navArrowRight {
-    right: 4px;
+    right: 0;
   }
 
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
   }
   .dotActive {
-    width: 24px;
+    width: 20px;
+  }
+}
+
+/* Very small phones: still 2 cards but tighter */
+@media (max-width: 400px) {
+  .carouselWrap {
+    padding: 0 34px;
+  }
+
+  .card h3 {
+    font-size: 0.72rem;
+  }
+
+  .card p {
+    font-size: 0.62rem;
+  }
+
+  .learnMore {
+    font-size: 0.64rem;
   }
 }
 

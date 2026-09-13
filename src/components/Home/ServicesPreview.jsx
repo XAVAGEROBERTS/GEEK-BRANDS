@@ -6,7 +6,7 @@ import { useData } from '../../context/DataContext';
 import styles from './ServicesPreview.module.css';
 
 const AUTO_ADVANCE_MS = 4500;
-const CARD_GAP_PX = 24; // must match CSS `gap: 1.5rem`
+const CARD_GAP_PX = 24; // must match CSS `gap: 1.5rem` on desktop
 
 const ServicesPreview = () => {
   const { services = [], loading } = useData();
@@ -16,16 +16,24 @@ const ServicesPreview = () => {
   const [paused, setPaused] = useState(false);
   const [visibleCount, setVisibleCount] = useState(3);
   const [manualPauseUntil, setManualPauseUntil] = useState(0);
+  const [gapPx, setGapPx] = useState(24);
 
   const totalSlides = services.length;
 
-  // ===== HOW MANY CARDS FIT IN VIEW =====
+  // ===== HOW MANY CARDS FIT IN VIEW + TRACK GAP =====
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      if (w >= 1024) setVisibleCount(3);
-      else if (w >= 640) setVisibleCount(2);
-      else setVisibleCount(1);
+      if (w >= 1024) {
+        setVisibleCount(3);
+        setGapPx(24);       // 1.5rem
+      } else if (w >= 640) {
+        setVisibleCount(2);
+        setGapPx(24);
+      } else {
+        setVisibleCount(2); // ✅ 2 cards on mobile
+        setGapPx(16);       // 1rem matches mobile CSS gap
+      }
     };
     update();
     window.addEventListener('resize', update);
@@ -46,8 +54,8 @@ const ServicesPreview = () => {
     const firstCard = track.querySelector(`.${styles.cardLink}`);
     if (!firstCard) return null;
     const cardWidth = firstCard.getBoundingClientRect().width;
-    return { cardWidth, step: cardWidth + CARD_GAP_PX };
-  }, []);
+    return { cardWidth, step: cardWidth + gapPx };
+  }, [gapPx]);
 
   // ===== PROGRAMMATIC SCROLL TO A GIVEN INDEX =====
   const scrollToIndex = useCallback((index) => {
@@ -57,18 +65,16 @@ const ServicesPreview = () => {
 
     const target = metrics.step * index;
 
-    // Disable snap temporarily so the smooth scroll can land where we tell it
     track.style.scrollSnapType = 'none';
     track.scrollTo({ left: target, behavior: 'smooth' });
 
-    // Re-enable snap after scroll settles
     window.clearTimeout(track.__snapTimeout);
     track.__snapTimeout = window.setTimeout(() => {
       track.style.scrollSnapType = '';
     }, 700);
   }, [getCardMetrics]);
 
-  // ===== GO TO A SPECIFIC INDEX (single source of truth) =====
+  // ===== GO TO A SPECIFIC INDEX =====
   const goTo = useCallback((index) => {
     const clamped = Math.max(0, Math.min(index, maxIndex));
     setActiveIndex(clamped);
@@ -77,7 +83,6 @@ const ServicesPreview = () => {
 
   const handlePrev = () => {
     goTo(activeIndex <= 0 ? maxIndex : activeIndex - 1);
-    // Manual press pauses auto-advance briefly
     setManualPauseUntil(Date.now() + 8000);
   };
 
@@ -92,19 +97,16 @@ const ServicesPreview = () => {
   };
 
   // ===== AUTO-ADVANCE =====
-  // Uses a single interval that always advances from latest state via setActiveIndex(prev => ...)
   useEffect(() => {
     if (totalSlides === 0) return;
 
     const interval = setInterval(() => {
       const now = Date.now();
-      // Skip if paused by hover or manual action
       if (paused) return;
       if (now < manualPauseUntil) return;
 
       setActiveIndex((prev) => {
         const next = prev >= maxIndex ? 0 : prev + 1;
-        // Scroll to next without depending on state above
         const track = trackRef.current;
         const metrics = getCardMetrics();
         if (track && metrics) {
@@ -200,11 +202,12 @@ const ServicesPreview = () => {
                   className={styles.cardLink}
                 >
                   <div className={styles.card}>
-                    <div
-                      className={styles.cardIcon}
-                      style={{ background: service.color }}
-                    >
-                      <span>{service.icon}</span>
+                    <div className={styles.cardImage}>
+                      <img
+                        src={service.image_url}
+                        alt={service.title}
+                        loading="lazy"
+                      />
                     </div>
                     <h3>{service.title}</h3>
                     <p>{service.short_description}</p>

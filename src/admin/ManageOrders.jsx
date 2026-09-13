@@ -2,7 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { useData } from '../context/DataContext';
 import { useNotifications } from '../context/NotificationsContext';
-import { FaTrash, FaEdit, FaTimes, FaFileAlt, FaDownload } from 'react-icons/fa';
+import {
+  FaTrash,
+  FaEdit,
+  FaTimes,
+  FaFileAlt,
+  FaDownload,
+  FaEye,
+  FaPenNib
+} from 'react-icons/fa';
 import { SkeletonTable } from './Loaders';
 import styles from './Manage.module.css';
 
@@ -14,10 +22,10 @@ const ManageOrders = () => {
 
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({});
+  const [viewing, setViewing] = useState(null);       // ✅ new — view modal
   const [artworkView, setArtworkView] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Initial load
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
@@ -27,12 +35,14 @@ const ManageOrders = () => {
     fetchOrders();
   }, []);
 
-  // Auto-refresh when new order arrives
   useEffect(() => {
     if (lastEvent?.type === 'new_order') {
       loadOrders();
     }
   }, [lastEvent]);
+
+  const openView = (order) => setViewing(order);
+  const closeView = () => setViewing(null);
 
   const openEdit = (order) => {
     setEditing(order.id);
@@ -75,7 +85,6 @@ const ManageOrders = () => {
 
   const closeArtwork = () => setArtworkView(null);
 
-  // Real download
   const downloadFile = async (url, filename) => {
     if (!url) return alert('No file URL provided.');
 
@@ -130,6 +139,15 @@ const ManageOrders = () => {
     return /\.pdf(\?.*)?$/i.test(url);
   };
 
+  const formatDate = (d) => {
+    if (!d) return '—';
+    try {
+      return new Date(d).toLocaleString();
+    } catch {
+      return d;
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.header}>
@@ -139,7 +157,149 @@ const ManageOrders = () => {
         </div>
       </div>
 
-      {/* EDIT MODAL */}
+      {/* ============================================================
+          VIEW MODAL — read-only, all fields
+         ============================================================ */}
+      {viewing && (
+        <div className={styles.modal} onClick={closeView}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button onClick={closeView} className={styles.closeBtn}><FaTimes /></button>
+
+            <div className={styles.modalHeader}>
+              <h2>Order {viewing.booking_ref || '—'}</h2>
+              <p className={styles.modalSubtitle}>
+                Submitted {formatDate(viewing.created_at)}
+              </p>
+            </div>
+
+            <div className={styles.viewGrid}>
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Status</span>
+                <span className={`${styles.status} ${styles[viewing.status?.replace(/\s/g, '')] || ''}`}>
+                  {viewing.status || '—'}
+                </span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Progress</span>
+                <span className={styles.viewValue}>{viewing.progress || 0}%</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Customer</span>
+                <span className={styles.viewValue}>{viewing.customer || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Business</span>
+                <span className={styles.viewValue}>{viewing.business || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Phone</span>
+                <span className={styles.viewValue}>{viewing.phone || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Email</span>
+                <span className={styles.viewValue}>{viewing.email || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Service</span>
+                <span className={styles.viewValue}>{viewing.service || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Quantity</span>
+                <span className={styles.viewValue}>{viewing.quantity || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Size / Dimensions</span>
+                <span className={styles.viewValue}>{viewing.size || '—'}</span>
+              </div>
+
+              <div className={styles.viewRow}>
+                <span className={styles.viewLabel}>Deadline</span>
+                <span className={styles.viewValue}>{viewing.deadline || '—'}</span>
+              </div>
+            </div>
+
+            <div className={styles.viewBlock}>
+              <span className={styles.viewLabel}>Project Description</span>
+              <p className={styles.viewText}>{viewing.description || '—'}</p>
+            </div>
+
+            {viewing.notes && (
+              <div className={styles.viewBlock}>
+                <span className={styles.viewLabel}>Internal Notes</span>
+                <p className={styles.viewText}>{viewing.notes}</p>
+              </div>
+            )}
+
+            {/* Design for me */}
+            {viewing.design_for_me && (
+              <div className={styles.designBanner}>
+                <FaPenNib />
+                <div>
+                  <strong>Design for me</strong>
+                  <small>The customer asked us to design the artwork.</small>
+                </div>
+              </div>
+            )}
+
+            {/* Artwork */}
+            {viewing.artwork_url && (
+              <div className={styles.artworkBlock}>
+                <span className={styles.viewLabel}>Customer Artwork</span>
+                <div className={styles.artworkBtnRow}>
+                  <button
+                    type="button"
+                    onClick={() => openArtwork(viewing)}
+                    className={styles.viewArtworkBtn}
+                  >
+                    <FaFileAlt /> View
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      downloadFile(viewing.artwork_url, `artwork-${viewing.booking_ref || viewing.customer}`)
+                    }
+                    className={styles.viewArtworkBtn}
+                  >
+                    <FaDownload /> Download
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className={styles.formActions}>
+              <button
+                type="button"
+                onClick={closeView}
+                className={styles.cancelBtn}
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  closeView();
+                  openEdit(viewing);
+                }}
+                className={styles.submitBtn}
+              >
+                <FaEdit /> Edit Order
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================
+          EDIT MODAL
+         ============================================================ */}
       {editing && (
         <div className={styles.modal} onClick={closeForm}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -167,6 +327,16 @@ const ManageOrders = () => {
 
               <label>Notes</label>
               <textarea name="notes" value={form.notes || ''} onChange={handleChange} rows="3" />
+
+              {form.design_for_me && (
+                <div className={styles.designBanner}>
+                  <FaPenNib />
+                  <div>
+                    <strong>Design for me</strong>
+                    <small>The customer asked us to design the artwork.</small>
+                  </div>
+                </div>
+              )}
 
               {form.artwork_url && (
                 <div className={styles.artworkBlock}>
@@ -198,7 +368,9 @@ const ManageOrders = () => {
         </div>
       )}
 
-      {/* ARTWORK VIEWER MODAL */}
+      {/* ============================================================
+          ARTWORK VIEWER MODAL
+         ============================================================ */}
       {artworkView && (
         <div className={styles.modal} onClick={closeArtwork}>
           <div className={styles.artworkModal} onClick={(e) => e.stopPropagation()}>
@@ -239,7 +411,9 @@ const ManageOrders = () => {
         </div>
       )}
 
-      {/* ORDERS — table on desktop, cards on mobile */}
+      {/* ============================================================
+          ORDERS LIST
+         ============================================================ */}
       {loading ? (
         <SkeletonTable rows={5} />
       ) : orders.length === 0 ? (
@@ -298,13 +472,36 @@ const ManageOrders = () => {
                             ⬇️
                           </button>
                         </div>
+                      ) : o.design_for_me ? (
+                        <span className={styles.designBadge}>
+                          <FaPenNib /> Design for me
+                        </span>
                       ) : (
                         <span className={styles.noArtwork}>—</span>
                       )}
                     </td>
                     <td className={styles.actionsCell}>
-                      <button onClick={() => openEdit(o)} className={styles.editBtn}><FaEdit /></button>
-                      <button onClick={() => handleDelete(o.id)} className={styles.deleteBtn}><FaTrash /></button>
+                      <button
+                        onClick={() => openView(o)}
+                        className={styles.viewBtn}
+                        title="View details"
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        onClick={() => openEdit(o)}
+                        className={styles.editBtn}
+                        title="Edit"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(o.id)}
+                        className={styles.deleteBtn}
+                        title="Delete"
+                      >
+                        <FaTrash />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -316,7 +513,6 @@ const ManageOrders = () => {
           <div className={styles.ordersCards}>
             {orders.map((o) => (
               <div key={o.id} className={styles.orderCard}>
-                {/* Header */}
                 <div className={styles.orderCardHeader}>
                   <div className={styles.orderRefBlock}>
                     <span className={styles.orderRefLabel}>Ref</span>
@@ -329,7 +525,6 @@ const ManageOrders = () => {
                   </span>
                 </div>
 
-                {/* Customer */}
                 <div className={styles.orderCardRow}>
                   <span className={styles.orderCardLabel}>Customer</span>
                   <div className={styles.orderCardValue}>
@@ -338,13 +533,11 @@ const ManageOrders = () => {
                   </div>
                 </div>
 
-                {/* Service */}
                 <div className={styles.orderCardRow}>
                   <span className={styles.orderCardLabel}>Service</span>
                   <span className={styles.orderCardValue}>{o.service || '—'}</span>
                 </div>
 
-                {/* Progress + Deadline */}
                 <div className={styles.orderCardTwoCols}>
                   <div className={styles.orderCardRow}>
                     <span className={styles.orderCardLabel}>Progress</span>
@@ -356,33 +549,42 @@ const ManageOrders = () => {
                   </div>
                 </div>
 
-                {/* Artwork */}
-                {o.artwork_url && (
+                {(o.artwork_url || o.design_for_me) && (
                   <div className={styles.orderCardRow}>
                     <span className={styles.orderCardLabel}>Artwork</span>
-                    <div className={styles.artworkBtnRow}>
-                      <button
-                        onClick={() => openArtwork(o)}
-                        className={styles.artworkBtn}
-                        title="View artwork"
-                      >
-                        {isImage(o.artwork_url) ? '🖼️ View' : '📄 Open'}
-                      </button>
-                      <button
-                        onClick={() =>
-                          downloadFile(o.artwork_url, `artwork-${o.booking_ref || o.customer}`)
-                        }
-                        className={styles.artworkBtn}
-                        title="Download"
-                      >
-                        ⬇️ Download
-                      </button>
-                    </div>
+                    {o.artwork_url ? (
+                      <div className={styles.artworkBtnRow}>
+                        <button
+                          onClick={() => openArtwork(o)}
+                          className={styles.artworkBtn}
+                        >
+                          {isImage(o.artwork_url) ? '🖼️ View' : '📄 Open'}
+                        </button>
+                        <button
+                          onClick={() =>
+                            downloadFile(o.artwork_url, `artwork-${o.booking_ref || o.customer}`)
+                          }
+                          className={styles.artworkBtn}
+                        >
+                          ⬇️ Download
+                        </button>
+                      </div>
+                    ) : (
+                      <span className={styles.designBadge}>
+                        <FaPenNib /> Design for me
+                      </span>
+                    )}
                   </div>
                 )}
 
-                {/* Actions */}
+                {/* ✅ Three actions on mobile */}
                 <div className={styles.orderCardActions}>
+                  <button
+                    onClick={() => openView(o)}
+                    className={styles.orderCardViewBtn}
+                  >
+                    <FaEye /> View
+                  </button>
                   <button
                     onClick={() => openEdit(o)}
                     className={styles.orderCardEditBtn}
@@ -393,7 +595,7 @@ const ManageOrders = () => {
                     onClick={() => handleDelete(o.id)}
                     className={styles.orderCardDeleteBtn}
                   >
-                    <FaTrash /> Delete
+                    <FaTrash />
                   </button>
                 </div>
               </div>

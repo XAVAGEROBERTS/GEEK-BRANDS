@@ -34,7 +34,8 @@ const OrderPage = () => {
     size: '',
     deadline: '',
     description: '',
-    artwork: null
+    artwork: null,
+    designForMe: false
   });
 
   const [artworkUrl, setArtworkUrl] = useState('');
@@ -57,7 +58,12 @@ const OrderPage = () => {
     if (raw) {
       try {
         const saved = JSON.parse(raw);
-        setFormData((prev) => ({ ...prev, ...saved, artwork: null }));
+        setFormData((prev) => ({
+          ...prev,
+          ...saved,
+          artwork: null,
+          designForMe: saved.designForMe || false
+        }));
         if (saved.artworkUrl) setArtworkUrl(saved.artworkUrl);
       } catch (e) {
         console.warn('Bad draft', e);
@@ -130,7 +136,18 @@ const OrderPage = () => {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+
+    // Handle checkbox
+    if (type === 'checkbox') {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+      // If "design for me" is checked, clear any uploaded artwork
+      if (name === 'designForMe' && checked) {
+        clearArtwork();
+      }
+      return;
+    }
+
     let cleaned = value;
 
     if (name === 'name') cleaned = sanitizeName(value);
@@ -269,6 +286,7 @@ const OrderPage = () => {
         deadline: formData.deadline || null,
         description: formData.description,
         artwork_url: artworkUrl || null,
+        design_for_me: formData.designForMe,
         status: 'Pending',
         progress: 0
       }
@@ -298,14 +316,15 @@ const OrderPage = () => {
       size: '',
       deadline: '',
       description: '',
-      artwork: null
+      artwork: null,
+      designForMe: false
     });
     setArtworkUrl('');
     const input = document.getElementById('artwork-input');
     if (input) input.value = '';
   };
 
-  // ===== LOGIN HANDLERS (redirect BACK to /order) =====
+  // ===== LOGIN HANDLERS =====
   const handleGoogle = async () => {
     const draft = { ...formData, artwork: null, artworkUrl };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -355,7 +374,7 @@ const OrderPage = () => {
         </div>
 
         <div className={styles.orderContent}>
-          <div className={styles.orderFormWrap}>
+          <div className={styles.orderFormWrap} id="order-form">
             <h3>Tell us what you need</h3>
 
             {user && (
@@ -438,6 +457,7 @@ const OrderPage = () => {
                 </div>
               </div>
 
+              {/* ===== SERVICE + ARTWORK ROW ===== */}
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label>Service Required *</label>
@@ -460,6 +480,72 @@ const OrderPage = () => {
                     <span className={styles.fieldErrorMsg}>{fieldErrors.service}</span>
                   )}
                 </div>
+
+                {/* ===== ARTWORK UPLOAD (moved here) ===== */}
+                <div className={styles.formGroup}>
+                  <label>Upload artwork/logo</label>
+                  <input
+                    id="artwork-input"
+                    type="file"
+                    onChange={handleArtworkChange}
+                    accept="image/*,.pdf,.ai,.psd"
+                    disabled={uploading || formData.designForMe}
+                  />
+
+                  {uploading && (
+                    <div className={styles.uploadStatus}>⏳ Uploading...</div>
+                  )}
+
+                  {uploadError && (
+                    <div className={styles.uploadError}>❌ {uploadError}</div>
+                  )}
+
+                  {artworkUrl && !uploading && (
+                    <div className={styles.uploadPreview}>
+                      <div className={styles.uploadThumb}>
+                        {formData.artwork?.type?.startsWith('image/') ? (
+                          <img src={artworkUrl} alt="Artwork preview" />
+                        ) : (
+                          <span>📄</span>
+                        )}
+                      </div>
+                      <div className={styles.uploadMeta}>
+                        <strong>{formData.artwork?.name || 'Artwork'}</strong>
+                        <span>✓ Uploaded successfully</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={clearArtwork}
+                        className={styles.removeArtwork}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* ===== DESIGN FOR ME CHECKBOX ===== */}
+              <div className={styles.designForMeBox}>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name="designForMe"
+                    checked={formData.designForMe}
+                    onChange={handleChange}
+                  />
+                  <span className={styles.checkboxText}>
+                    <strong>Design for me</strong>
+                    <small>
+                      No artwork? No problem — our team will design it for you
+                      based on your project description.
+                    </small>
+                  </span>
+                </label>
+              </div>
+
+              {/* ===== QUANTITY + SIZE ===== */}
+              <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label>Quantity</label>
                   <input
@@ -476,9 +562,6 @@ const OrderPage = () => {
                     <span className={styles.fieldErrorMsg}>{fieldErrors.quantity}</span>
                   )}
                 </div>
-              </div>
-
-              <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label>Size / Dimensions</label>
                   <input
@@ -489,15 +572,17 @@ const OrderPage = () => {
                     placeholder="e.g. 10cm x 15cm"
                   />
                 </div>
-                <div className={styles.formGroup}>
-                  <label>Deadline</label>
-                  <input
-                    type="date"
-                    name="deadline"
-                    value={formData.deadline}
-                    onChange={handleChange}
-                  />
-                </div>
+              </div>
+
+              {/* ===== DEADLINE ===== */}
+              <div className={styles.formGroup}>
+                <label>Deadline</label>
+                <input
+                  type="date"
+                  name="deadline"
+                  value={formData.deadline}
+                  onChange={handleChange}
+                />
               </div>
 
               <div className={styles.formGroup}>
@@ -518,48 +603,6 @@ const OrderPage = () => {
                 <span className={styles.charCount}>
                   {formData.description.length} characters
                 </span>
-              </div>
-
-              <div className={styles.formGroup}>
-                <label>Upload artwork/logo</label>
-                <input
-                  id="artwork-input"
-                  type="file"
-                  onChange={handleArtworkChange}
-                  accept="image/*,.pdf,.ai,.psd"
-                  disabled={uploading}
-                />
-
-                {uploading && (
-                  <div className={styles.uploadStatus}>⏳ Uploading...</div>
-                )}
-
-                {uploadError && (
-                  <div className={styles.uploadError}>❌ {uploadError}</div>
-                )}
-
-                {artworkUrl && !uploading && (
-                  <div className={styles.uploadPreview}>
-                    <div className={styles.uploadThumb}>
-                      {formData.artwork?.type?.startsWith('image/') ? (
-                        <img src={artworkUrl} alt="Artwork preview" />
-                      ) : (
-                        <span>📄</span>
-                      )}
-                    </div>
-                    <div className={styles.uploadMeta}>
-                      <strong>{formData.artwork?.name || 'Artwork'}</strong>
-                      <span>✓ Uploaded successfully</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={clearArtwork}
-                      className={styles.removeArtwork}
-                    >
-                      ✕
-                    </button>
-                  </div>
-                )}
               </div>
 
               <button

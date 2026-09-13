@@ -1,9 +1,18 @@
 // src/admin/ManageServices.jsx
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { FaTrash, FaEdit, FaPlus, FaTimes, FaEye } from 'react-icons/fa';
+import {
+  FaTrash,
+  FaEdit,
+  FaPlus,
+  FaTimes,
+  FaEye,
+  FaUpload,
+  FaLink,
+  FaImage
+} from 'react-icons/fa';
+import { supabase } from '../lib/supabase';
 import { SkeletonList } from './Loaders';
-import EmojiPicker from './EmojiPicker';
 import styles from './Manage.module.css';
 
 const emptyService = {
@@ -11,8 +20,8 @@ const emptyService = {
   title: '',
   short_description: '',
   description: '',
-  icon: '⭐',
   color: '#ad1380',
+  image_url: '',
   hero_heading: '',
   hero_subheading: '',
   services_list: [],
@@ -37,15 +46,18 @@ const ManageServices = () => {
   const [form, setForm] = useState(emptyService);
   const [activeTab, setActiveTab] = useState('basics');
 
-  // ✅ Draft strings for list fields — allows free typing with Enter key
   const [listDraft, setListDraft] = useState('');
   const [processDraft, setProcessDraft] = useState('');
+
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const openNew = () => {
     setEditing('new');
     setForm({ ...emptyService, sort_order: services.length });
     setListDraft('');
     setProcessDraft('');
+    setUploadError('');
     setActiveTab('basics');
   };
 
@@ -53,9 +65,16 @@ const ManageServices = () => {
     setEditing(svc.id);
     const list = svc.services_list || [];
     const proc = svc.process || [];
-    setForm({ ...svc, services_list: list, process: proc });
+    setForm({
+      ...emptyService,
+      ...svc,
+      services_list: list,
+      process: proc,
+      image_url: svc.image_url || ''
+    });
     setListDraft(list.join('\n'));
     setProcessDraft(proc.join('\n'));
+    setUploadError('');
     setActiveTab('basics');
   };
 
@@ -64,13 +83,13 @@ const ManageServices = () => {
     setForm(emptyService);
     setListDraft('');
     setProcessDraft('');
+    setUploadError('');
   };
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Auto-slug from title (only for new services)
   const handleTitleChange = (e) => {
     const title = e.target.value;
     setForm((prev) => ({
@@ -88,7 +107,57 @@ const ManageServices = () => {
     }));
   };
 
-  // Convert draft string → array before save
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadError('Image too large. Max 5MB.');
+      return;
+    }
+    if (!file.type.startsWith('image/')) {
+      setUploadError('Only image files are allowed.');
+      return;
+    }
+
+    setUploadError('');
+    setUploading(true);
+
+    const ext = file.name.split('.').pop();
+    const fileName = `services/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}.${ext}`;
+
+    const { error: uploadErr } = await supabase.storage
+      .from('geekbrands')
+      .upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+    if (uploadErr) {
+      setUploadError('Upload failed: ' + uploadErr.message);
+      setUploading(false);
+      return;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('geekbrands')
+      .getPublicUrl(fileName);
+
+    setForm((prev) => ({ ...prev, image_url: publicUrl }));
+    setUploading(false);
+  };
+
+  const clearImage = async () => {
+    const url = form.image_url;
+    if (url && url.includes('/geekbrands/')) {
+      const path = url.split('/geekbrands/')[1];
+      if (path) await supabase.storage.from('geekbrands').remove([path]);
+    }
+    setForm((prev) => ({ ...prev, image_url: '' }));
+    setUploadError('');
+    const input = document.getElementById('service-image-input');
+    if (input) input.value = '';
+  };
+
   const parseDraft = (text) =>
     text
       .split('\n')
@@ -100,6 +169,7 @@ const ManageServices = () => {
 
     if (!form.slug) return alert('Slug is required.');
     if (!form.title) return alert('Title is required.');
+    if (!form.image_url) return alert('Service image is required. Please upload or paste an image URL.');
 
     const payload = {
       ...form,
@@ -124,7 +194,7 @@ const ManageServices = () => {
   };
 
   const tabs = [
-    { id: 'basics', label: '1. Basics', desc: 'Title, slug, description' },
+    { id: 'basics', label: '1. Basics', desc: 'Title, slug, image' },
     { id: 'hero', label: '2. Hero Section', desc: 'Service page hero' },
     { id: 'content', label: '3. Content', desc: 'What we offer + list' },
     { id: 'cta', label: '4. Calls to Action', desc: 'Buttons + taglines' }
@@ -211,29 +281,67 @@ const ManageServices = () => {
                     <small>Auto-generated from title. Must be unique.</small>
                   </div>
 
-                  {/* ===== ICON WITH EMOJI PICKER ===== */}
+                  {/* ===== SERVICE IMAGE ===== */}
                   <div className={styles.fieldGroup}>
-                    <label>Icon (emoji)</label>
-                    <div className={styles.iconRow}>
-                      <EmojiPicker
-                        value={form.icon || '⭐'}
-                        onChange={(emoji) =>
-                          setForm((prev) => ({ ...prev, icon: emoji }))
-                        }
-                        color={form.color || '#ad1380'}
-                      />
+                    <label>
+                      Service Image <span className={styles.required}>*</span>
+                    </label>
+                    <p className={styles.helper}>
+                      Upload a photo (recommended: 800×500, 16:10 ratio). This
+                      is required — it powers the service card and detail page.
+                    </p>
+
+                    <div className={styles.imageUploadRow}>
+                      <label className={styles.uploadBtn} htmlFor="service-image-input">
+                        <FaUpload /> {uploading ? 'Uploading…' : 'Upload Image'}
+                      </label>
                       <input
-                        name="icon"
-                        value={form.icon || ''}
-                        onChange={handleChange}
-                        placeholder="or type emoji"
-                        maxLength={4}
-                        className={styles.iconManualInput}
+                        id="service-image-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={uploading}
+                        hidden
                       />
+                      <span className={styles.orDivider}>or</span>
+                      <div className={styles.urlInputWrap}>
+                        <FaLink className={styles.urlIcon} />
+                        <input
+                          type="url"
+                          name="image_url"
+                          value={form.image_url || ''}
+                          onChange={handleChange}
+                          placeholder="https://… paste image URL"
+                          className={styles.urlInput}
+                        />
+                      </div>
                     </div>
-                    <small>
-                      Click "Pick icon" to choose from 300+ emojis, or type/paste your own.
-                    </small>
+
+                    {uploadError && (
+                      <div className={styles.uploadErrorBox}>❌ {uploadError}</div>
+                    )}
+
+                    {form.image_url && (
+                      <div className={styles.imagePreviewWrap}>
+                        <div
+                          className={styles.imagePreview}
+                          style={{
+                            background: form.color
+                              ? `linear-gradient(135deg, ${form.color}22, ${form.color}44)`
+                              : undefined
+                          }}
+                        >
+                          <img src={form.image_url} alt="Service preview" />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={clearImage}
+                          className={styles.removeImageBtn}
+                        >
+                          <FaTrash /> Remove image
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.fieldGroup}>
@@ -253,6 +361,7 @@ const ManageServices = () => {
                         placeholder="#ad1380"
                       />
                     </div>
+                    <small>Used for subtle background tints.</small>
                   </div>
 
                   <div className={styles.fieldGroup}>
@@ -318,7 +427,6 @@ const ManageServices = () => {
                     />
                   </div>
 
-                  {/* Live preview */}
                   <div className={styles.previewBox}>
                     <span className={styles.previewLabel}>Live Preview</span>
                     <div
@@ -327,7 +435,11 @@ const ManageServices = () => {
                         background: `linear-gradient(135deg, ${form.color || '#ad1380'}22, ${form.color || '#ad1380'}44)`
                       }}
                     >
-                      <span className={styles.previewIcon}>{form.icon || '⭐'}</span>
+                      {form.image_url && (
+                        <div className={styles.previewImageBox}>
+                          <img src={form.image_url} alt="preview" />
+                        </div>
+                      )}
                       <h3>{form.hero_heading || 'Hero heading will appear here'}</h3>
                       <p>{form.hero_subheading || 'Hero subheading will appear here'}</p>
                     </div>
@@ -359,7 +471,9 @@ const ManageServices = () => {
                       rows="4"
                       placeholder={'Design\nProof\nPrint\nFinish\nDeliver'}
                     />
-                    <small>Shows numbered steps on the service page. Leave empty to hide.</small>
+                    <small>
+                      Shows numbered steps on the service page. Leave empty to hide.
+                    </small>
                   </div>
 
                   <div className={styles.fieldGroup}>
@@ -417,7 +531,6 @@ const ManageServices = () => {
                     <small>The actual button text users click.</small>
                   </div>
 
-                  {/* Button preview */}
                   <div className={styles.previewBox}>
                     <span className={styles.previewLabel}>Button Preview</span>
                     <button
@@ -440,7 +553,11 @@ const ManageServices = () => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className={styles.submitBtn}>
+                <button
+                  type="submit"
+                  className={styles.submitBtn}
+                  disabled={uploading}
+                >
                   {editing === 'new' ? 'Create Service' : 'Save Changes'}
                 </button>
               </div>
@@ -461,12 +578,17 @@ const ManageServices = () => {
           )}
           {services.map((svc) => (
             <div key={svc.id} className={styles.item}>
-              <div
-                className={styles.serviceIconBox}
-                style={{ background: svc.color || '#ad1380' }}
-              >
-                {svc.icon || '⭐'}
-              </div>
+              {svc.image_url ? (
+                <img
+                  src={svc.image_url}
+                  alt={svc.title}
+                  className={styles.thumb}
+                />
+              ) : (
+                <div className={styles.thumbPlaceholder}>
+                  <FaImage />
+                </div>
+              )}
               <div className={styles.info}>
                 <h3>{svc.title}</h3>
                 <span className={styles.badge}>/services/{svc.slug}</span>

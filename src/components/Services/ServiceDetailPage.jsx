@@ -40,7 +40,10 @@ const ServiceDetailPage = () => {
         }}
       >
         <div className="container">
-          <span className={styles.serviceIcon}>{service.icon}</span>
+          <div className={styles.serviceHeroImage}>
+            <img src={service.image_url} alt={service.title} />
+          </div>
+
           <h1>{service.hero_heading}</h1>
           <p>{service.hero_subheading}</p>
           <Link to="/order" className="btn-primary">{service.cta_button}</Link>

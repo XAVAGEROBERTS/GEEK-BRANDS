@@ -31,12 +31,14 @@ const ServicesPage = () => {
                 className={styles.serviceCardLink}
               >
                 <div className={styles.serviceCard}>
-                  <div
-                    className={styles.serviceIcon}
-                    style={{ background: service.color }}
-                  >
-                    <span>{service.icon}</span>
+                  <div className={styles.serviceImage}>
+                    <img
+                      src={service.image_url}
+                      alt={service.title}
+                      loading="lazy"
+                    />
                   </div>
+
                   <h3>{service.title}</h3>
                   <p>{service.short_description}</p>
                   <ul className={styles.serviceFeatures}>

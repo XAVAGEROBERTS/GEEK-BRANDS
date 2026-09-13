@@ -1,3 +1,5 @@
+/* src/components/Contact/ContactPage.module.css */
+
 .contactPage {
   padding: 3rem 1.5rem 4rem;
 }
@@ -78,6 +80,11 @@
   cursor: pointer;
 }
 
+.formGroup input[type="file"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .formGroup input[type="file"]::file-selector-button {
   background: var(--primary);
   color: #fff;
@@ -92,6 +99,101 @@
 
 .formGroup input[type="file"]::file-selector-button:hover {
   background: #8f0f6a;
+}
+
+/* ===== DESIGN FOR ME CHECKBOX ===== */
+.designForMeBox {
+  margin: -0.5rem 0 1.5rem;
+  padding: 1rem 1.2rem;
+  background: #faf5fb;
+  border: 1px solid #f0e0f0;
+  border-left: 4px solid #ad1380;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+.designForMeBox:hover {
+  background: #f7eef9;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid #ad1380;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  margin: 0;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.checkboxLabel input[type="checkbox"]:hover {
+  box-shadow: 0 0 0 4px rgba(173, 19, 128, 0.08);
+}
+
+.checkboxLabel input[type="checkbox"]:checked {
+  background: #ad1380;
+  border-color: #ad1380;
+}
+
+.checkboxLabel input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.checkboxText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.4;
+}
+
+.checkboxText strong {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.checkboxText small {
+  font-size: 0.78rem;
+  color: #777;
+  line-height: 1.45;
+}
+
+/* ===== LOGGED-IN BANNER ===== */
+.loggedInBanner {
+  background: #e7f8ee;
+  color: #27ae60;
+  border-left: 4px solid #27ae60;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+.loggedInBanner strong {
+  color: #1a1a1a;
+  font-weight: 700;
 }
 
 /* ===== CONTACT INFO SIDEBAR ===== */
@@ -163,56 +265,6 @@
   line-height: 1.5;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-  .contactContent {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .contactInfo {
-    position: static;
-  }
-}
-
-@media (max-width: 768px) {
-  .contactPage {
-    padding: 2rem 1rem 3rem;
-  }
-
-  .orderForm {
-    padding: 1.8rem 1.5rem;
-  }
-
-  .formRow {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .contactInfo {
-    padding: 2rem 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .orderForm {
-    padding: 1.5rem 1rem;
-  }
-
-  .orderForm h3 {
-    font-size: 1.15rem;
-  }
-
-  .contactInfo h3 {
-    font-size: 1.15rem;
-  }
-
-  .infoItem > span {
-    font-size: 1rem;
-    min-width: 32px;
-    height: 32px;
-  }
-}
 /* ============================================================
    SUCCESS MODAL
    ============================================================ */
@@ -262,7 +314,6 @@
   background: linear-gradient(90deg, #ad1380, #df006e, #f5a623, #27ae60);
 }
 
-/* Icon */
 .successIconWrap {
   display: flex;
   justify-content: center;
@@ -290,7 +341,6 @@
   100% { transform: scale(1); }
 }
 
-/* Text */
 .successTitle {
   font-size: 1.6rem;
   font-weight: 800;
@@ -306,7 +356,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Ref box */
 .refBox {
   background: linear-gradient(135deg, rgba(173, 19, 128, 0.06), rgba(245, 166, 35, 0.06));
   border: 2px dashed rgba(173, 19, 128, 0.3);
@@ -377,7 +426,6 @@
   font-weight: 700;
 }
 
-/* Actions */
 .successActions {
   display: flex;
   gap: 0.8rem;
@@ -395,6 +443,9 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
   box-shadow: 0 6px 20px rgba(173, 19, 128, 0.3);
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
 }
 
 .trackBtn:hover {
@@ -421,7 +472,7 @@
   transform: translateY(-2px);
 }
 
-/* Inline error box (unchanged) */
+/* Inline error box */
 .errorBox {
   background: #fff3f3;
   border: 1px solid #ffd7d7;
@@ -439,36 +490,6 @@
   cursor: not-allowed;
 }
 
-/* Mobile responsive */
-@media (max-width: 480px) {
-  .successModal {
-    padding: 2rem 1.4rem 1.6rem;
-    border-radius: 20px;
-  }
-  .successIcon {
-    width: 64px;
-    height: 64px;
-    font-size: 2.2rem;
-  }
-  .successTitle {
-    font-size: 1.3rem;
-  }
-  .successSubtitle {
-    font-size: 0.85rem;
-  }
-  .refValue {
-    font-size: 1.3rem;
-    padding: 0.35rem 0.8rem;
-  }
-  .successActions {
-    flex-direction: column;
-  }
-  .trackBtn,
-  .closeModalBtn {
-    width: 100%;
-    text-align: center;
-  }
-}
 /* ============================================================
    ARTWORK UPLOAD UI
    ============================================================ */
@@ -576,6 +597,7 @@
 .removeArtwork:hover {
   background: #fee2e2;
 }
+
 /* ============================================================
    FIELD VALIDATION
    ============================================================ */
@@ -598,11 +620,6 @@
   animation: slideDown 0.2s ease;
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 .charCount {
   display: block;
   font-size: 0.72rem;
@@ -614,15 +631,190 @@
 /* ============================================================
    DARK MODE
    ============================================================ */
+[data-theme='dark'] .orderForm {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .orderForm h3 {
+  color: #f5f5f7;
+  border-bottom-color: #2a2a33;
+}
+[data-theme='dark'] .formGroup label {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .formGroup input,
+[data-theme='dark'] .formGroup select,
+[data-theme='dark'] .formGroup textarea {
+  background: #222229;
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .formGroup input::placeholder,
+[data-theme='dark'] .formGroup textarea::placeholder {
+  color: #6a6a75;
+}
+[data-theme='dark'] .formGroup input[type="file"] {
+  background: #222229;
+  border-color: #3a3a45;
+}
+[data-theme='dark'] .loggedInBanner {
+  background: #16261e;
+  border-left-color: #27ae60;
+}
+[data-theme='dark'] .loggedInBanner strong {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .successModal {
+  background: #1a1a1f;
+  border: 1px solid #2a2a33;
+}
+[data-theme='dark'] .successTitle {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .successSubtitle {
+  color: #b8b8c0;
+}
+[data-theme='dark'] .refBox {
+  background: linear-gradient(135deg, rgba(173, 19, 128, 0.12), rgba(245, 166, 35, 0.08));
+  border-color: rgba(173, 19, 128, 0.5);
+}
+[data-theme='dark'] .refValue {
+  background: #222229;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .refHint {
+  color: #b8b8c0;
+}
+[data-theme='dark'] .closeModalBtn {
+  background: #2a2a33;
+  color: #f5f5f7;
+}
+[data-theme='dark'] .closeModalBtn:hover {
+  background: #3a3a45;
+}
+[data-theme='dark'] .uploadMeta strong {
+  color: #f5f5f7;
+}
 [data-theme='dark'] .inputError {
   border-color: #e74c3c !important;
   background: #2a1a1a !important;
 }
-
 [data-theme='dark'] .fieldErrorMsg {
   color: #ff6b6b;
 }
-
 [data-theme='dark'] .charCount {
   color: #7a7a85;
+}
+
+/* Dark mode — Design for me checkbox */
+[data-theme='dark'] .designForMeBox {
+  background: #221822;
+  border-color: #3a2a3a;
+  border-left-color: #ad1380;
+}
+[data-theme='dark'] .designForMeBox:hover {
+  background: #2a1c2a;
+}
+[data-theme='dark'] .checkboxLabel input[type="checkbox"] {
+  background: #222229;
+  border-color: #ad1380;
+}
+[data-theme='dark'] .checkboxText strong {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .checkboxText small {
+  color: #b8b8c0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+  .contactContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contactInfo {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .contactPage {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .orderForm {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contactInfo {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .orderForm {
+    padding: 1.5rem 1rem;
+  }
+
+  .orderForm h3 {
+    font-size: 1.15rem;
+  }
+
+  .designForMeBox {
+    padding: 0.9rem 1rem;
+  }
+
+  .checkboxText strong {
+    font-size: 0.85rem;
+  }
+
+  .checkboxText small {
+    font-size: 0.74rem;
+  }
+
+  .contactInfo h3 {
+    font-size: 1.15rem;
+  }
+
+  .infoItem > span {
+    font-size: 1rem;
+    min-width: 32px;
+    height: 32px;
+  }
+
+  .successModal {
+    padding: 2rem 1.4rem 1.6rem;
+    border-radius: 20px;
+  }
+  .successIcon {
+    width: 64px;
+    height: 64px;
+    font-size: 2.2rem;
+  }
+  .successTitle {
+    font-size: 1.3rem;
+  }
+  .successSubtitle {
+    font-size: 0.85rem;
+  }
+  .refValue {
+    font-size: 1.3rem;
+    padding: 0.35rem 0.8rem;
+  }
+  .successActions {
+    flex-direction: column;
+  }
+  .trackBtn,
+  .closeModalBtn {
+    width: 100%;
+    text-align: center;
+  }
 }
