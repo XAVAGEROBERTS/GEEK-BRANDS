@@ -1,5 +1,5 @@
 .app {
-  max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   background: #ffffff;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.03);
@@ -10,4 +10,5 @@
 
 .app main {
   flex: 1;
+  width: 100%;
 }
