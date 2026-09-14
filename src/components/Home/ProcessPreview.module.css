@@ -7,6 +7,7 @@
   padding: 5rem 1.5rem 4rem;
   margin-top: 2rem;
   position: relative;
+  width: 100%;
 }
 
 .processPreview::before {
@@ -27,6 +28,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin: 3rem 0;
+  width: 100%;
 }
 
 .stepCard {
@@ -83,7 +85,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 992px (tablet): 2 columns
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 992px) {
   .processPreview {
@@ -96,9 +98,6 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 576px (mobile): still 2 columns ✅
-   ============================================================ */
 @media (max-width: 576px) {
   .processPreview {
     padding: 3rem 1rem 2rem;
@@ -110,7 +109,6 @@
     margin-bottom: 2rem;
   }
 
-  /* ✅ 2×3 grid (2 per row) */
   .stepsGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -152,9 +150,6 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 380px (very small): tighten further
-   ============================================================ */
 @media (max-width: 380px) {
   .stepCard {
     padding: 1.2rem 0.7rem;

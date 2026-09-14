@@ -1,5 +1,7 @@
+/* src/components/Home/HomePage.module.css */
+
 /* ============================================================
-   HOME PAGE CONTAINER
+   HOME PAGE CONTAINER — full width
    ============================================================ */
 .homePage {
   width: 100%;
@@ -7,7 +9,7 @@
 }
 
 /* ============================================================
-   ABSOLUTE BAR — Desktop floating pill (HORIZONTAL)
+   ABSOLUTE BAR — Desktop floating pill
    ============================================================ */
 .absoluteBar {
   position: absolute;
@@ -76,7 +78,6 @@
   display: none;
 }
 
-/* ===== ACTION BUTTONS — horizontal row ===== */
 .barActions {
   display: flex;
   flex-direction: row;
@@ -101,7 +102,6 @@
   line-height: 1.2;
 }
 
-/* Primary: "Order" — white bg */
 .barButtonPrimary {
   background: #ffffff;
   color: #ad1380;
@@ -114,7 +114,6 @@
   background: #f8f8f8;
 }
 
-/* Secondary buttons — outline style */
 .barButton {
   background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
@@ -131,7 +130,7 @@
 }
 
 /* ============================================================
-   TRUST STRIP — auto-scaling, single line
+   TRUST STRIP — full width
    ============================================================ */
 .trustStrip {
   background: #fff;
@@ -140,6 +139,7 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
   position: relative;
   z-index: 5;
+  width: 100%;
 }
 
 .trustItems {
@@ -180,6 +180,7 @@
    SLIDING HERO BANNER
    ============================================================ */
 .heroBanner {
+  width: 100%;
   min-height: 500px;
   display: flex;
   align-items: center;
@@ -549,10 +550,9 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 768px (ACTION BAR BECOMES BLOCK BELOW HERO)
+   RESPONSIVE — 768px
    ============================================================ */
 @media (max-width: 768px) {
-  /* ===== ACTION BAR — normal block below hero ===== */
   .absoluteBar {
     position: relative;
     top: auto;
@@ -611,7 +611,6 @@
     text-overflow: ellipsis;
   }
 
-  /* ===== HERO ===== */
   .heroContent h1 {
     font-size: 2.2rem;
   }
@@ -620,7 +619,6 @@
     font-size: 1rem;
   }
 
-  /* ===== SEARCH PANEL ===== */
   .searchPanel {
     margin: 1rem 0.5rem 1rem;
     padding: 0.8rem;
@@ -635,12 +633,10 @@
     width: 100%;
   }
 
-  /* ===== GRID ===== */
   .grid3 {
     grid-template-columns: 1fr;
   }
 
-  /* ===== SLIDER ===== */
   .slideArrow {
     display: none;
   }

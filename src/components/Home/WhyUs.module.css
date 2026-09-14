@@ -1,11 +1,12 @@
 /* src/components/Home/WhyUs.module.css */
 
 /* ============================================================
-   SECTION
+   SECTION — full width
    ============================================================ */
 .whyUs {
   padding: 4rem 1.5rem;
   background: var(--gray-bg, #f8f8f8);
+  width: 100%;
 }
 
 /* ============================================================
@@ -15,6 +16,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
+  width: 100%;
 }
 
 .featureCard {
@@ -61,7 +63,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 992px (tablet): 2 columns
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 992px) {
   .whyUs {
@@ -74,15 +76,11 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 576px (mobile): STILL 2 COLUMNS ✅
-   ============================================================ */
 @media (max-width: 576px) {
   .whyUs {
     padding: 3rem 1rem;
   }
 
-  /* ✅ 2×2 grid */
   .featuresGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.9rem;
@@ -112,9 +110,6 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 380px (very small): tighten further
-   ============================================================ */
 @media (max-width: 380px) {
   .featuresGrid {
     gap: 0.7rem;

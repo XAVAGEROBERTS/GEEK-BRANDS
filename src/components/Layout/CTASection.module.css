@@ -1,13 +1,14 @@
 /* src/components/Layout/CTASection.module.css */
 
 /* ============================================================
-   CTA BAND — Muted navy + soft gold
+   CTA BAND — Muted navy + soft gold — full width
    ============================================================ */
 .ctaSection {
   padding: 4rem 1.5rem;
   background: #111827;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .ctaSection::before {
@@ -91,9 +92,6 @@
   font-family: inherit;
 }
 
-/* ============================================================
-   Primary button — flat gold, lightens noticeably on hover
-   ============================================================ */
 .bookBtn {
   background: #d99b34;
   color: #111827;
@@ -101,22 +99,19 @@
   box-shadow: none;
 }
 .bookBtn:hover {
-  background: #f7c266;                  /* ✅ noticeably lighter gold */
+  background: #f7c266;
   border-color: #f7c266;
   color: #111827;
 }
 
-/* ============================================================
-   Secondary button — outline, lightens on hover
-   ============================================================ */
 .orderBtn {
   background: transparent;
   color: #e5e7eb;
   border: 1px solid rgba(255, 255, 255, 0.28);
 }
 .orderBtn:hover {
-  background: rgba(255, 255, 255, 0.14); /* ✅ brighter fill */
-  border-color: rgba(255, 255, 255, 0.7);/* ✅ brighter border */
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.7);
   color: #ffffff;
 }
 

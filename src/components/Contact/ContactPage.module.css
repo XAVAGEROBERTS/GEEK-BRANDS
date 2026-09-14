@@ -1,7 +1,11 @@
 /* src/components/Contact/ContactPage.module.css */
 
+/* ============================================================
+   PAGE — full width
+   ============================================================ */
 .contactPage {
   padding: 3rem 1.5rem 4rem;
+  width: 100%;
 }
 
 .contactContent {
@@ -9,9 +13,12 @@
   grid-template-columns: 2fr 1fr;
   gap: 3rem;
   margin-top: 2rem;
+  width: 100%;
 }
 
-/* ===== ORDER FORM ===== */
+/* ============================================================
+   ORDER FORM
+   ============================================================ */
 .orderForm {
   background: #fff;
   padding: 2.5rem;
@@ -101,7 +108,9 @@
   background: #8f0f6a;
 }
 
-/* ===== DESIGN FOR ME CHECKBOX ===== */
+/* ============================================================
+   DESIGN FOR ME CHECKBOX
+   ============================================================ */
 .designForMeBox {
   margin: -0.5rem 0 1.5rem;
   padding: 1rem 1.2rem;
@@ -181,7 +190,9 @@
   line-height: 1.45;
 }
 
-/* ===== LOGGED-IN BANNER ===== */
+/* ============================================================
+   LOGGED-IN BANNER
+   ============================================================ */
 .loggedInBanner {
   background: #e7f8ee;
   color: #27ae60;
@@ -196,7 +207,9 @@
   font-weight: 700;
 }
 
-/* ===== CONTACT INFO SIDEBAR ===== */
+/* ============================================================
+   CONTACT INFO SIDEBAR
+   ============================================================ */
 .contactInfo {
   background: linear-gradient(135deg, var(--primary, #ad1380), #8f0f6a);
   padding: 2.5rem 2rem;
@@ -705,8 +718,6 @@
 [data-theme='dark'] .charCount {
   color: #7a7a85;
 }
-
-/* Dark mode — Design for me checkbox */
 [data-theme='dark'] .designForMeBox {
   background: #221822;
   border-color: #3a2a3a;

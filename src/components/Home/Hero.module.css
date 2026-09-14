@@ -1,10 +1,15 @@
-/* ===== HERO SECTION - REDUCED HEIGHT ===== */
+/* src/components/Home/Hero.module.css */
+
+/* ============================================================
+   HERO SECTION — full width
+   ============================================================ */
 .hero {
-  min-height: 400px;  /* Reduced from 550px */
-  max-height: 500px;  /* Added max height */
+  width: 100%;
+  min-height: 400px;
+  max-height: 500px;
   display: flex;
   align-items: center;
-  padding: 3rem 3rem;  /* Reduced padding */
+  padding: 3rem 3rem;
   position: relative;
   background-size: cover;
   background-position: center;
@@ -13,7 +18,6 @@
   overflow: hidden;
 }
 
-/* Smooth transition class */
 .transitioning .heroContent {
   opacity: 0;
   transform: translateY(20px);
@@ -35,14 +39,14 @@
   background: rgba(0, 0, 0, 0.25);
 }
 
-/* ===== HERO CONTENT - SMALLER TEXT ===== */
+/* ===== HERO CONTENT — capped for readability ===== */
 .heroContent {
-  max-width: 580px;  /* Slightly smaller */
+  max-width: 580px;
   position: relative;
   z-index: 2;
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -62,26 +66,26 @@
   margin: 0 auto;
 }
 
-/* ===== TEXT STYLES - SMALLER ===== */
+/* ===== TEXT STYLES ===== */
 .badge {
   display: inline-block;
   background: rgba(173, 19, 128, 0.85);
   color: #fff;
-  padding: 0.25rem 1rem;  /* Smaller padding */
+  padding: 0.25rem 1rem;
   border-radius: 40px;
-  font-size: 0.6rem;  /* Smaller */
+  font-size: 0.6rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin-bottom: 0.5rem;  /* Reduced margin */
+  margin-bottom: 0.5rem;
   backdrop-filter: blur(10px);
 }
 
 .heroContent h1 {
-  font-size: 2rem;  /* Reduced from 2.5rem */
+  font-size: 2rem;
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 0.5rem;  /* Reduced */
+  margin-bottom: 0.5rem;
   color: #ffffff;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
@@ -92,29 +96,27 @@
 }
 
 .heroContent p {
-  font-size: 0.95rem;  /* Reduced from 1.05rem */
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.92);
   max-width: 500px;
-  margin-bottom: 1rem;  /* Reduced */
-  line-height: 1.6;  /* Slightly tighter */
+  margin-bottom: 1rem;
+  line-height: 1.6;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* For center alignment, p should be centered */
 .textCenter p {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* For right alignment, p should be right-aligned */
 .textRight p {
   margin-left: auto;
 }
 
-/* ===== BUTTONS - SMALLER ===== */
+/* ===== BUTTONS ===== */
 .heroButtons {
   display: flex;
-  gap: 0.8rem;  /* Reduced gap */
+  gap: 0.8rem;
   flex-wrap: wrap;
 }
 
@@ -133,8 +135,8 @@
 .heroButtons :global(.btn-primary) {
   background: #ad1380;
   color: #fff;
-  padding: 0.55rem 1.8rem;  /* Smaller padding */
-  font-size: 0.85rem;  /* Smaller */
+  padding: 0.55rem 1.8rem;
+  font-size: 0.85rem;
   border: none;
   border-radius: 40px;
   font-weight: 600;
@@ -151,8 +153,8 @@
 .heroButtons :global(.btn-outline) {
   border: 2px solid #fff;
   color: #fff;
-  padding: 0.55rem 1.8rem;  /* Smaller padding */
-  font-size: 0.85rem;  /* Smaller */
+  padding: 0.55rem 1.8rem;
+  font-size: 0.85rem;
   background: transparent;
   border-radius: 40px;
   font-weight: 600;
@@ -165,7 +167,7 @@
   color: #ad1380;
 }
 
-/* ===== SLIDER CONTROLS - SMALLER ===== */
+/* ===== SLIDER CONTROLS ===== */
 .slideArrow {
   position: absolute;
   top: 50%;
@@ -174,10 +176,10 @@
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.25);
-  width: 40px;  /* Reduced from 46px */
-  height: 40px;  /* Reduced from 46px */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  font-size: 1rem;  /* Reduced */
+  font-size: 1rem;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
@@ -199,20 +201,20 @@
   right: 1.5rem;
 }
 
-/* ===== SLIDE DOTS - SMALLER ===== */
+/* ===== SLIDE DOTS ===== */
 .slideDots {
   position: absolute;
-  bottom: 1.5rem;  /* Reduced from 2rem */
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.6rem;  /* Reduced gap */
+  gap: 0.6rem;
   z-index: 10;
 }
 
 .slideDot {
-  width: 10px;  /* Reduced from 11px */
-  height: 10px;  /* Reduced from 11px */
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -235,8 +237,8 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 992px) {
   .hero {
-    min-height: 350px;  /* Reduced */
-    max-height: 450px;  /* Reduced */
+    min-height: 350px;
+    max-height: 450px;
     padding: 2.5rem 2rem;
   }
 
@@ -267,8 +269,8 @@
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 300px;  /* Reduced */
-    max-height: 400px;  /* Reduced */
+    min-height: 300px;
+    max-height: 400px;
     padding: 2rem 1.5rem;
   }
 
@@ -320,8 +322,8 @@
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 280px;  /* Reduced */
-    max-height: 380px;  /* Reduced */
+    min-height: 280px;
+    max-height: 380px;
     padding: 1.5rem 1rem;
   }
 

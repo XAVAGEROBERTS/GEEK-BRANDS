@@ -1,10 +1,11 @@
 /* src/components/HowItWorks/HowItWorksPage.module.css */
 
 /* ============================================================
-   PAGE
+   PAGE — full width
    ============================================================ */
 .howItWorksPage {
   padding: 3rem 1.5rem 4rem;
+  width: 100%;
 }
 
 /* ============================================================
@@ -16,6 +17,7 @@
   gap: 2.5rem;
   margin: 3rem 0;
   position: relative;
+  width: 100%;
 }
 
 .stepCard {
@@ -85,6 +87,7 @@
   background: linear-gradient(135deg, rgba(173, 19, 128, 0.05) 0%, rgba(245, 166, 35, 0.05) 100%);
   border-radius: 20px;
   border: 1px solid #f0f0f0;
+  width: 100%;
 }
 
 .processCta h3 {
@@ -95,7 +98,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 992px (tablet): 2 columns
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 992px) {
   .stepsContainer {
@@ -105,15 +108,11 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 576px (mobile): STILL 2 COLUMNS ✅
-   ============================================================ */
 @media (max-width: 576px) {
   .howItWorksPage {
     padding: 2rem 1rem 3rem;
   }
 
-  /* ✅ 2-column grid */
   .stepsContainer {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.2rem;
@@ -160,9 +159,6 @@
   }
 }
 
-/* ============================================================
-   RESPONSIVE — 380px (very small): tighten further
-   ============================================================ */
 @media (max-width: 380px) {
   .stepsContainer {
     gap: 1rem;
