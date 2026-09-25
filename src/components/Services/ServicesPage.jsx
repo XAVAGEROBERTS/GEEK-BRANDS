@@ -28,6 +28,7 @@ const ServicesPage = () => {
               <Link
                 key={service.id}
                 to={`/services/${service.slug}`}
+                state={{ scrollToTop: true }}
                 className={styles.serviceCardLink}
               >
                 <div className={styles.serviceCard}>

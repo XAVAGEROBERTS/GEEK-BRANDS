@@ -4,107 +4,283 @@
   width: 100%;
 }
 
-/* ===== HERO — full width ===== */
+/* ============================================================
+   HERO — professional split layout
+   ============================================================ */
 .serviceHero {
-  padding: 4rem 1.5rem;
-  text-align: center;
+  width: 100%;
+  padding: 3rem 1.5rem;
   position: relative;
   overflow: hidden;
-  width: 100%;
+  background: linear-gradient(135deg, #faf5fb 0%, #f5f5f7 100%);
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .serviceHero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
+  top: -60%;
+  right: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(173, 19, 128, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(173, 19, 128, 0.07) 0%, transparent 70%);
   border-radius: 50%;
+  pointer-events: none;
 }
 
-/* ===== HERO IMAGE ===== */
-.serviceHeroImage {
-  width: 160px;
-  height: 160px;
-  border-radius: 24px;
-  overflow: hidden;
-  margin: 0 auto 1.5rem;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-  background: #fff;
+.heroInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
   position: relative;
   z-index: 1;
-  animation: floatIcon 3s ease-in-out infinite;
 }
 
-.serviceHeroImage img {
+/* ===== IMAGE ===== */
+.heroImageWrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.heroImageWrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.6s ease;
 }
 
-@keyframes floatIcon {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+.heroImageWrap:hover img {
+  transform: scale(1.04);
 }
 
-.serviceHero h1 {
+/* ===== TEXT ===== */
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.heroBadge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary, #ad1380);
+  padding: 0.3rem 0.9rem;
+  border: 1.5px solid rgba(173, 19, 128, 0.25);
+  border-radius: 40px;
+  background: rgba(173, 19, 128, 0.05);
+  margin-bottom: 0.9rem;
+}
+
+.heroText h1 {
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-dark);
-  line-height: 1.25;
-  margin-bottom: 1rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 1;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.02em;
 }
 
-.serviceHero p {
-  font-size: 1.05rem;
+.heroText p {
+  font-size: 1rem;
   color: var(--text-light);
-  max-width: 650px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-  position: relative;
-  z-index: 1;
+  line-height: 1.65;
+  margin: 0 0 1.5rem;
+  max-width: 480px;
 }
 
-/* ===== BODY ===== */
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--primary, #ad1380);
+  color: #fff;
+  padding: 0.85rem 1.9rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 22px rgba(173, 19, 128, 0.28);
+}
+
+.heroCta:hover {
+  background: #8f0f6a;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(173, 19, 128, 0.4);
+}
+
+/* ============================================================
+   CHILD SERVICES SECTION
+   ============================================================ */
+.subServicesSection {
+  padding: 3.5rem 0 2rem;
+  width: 100%;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.sectionBadge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary, #ad1380);
+  margin-bottom: 0.5rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionHeader p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.subServicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.subServiceCard {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.subServiceCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary, #ad1380);
+}
+
+.subServiceImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f3f3f3;
+  flex-shrink: 0;
+}
+
+.subServiceImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.subServiceCard:hover .subServiceImage img {
+  transform: scale(1.06);
+}
+
+.subServiceInfo {
+  padding: 1rem 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.subServiceTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark, #1a1a1a);
+  margin: 0 0 0.35rem;
+  line-height: 1.3;
+}
+
+.subServiceDesc {
+  font-size: 0.82rem;
+  color: var(--text-light, #555);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ============================================================
+   BOTTOM CTA
+   ============================================================ */
+.bottomCta {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  margin: 2rem 0 3rem;
+  background: linear-gradient(135deg, rgba(173, 19, 128, 0.05), rgba(245, 166, 35, 0.05));
+  border-radius: 20px;
+  border: 1px solid #f0f0f0;
+}
+
+.bottomCta h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.bottomCta p {
+  font-size: 0.92rem;
+  color: var(--text-light);
+  margin-bottom: 1.25rem;
+}
+
+/* ============================================================
+   FALLBACK BODY
+   ============================================================ */
 .serviceBody {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 3rem;
-  padding: 3rem 0 4rem;
-  margin-top: 2rem;
+  padding: 2rem 0 4rem;
   width: 100%;
 }
 
 .serviceMain h2 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 1rem;
 }
 
 .serviceMain h3 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-dark);
-  margin: 2rem 0 1rem;
+  margin: 1.8rem 0 0.9rem;
 }
 
 .serviceMain p {
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 0.97rem;
+  line-height: 1.75;
   color: var(--text-light);
   margin-bottom: 1rem;
 }
 
-/* ===== SERVICE LIST ===== */
 .serviceList {
   list-style: none;
   padding: 0;
@@ -117,7 +293,7 @@
 .serviceList li {
   position: relative;
   padding-left: 1.8rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--text-dark);
   line-height: 1.6;
 }
@@ -132,7 +308,6 @@
   font-size: 1rem;
 }
 
-/* ===== PROCESS STEPS ===== */
 .processSteps {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -177,7 +352,6 @@
   line-height: 1.4;
 }
 
-/* ===== KEY MESSAGE ===== */
 .keyMessage {
   background: linear-gradient(135deg, rgba(173, 19, 128, 0.06), rgba(245, 166, 35, 0.06));
   border-left: 4px solid var(--primary);
@@ -194,7 +368,6 @@
   font-style: italic;
 }
 
-/* ===== SERVICE COPY ===== */
 .serviceCopy {
   background: #fafafa;
   padding: 1.5rem 1.8rem;
@@ -210,7 +383,6 @@
   font-weight: 500;
 }
 
-/* ===== SIDEBAR ===== */
 .serviceSidebar {
   position: sticky;
   top: 100px;
@@ -273,7 +445,9 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== NOT FOUND ===== */
+/* ============================================================
+   NOT FOUND
+   ============================================================ */
 .notFound {
   text-align: center;
   padding: 5rem 1.5rem;
@@ -285,8 +459,35 @@
   margin-bottom: 1.5rem;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE — 992px
+   ============================================================ */
 @media (max-width: 992px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .heroText {
+    align-items: center;
+    text-align: center;
+  }
+
+  .heroText p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heroText h1 {
+    font-size: 1.85rem;
+  }
+
+  .subServicesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
   .serviceBody {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -299,38 +500,89 @@
   .processSteps {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .serviceHero h1 {
-    font-size: 1.8rem;
-  }
 }
 
+/* ============================================================
+   RESPONSIVE — 576px
+   ============================================================ */
 @media (max-width: 576px) {
   .serviceHero {
-    padding: 3rem 1rem;
+    padding: 2rem 1rem;
   }
 
-  .serviceHeroImage {
-    width: 120px;
-    height: 120px;
-    border-radius: 20px;
-    margin-bottom: 1rem;
+  .heroInner {
+    gap: 1.5rem;
   }
 
-  .serviceHero h1 {
-    font-size: 1.4rem;
+  .heroImageWrap {
+    border-radius: 16px;
   }
 
-  .serviceHero p {
-    font-size: 0.9rem;
+  .heroText h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
   }
 
-  .serviceMain h2 {
+  .heroText p {
+    font-size: 0.88rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .heroCta {
+    padding: 0.75rem 1.6rem;
+    font-size: 0.85rem;
+  }
+
+  .subServicesSection {
+    padding: 2.25rem 0 1.5rem;
+  }
+
+  .sectionHeader h2 {
     font-size: 1.3rem;
   }
 
-  .serviceMain h3 {
+  .sectionHeader p {
+    font-size: 0.85rem;
+  }
+
+  .subServicesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+
+  .subServiceInfo {
+    padding: 0.75rem 0.8rem 1rem;
+  }
+
+  .subServiceTitle {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .subServiceDesc {
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
+  .bottomCta {
+    padding: 2rem 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .bottomCta h3 {
     font-size: 1.1rem;
+  }
+
+  .bottomCta p {
+    font-size: 0.85rem;
+  }
+
+  .serviceMain h2 {
+    font-size: 1.2rem;
+  }
+
+  .serviceMain h3 {
+    font-size: 1.05rem;
   }
 
   .serviceList {
@@ -350,10 +602,63 @@
   }
 }
 
-/* ===== DARK MODE ===== */
-[data-theme='dark'] .serviceHeroImage {
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme='dark'] .serviceHero {
+  background: linear-gradient(135deg, #1a121a 0%, #0f0f12 100%);
+  border-bottom-color: #2a2a33;
+}
+
+[data-theme='dark'] .heroBadge {
+  color: #f5a3d4;
+  border-color: rgba(245, 163, 212, 0.3);
+  background: rgba(173, 19, 128, 0.12);
+}
+
+[data-theme='dark'] .heroText h1 {
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .heroText p {
+  color: #b8b8c0;
+}
+
+[data-theme='dark'] .heroImageWrap {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .sectionHeader h2 {
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .sectionHeader p {
+  color: #b8b8c0;
+}
+
+[data-theme='dark'] .subServiceCard {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .subServiceTitle {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .subServiceDesc {
+  color: #b8b8c0;
+}
+[data-theme='dark'] .subServiceImage {
   background: #222229;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .bottomCta {
+  background: linear-gradient(135deg, rgba(173, 19, 128, 0.1), rgba(245, 166, 35, 0.08));
+  border-color: #2a2a33;
+}
+[data-theme='dark'] .bottomCta h3 {
+  color: #f5f5f7;
+}
+[data-theme='dark'] .bottomCta p {
+  color: #b8b8c0;
 }
 
 [data-theme='dark'] .processStep {
