@@ -19,7 +19,7 @@ import TeamPage from './components/Team/TeamPage';
 import ContactPage from './components/Contact/ContactPage';
 import OrderPage from './components/Order/OrderPage';
 import PortfolioPage from './components/Portfolio/PortfolioPage';
-import HowItWorksPage from './components/HowItWorks/HowItWorksPage';
+
 import WhyGeekBrandsPage from './components/WhyGeekBrands/WhyGeekBrandsPage';
 import ManageBookingPage from './components/Manage/ManageBookingPage';
 import LoginPage from './pages/LoginPage';
@@ -85,7 +85,7 @@ function App() {
                   <Route path="/services" element={<ServicesPage />} />
                   <Route path="/services/:slug" element={<ServiceDetailPage />} />
                   <Route path="/portfolio" element={<PortfolioPage />} />
-                  <Route path="/how-it-works" element={<HowItWorksPage />} />
+         
                   <Route path="/why-geek-brands" element={<WhyGeekBrandsPage />} />
                   <Route path="/manage" element={<ManageBookingPage />} />
                   <Route path="/login" element={<LoginPage />} />

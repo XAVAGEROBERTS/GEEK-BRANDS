@@ -9,24 +9,24 @@
 }
 
 /* ============================================================
-   ABSOLUTE BAR — Desktop floating pill
+   ABSOLUTE BAR — Compact floating pill (desktop only)
    ============================================================ */
 .absoluteBar {
   position: absolute;
-  top: 16%;
-  left: 1.5rem;
+  top: 19%;                          /* ✅ moved higher — was 20% */
+  left: 1rem;
   transform: translateY(-50%);
   width: auto;
-  max-width: 420px;
-  min-width: 400px;
+  max-width: 320px;                  /* ✅ tightened — was 400px */
+  min-width: 280px;                  /* ✅ tightened — was 400px */
   background: linear-gradient(135deg, #ad1380 0%, #8f0f6a 100%);
-  border-radius: 16px;
-  box-shadow: 0 12px 35px rgba(173, 19, 128, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(173, 19, 128, 0.3);
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.9rem 1.1rem;
+  padding: 0.7rem 0.85rem;           /* ✅ tighter */
   transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
   opacity: 1;
   visibility: visible;
@@ -47,7 +47,7 @@
   right: -2px;
   bottom: -2px;
   background: linear-gradient(135deg, #ad1380, #f5a623, #ad1380);
-  border-radius: 0 18px 18px 0;
+  border-radius: 0 16px 16px 0;
   z-index: -1;
   opacity: 0.3;
   filter: blur(8px);
@@ -58,7 +58,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 0.6rem;
+  gap: 0.5rem;                       /* ✅ tighter */
 }
 
 .barText {
@@ -68,7 +68,7 @@
 
 .barText h3 {
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 0.82rem;                /* ✅ smaller */
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
@@ -81,7 +81,7 @@
 .barActions {
   display: flex;
   flex-direction: row;
-  gap: 0.4rem;
+  gap: 0.35rem;                      /* ✅ tighter */
   width: 100%;
   flex-wrap: nowrap;
 }
@@ -92,10 +92,10 @@
   flex: 1 1 0;
   min-width: 0;
   text-align: center;
-  padding: 0.55rem 0.7rem;
+  padding: 0.48rem 0.65rem;          /* ✅ tighter */
   border-radius: 50px;
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.68rem;                /* ✅ smaller */
   text-decoration: none;
   transition: all 0.25s ease;
   white-space: nowrap;
@@ -130,50 +130,57 @@
 }
 
 /* ============================================================
-   TRUST STRIP — full width
+   BRAND STATEMENT STRIP — centered, clean
    ============================================================ */
-.trustStrip {
-  background: #fff;
-  padding: clamp(0.5rem, 1.2vw, 1rem) 0;
+.brandStrip {
+  width: 100%;
+  background: #ffffff;
   border-bottom: 1px solid #f0f0f0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   position: relative;
   z-index: 5;
-  width: 100%;
 }
 
-.trustItems {
+.brandStripInner {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: nowrap;
-  gap: clamp(0.3rem, 1.5vw, 2rem);
-  padding: 0 clamp(0.2rem, 1vw, 1rem);
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
+  gap: 0.7rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.trustItems span {
-  font-size: clamp(0.55rem, 1.4vw, 0.85rem);
-  font-weight: 600;
-  color: var(--text-dark, #1a1a1a);
+.brandStripLabel {
+  display: inline-block;
+  font-size: clamp(0.7rem, 1.1vw, 0.82rem);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: clamp(0.1px, 0.15vw, 1px);
-  position: relative;
-  padding-left: clamp(0.65rem, 1.2vw, 1.5rem);
-  white-space: nowrap;
-  flex: 0 1 auto;
-  min-width: 0;
+  letter-spacing: clamp(2px, 0.35vw, 3.5px);
+  color: var(--primary, #ad1380);
+  padding: 0.35rem 1rem;
+  border: 1.5px solid rgba(173, 19, 128, 0.22);
+  border-radius: 40px;
+  background: rgba(173, 19, 128, 0.04);
+  line-height: 1;
 }
 
-.trustItems span::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
+.brandStripTagline {
+  font-size: clamp(1.05rem, 2.1vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-dark, #1a1a1a);
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  max-width: 100%;
+}
+
+.brandStripTagline span {
   color: var(--primary, #ad1380);
   font-weight: 800;
-  font-size: 0.9em;
 }
 
 /* ============================================================
@@ -492,23 +499,45 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 1200px
+   DARK MODE — brand statement
+   ============================================================ */
+[data-theme='dark'] .brandStrip {
+  background: #0f0f12;
+  border-bottom-color: #2a2a33;
+}
+
+[data-theme='dark'] .brandStripLabel {
+  color: #f5a3d4;
+  border-color: rgba(245, 163, 212, 0.3);
+  background: rgba(173, 19, 128, 0.12);
+}
+
+[data-theme='dark'] .brandStripTagline {
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .brandStripTagline span {
+  color: #f5a3d4;
+}
+
+/* ============================================================
+   RESPONSIVE — 1200px (tighten bar further)
    ============================================================ */
 @media (max-width: 1200px) {
   .absoluteBar {
-    max-width: 380px;
-    min-width: 260px;
-    padding: 0.85rem 1rem;
+    max-width: 300px;
+    min-width: 250px;
+    padding: 0.7rem 0.8rem;
   }
 
   .barText h3 {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
   }
 
   .barButton,
   .barButtonPrimary {
-    padding: 0.5rem 0.65rem;
-    font-size: 0.7rem;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -517,19 +546,19 @@
    ============================================================ */
 @media (max-width: 992px) {
   .absoluteBar {
-    max-width: 340px;
-    min-width: 240px;
-    padding: 0.8rem 0.9rem;
+    max-width: 280px;
+    min-width: 230px;
+    padding: 0.65rem 0.75rem;
   }
 
   .barText h3 {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .barButton,
   .barButtonPrimary {
-    padding: 0.45rem 0.6rem;
-    font-size: 0.68rem;
+    padding: 0.4rem 0.55rem;
+    font-size: 0.62rem;
   }
 
   .grid3 {
@@ -550,7 +579,7 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 768px
+   RESPONSIVE — 768px (bar becomes a stacked block below hero)
    ============================================================ */
 @media (max-width: 768px) {
   .absoluteBar {
@@ -611,6 +640,18 @@
     text-overflow: ellipsis;
   }
 
+  .brandStrip {
+    padding: 1.75rem 0;
+  }
+
+  .brandStripInner {
+    gap: 0.55rem;
+  }
+
+  .brandStripTagline {
+    font-size: 1.15rem;
+  }
+
   .heroContent h1 {
     font-size: 2.2rem;
   }
@@ -647,6 +688,31 @@
 }
 
 /* ============================================================
+   RESPONSIVE — 576px (phone)
+   ============================================================ */
+@media (max-width: 576px) {
+  .brandStrip {
+    padding: 1.4rem 0;
+  }
+
+  .brandStripInner {
+    gap: 0.45rem;
+    padding: 0 0.85rem;
+  }
+
+  .brandStripLabel {
+    font-size: 0.65rem;
+    padding: 0.28rem 0.75rem;
+    letter-spacing: 1.8px;
+  }
+
+  .brandStripTagline {
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+}
+
+/* ============================================================
    RESPONSIVE — 480px
    ============================================================ */
 @media (max-width: 480px) {
@@ -664,13 +730,13 @@
     padding: 0.65rem 0.35rem;
     letter-spacing: -0.02em;
   }
-}
 
-/* ============================================================
-   HIDE TRUST STRIP ON SMALL SCREENS
-   ============================================================ */
-@media (max-width: 490px) {
-  .trustStrip {
-    display: none;
+  .brandStripTagline {
+    font-size: 0.92rem;
+  }
+
+  .brandStripLabel {
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
   }
 }

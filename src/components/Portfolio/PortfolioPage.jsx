@@ -63,11 +63,12 @@ const PortfolioPage = () => {
               <div key={project.id} className={styles.projectCard}>
                 <div className={styles.projectImage}>
                   <img src={project.image} alt={project.name} />
-                  <div className={styles.projectOverlay}>
-                    <span>{project.service}</span>
-                  </div>
                 </div>
                 <div className={styles.projectInfo}>
+                  {/* ✅ Service badge moved below image */}
+                  {project.service && (
+                    <span className={styles.serviceBadge}>{project.service}</span>
+                  )}
                   <span className={styles.projectCategory}>{project.client}</span>
                   <h3>{project.name}</h3>
                   <p>{project.description}</p>

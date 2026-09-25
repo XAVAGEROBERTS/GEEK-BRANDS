@@ -43,11 +43,13 @@
   box-shadow: 0 6px 20px rgba(173, 19, 128, 0.3);
 }
 
-/* ===== PROJECTS GRID ===== */
+/* ============================================================
+   PROJECTS GRID
+   ============================================================ */
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.75rem;
   width: 100%;
 }
 
@@ -59,19 +61,26 @@
   border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .projectCard:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
   border-color: var(--primary);
 }
 
+/* ============================================================
+   IMAGE — dominant, square-ish, fills most of the card
+   ============================================================ */
 .projectImage {
   position: relative;
   width: 100%;
-  height: 240px;
+  aspect-ratio: 4 / 3;              /* ✅ taller than before */
   overflow: hidden;
+  flex-shrink: 0;
+  background: #f3f3f3;
 }
 
 .projectImage img {
@@ -79,55 +88,74 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  display: block;
 }
 
 .projectCard:hover .projectImage img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
-.projectOverlay {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: rgba(173, 19, 128, 0.9);
-  color: #fff;
-  padding: 0.35rem 0.9rem;
-  border-radius: 40px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  backdrop-filter: blur(10px);
-}
-
+/* ============================================================
+   INFO — compact, smaller text
+   ============================================================ */
 .projectInfo {
-  padding: 1.5rem 1.5rem 1.8rem;
+  padding: 0.9rem 1rem 1.1rem;      /* ✅ reduced padding */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
+/* Service badge — small pill */
+.serviceBadge {
+  display: inline-block;
+  align-self: flex-start;
+  background: rgba(173, 19, 128, 0.1);
+  color: var(--primary, #ad1380);
+  padding: 0.22rem 0.65rem;
+  border-radius: 40px;
+  font-size: 0.6rem;                /* ✅ smaller */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+
+/* Client name — small uppercase label */
 .projectCategory {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.62rem;               /* ✅ smaller */
   color: var(--primary);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.25rem;
 }
 
+/* Project title */
 .projectInfo h3 {
-  font-size: 1.15rem;
+  font-size: 0.95rem;               /* ✅ reduced from 1.15rem */
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.3rem;
+  line-height: 1.25;
 }
 
+/* Description */
 .projectInfo p {
-  font-size: 0.9rem;
+  font-size: 0.78rem;               /* ✅ reduced from 0.9rem */
   color: var(--text-light);
-  line-height: 1.6;
+  line-height: 1.45;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;            /* ✅ max 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* ===== CTA ===== */
+/* ============================================================
+   CTA
+   ============================================================ */
 .portfolioCta {
   text-align: center;
   margin-top: 4rem;
@@ -145,7 +173,9 @@
   margin-bottom: 1.5rem;
 }
 
-/* ===== EMPTY / LOADING STATES ===== */
+/* ============================================================
+   EMPTY / LOADING STATES
+   ============================================================ */
 .empty {
   text-align: center;
   padding: 3rem 1.5rem;
@@ -175,6 +205,10 @@
 }
 [data-theme='dark'] .projectInfo p {
   color: #b8b8c0;
+}
+[data-theme='dark'] .serviceBadge {
+  background: rgba(173, 19, 128, 0.2);
+  color: #f5a3d4;
 }
 [data-theme='dark'] .filterBtn {
   background: #1a1a1f;
@@ -206,10 +240,13 @@
   color: #7a7a85 !important;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 @media (max-width: 992px) {
   .projectsGrid {
     grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
   }
 }
 
@@ -220,7 +257,7 @@
 
   .projectsGrid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .categoryFilter {
@@ -233,7 +270,28 @@
   }
 
   .projectImage {
-    height: 200px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .projectInfo {
+    padding: 0.75rem 0.85rem 0.95rem;
+  }
+
+  .projectInfo h3 {
+    font-size: 0.9rem;
+  }
+
+  .projectInfo p {
+    font-size: 0.74rem;
+  }
+
+  .serviceBadge {
+    font-size: 0.58rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  .projectCategory {
+    font-size: 0.6rem;
   }
 
   .portfolioCta {

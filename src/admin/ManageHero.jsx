@@ -6,10 +6,7 @@ import { SkeletonList } from './Loaders';
 import styles from './Manage.module.css';
 
 const emptySlide = {
-  title: '',
   heading: '',
-  description: '',
-  tags: '',
   image: '',
   cta1: 'Make Your Order',
   cta1_link: '/order',
@@ -40,7 +37,7 @@ const ManageHero = () => {
 
   const openEdit = (slide) => {
     setEditing(slide.id);
-    setForm({ ...slide });
+    setForm({ ...emptySlide, ...slide });
   };
 
   const closeForm = () => {
@@ -114,39 +111,17 @@ const ManageHero = () => {
             <h2>{editing === 'new' ? 'New Slide' : 'Edit Slide'}</h2>
 
             <form onSubmit={handleSubmit} className={styles.form}>
-              <label>Title / Badge</label>
-              <input
-                name="title"
-                value={form.title}
-                onChange={handleChange}
-                required
-                placeholder="e.g. Product Stickers & Packaging"
-              />
-
               <label>Heading (supports HTML)</label>
               <input
                 name="heading"
                 value={form.heading}
                 onChange={handleChange}
                 required
-                placeholder='We make brands <span class="highlight">hotter</span>...'
+                placeholder='Your products deserve to <span class="highlight">stand out</span>.'
               />
-
-              <label>Description</label>
-              <textarea
-                name="description"
-                value={form.description}
-                onChange={handleChange}
-                rows="3"
-              />
-
-              <label>Tags (bullet list)</label>
-              <input
-                name="tags"
-                value={form.tags}
-                onChange={handleChange}
-                placeholder="Product stickers • Marketing items • ..."
-              />
+              <small style={{ fontSize: '0.75rem', color: '#888', marginTop: '-0.3rem' }}>
+                Use <code>&lt;span class="highlight"&gt;word&lt;/span&gt;</code> to color a word pink.
+              </small>
 
               <label>Image URL</label>
               <input
@@ -225,10 +200,10 @@ const ManageHero = () => {
           )}
           {heroSlides.map((slide) => (
             <div key={slide.id} className={styles.item}>
-              <img src={slide.image} alt={slide.title} className={styles.thumb} />
+              <img src={slide.image} alt="slide" className={styles.thumb} />
               <div className={styles.info}>
-                <h3>{slide.title}</h3>
-                <p dangerouslySetInnerHTML={{ __html: slide.heading }} />
+                <h3 dangerouslySetInnerHTML={{ __html: slide.heading || '—' }} />
+                <p className={styles.badge}>{slide.text_align || 'left'} · order {slide.sort_order ?? 0}</p>
               </div>
               <div className={styles.actions}>
                 <button onClick={() => openEdit(slide)} className={styles.editBtn}>

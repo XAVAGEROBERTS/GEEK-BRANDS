@@ -4,22 +4,52 @@
    SECTION — full width
    ============================================================ */
 .whyUs {
-  padding: 4rem 1.5rem;
+  padding: 4rem 0;
   background: var(--gray-bg, #f8f8f8);
   width: 100%;
+  overflow: hidden;
 }
 
 /* ============================================================
-   FEATURES GRID — 4 cols desktop
+   CAROUSEL WRAP — centered, full width up to 1400px
    ============================================================ */
-.featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+.carouselWrap {
+  position: relative;
   width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
 }
 
+/* ============================================================
+   TRACK — horizontal scroll-snap
+   ============================================================ */
+.track {
+  display: flex;
+  gap: 2rem;                        /* 32px desktop — matches gapPx */
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.25rem 1.5rem;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ============================================================
+   FEATURE CARD — 4 per view on desktop
+   ============================================================ */
 .featureCard {
+  flex: 0 0 calc((100% - (2rem * 3)) / 4);   /* 4 cols with 3 gaps */
+  scroll-snap-align: start;
+  min-width: 0;
+
   background: #fff;
   padding: 2rem;
   border-radius: 16px;
@@ -27,6 +57,8 @@
   box-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.06));
   border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .featureCard:hover {
@@ -46,6 +78,7 @@
   margin: 0 auto 1rem;
   font-size: 1.6rem;
   color: var(--primary, #ad1380);
+  flex-shrink: 0;
 }
 
 .featureCard h3 {
@@ -60,77 +93,243 @@
   font-size: 0.88rem;
   color: var(--text-light, #555);
   line-height: 1.6;
+  flex: 1;
+}
+
+/* ============================================================
+   ARROWS
+   ============================================================ */
+.navArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.25s ease;
+}
+
+.navArrow:hover {
+  background: #ad1380;
+  color: #fff;
+  border-color: #ad1380;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 12px 30px rgba(173, 19, 128, 0.35);
+}
+
+.navArrowLeft {
+  left: 0;
+}
+
+.navArrowRight {
+  right: 0;
+}
+
+/* ============================================================
+   DOTS
+   ============================================================ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #d5d5d5;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: #ad1380;
+  opacity: 0.6;
+  transform: scale(1.2);
+}
+
+.dotActive {
+  width: 32px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ad1380, #df006e);
+  box-shadow: 0 4px 12px rgba(173, 19, 128, 0.35);
+}
+
+.dotActive:hover {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+/* Tablet: 2 per view */
 @media (max-width: 992px) {
   .whyUs {
-    padding: 3.5rem 1.5rem;
+    padding: 3.5rem 0;
   }
 
-  .featuresGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .whyUs {
-    padding: 3rem 1rem;
-  }
-
-  .featuresGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.9rem;
+  .track {
+    gap: 1.5rem;                    /* 24px — matches gapPx */
   }
 
   .featureCard {
-    padding: 1.4rem 0.9rem;
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+/* Mobile: 1 per view */
+@media (max-width: 640px) {
+  .whyUs {
+    padding: 3rem 0;
+  }
+
+  .carouselWrap {
+    padding: 0 40px;
+  }
+
+  .track {
+    gap: 1rem;                      /* 16px — matches gapPx */
+    padding: 0.5rem 0.25rem 1.2rem;
+  }
+
+  .featureCard {
+    flex: 0 0 100%;
+    padding: 1.5rem 1.25rem;
     border-radius: 14px;
+  }
+
+  .featureIcon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .featureCard h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .featureCard p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .navArrow {
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
+  }
+
+  .navArrowLeft {
+    left: 0;
+  }
+
+  .navArrowRight {
+    right: 0;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .dotActive {
+    width: 20px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .featureCard {
+    padding: 1.25rem 1rem;
   }
 
   .featureIcon {
     width: 46px;
     height: 46px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 0.6rem;
   }
 
   .featureCard h3 {
-    font-size: 0.85rem;
-    line-height: 1.3;
-    margin-bottom: 0.4rem;
+    font-size: 0.88rem;
   }
 
   .featureCard p {
-    font-size: 0.72rem;
-    line-height: 1.5;
+    font-size: 0.74rem;
   }
 }
 
-@media (max-width: 380px) {
-  .featuresGrid {
-    gap: 0.7rem;
-  }
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme='dark'] .whyUs {
+  background: #1a1a1f;
+}
 
+[data-theme='dark'] .featureCard {
+  background: #222229;
+  border-color: #2a2a33;
+}
+
+[data-theme='dark'] .featureCard h3 {
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .featureCard p {
+  color: #b8b8c0;
+}
+
+[data-theme='dark'] .featureIcon {
+  background: rgba(173, 19, 128, 0.2);
+}
+
+[data-theme='dark'] .navArrow {
+  background: #1a1a1f;
+  border-color: #2a2a33;
+  color: #f5f5f7;
+}
+
+[data-theme='dark'] .navArrow:hover {
+  background: #ad1380;
+  border-color: #ad1380;
+}
+
+[data-theme='dark'] .dot {
+  background: #3a3a45;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    scroll-behavior: auto;
+  }
+  .navArrow {
+    transition: none;
+  }
   .featureCard {
-    padding: 1.1rem 0.7rem;
-  }
-
-  .featureIcon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .featureCard h3 {
-    font-size: 0.78rem;
-  }
-
-  .featureCard p {
-    font-size: 0.68rem;
+    transition: none;
   }
 }

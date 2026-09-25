@@ -63,11 +63,6 @@ const Hero = () => {
           <h1>
             We make brands <span className="highlight">hotter</span> than your crush.
           </h1>
-          <p>
-            And we print faster than your ex can say, "I miss you." We design, print
-            and brand products, businesses, vehicles, offices, schools and everything
-            in between.
-          </p>
           <div className={styles.heroButtons}>
             <Link to="/order" className="btn-primary">Make Your Order</Link>
             <Link to="/services" className="btn-outline">Explore Our Services</Link>
@@ -109,9 +104,8 @@ const Hero = () => {
             <h1 dangerouslySetInnerHTML={{ __html: current.heading }} />
           )}
 
-          {current.description && <p>{current.description}</p>}
-
-          {current.tags && <p className={styles.tags}>{current.tags}</p>}
+          {/* ✅ Description removed */}
+          {/* ✅ Tags removed */}
 
           <div className={styles.heroButtons}>
             {cta1Text && (
