@@ -6,41 +6,21 @@ import styles from './CTASection.module.css';
 
 const CAL_URL = 'https://cal.com/geek-brands-ug';
 
-// Scroll target — the form wrapper inside OrderPage
-const ORDER_ANCHOR = 'order-form';
-
-// Small delay to let the page mount before we scroll
-const SCROLL_DELAY = 120;
-
 const CTASection = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const scrollToOrderForm = () => {
-    // Wait for the page to render, then scroll the form into view
-    setTimeout(() => {
-      const el = document.getElementById(ORDER_ANCHOR);
-      if (el) {
-        const headerOffset = 90; // accounts for sticky header height
-        const rect = el.getBoundingClientRect();
-        const top = window.scrollY + rect.top - headerOffset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
-    }, SCROLL_DELAY);
-  };
 
   const handleOrderClick = (e) => {
     e.preventDefault();
 
     if (location.pathname === '/order') {
-      // Already on the order page — just scroll
-      scrollToOrderForm();
+      // Already on order page → scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    // Navigate first, then scroll to the form
-    navigate('/order');
-    scrollToOrderForm();
+    // Navigate and tell OrderPage to scroll to top after mount
+    navigate('/order', { state: { scrollToTop: true } });
   };
 
   return (

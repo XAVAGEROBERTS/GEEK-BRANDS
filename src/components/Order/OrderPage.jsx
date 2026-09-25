@@ -1,6 +1,6 @@
 // src/components/Order/OrderPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaGoogle, FaLock, FaTimes } from 'react-icons/fa';
 import { supabase } from '../../lib/supabase';
 import { useData } from '../../context/DataContext';
@@ -23,6 +23,7 @@ const isValidName = (v) => v.trim().length >= 2;
 const OrderPage = () => {
   const { services = [] } = useData();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -51,6 +52,21 @@ const OrderPage = () => {
   const [successName, setSuccessName] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // ===== SCROLL TO TOP when arriving from CTA =====
+  useEffect(() => {
+    if (location.state?.scrollToTop) {
+      // Wait one frame so layout is ready
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      // Clear state so refresh / back doesn't re-scroll
+      navigate(location.pathname, { replace: true, state: {} });
+    } else {
+      // Default: land at top when opening /order directly
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [location.pathname, location.state, navigate]);
 
   // ===== CHECK AUTH + RESTORE DRAFT =====
   useEffect(() => {
@@ -138,10 +154,8 @@ const OrderPage = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Handle checkbox
     if (type === 'checkbox') {
       setFormData((prev) => ({ ...prev, [name]: checked }));
-      // If "design for me" is checked, clear any uploaded artwork
       if (name === 'designForMe' && checked) {
         clearArtwork();
       }
@@ -221,9 +235,9 @@ const OrderPage = () => {
       return;
     }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('geekbrands')
-      .getPublicUrl(fileName);
+    const {
+      data: { publicUrl }
+    } = supabase.storage.from('geekbrands').getPublicUrl(fileName);
 
     setArtworkUrl(publicUrl);
     setFormData((prev) => ({ ...prev, artwork: file }));
@@ -260,7 +274,6 @@ const OrderPage = () => {
       return;
     }
 
-    // 🚫 NOT LOGGED IN → save draft, open login modal, STOP
     if (!user) {
       const draft = { ...formData, artwork: null, artworkUrl };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
@@ -305,7 +318,9 @@ const OrderPage = () => {
     localStorage.removeItem(STORAGE_KEY);
     setFieldErrors({});
 
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session }
+    } = await supabase.auth.getSession();
     setFormData({
       name: session?.user?.user_metadata?.full_name || '',
       business: '',
@@ -457,7 +472,6 @@ const OrderPage = () => {
                 </div>
               </div>
 
-              {/* ===== SERVICE + ARTWORK ROW ===== */}
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label>Service Required *</label>
@@ -481,7 +495,6 @@ const OrderPage = () => {
                   )}
                 </div>
 
-                {/* ===== ARTWORK UPLOAD (moved here) ===== */}
                 <div className={styles.formGroup}>
                   <label>Upload artwork/logo</label>
                   <input
@@ -525,7 +538,6 @@ const OrderPage = () => {
                 </div>
               </div>
 
-              {/* ===== DESIGN FOR ME CHECKBOX ===== */}
               <div className={styles.designForMeBox}>
                 <label className={styles.checkboxLabel}>
                   <input
@@ -544,7 +556,6 @@ const OrderPage = () => {
                 </label>
               </div>
 
-              {/* ===== QUANTITY + SIZE ===== */}
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label>Quantity</label>
@@ -574,7 +585,6 @@ const OrderPage = () => {
                 </div>
               </div>
 
-              {/* ===== DEADLINE ===== */}
               <div className={styles.formGroup}>
                 <label>Deadline</label>
                 <input
@@ -610,14 +620,17 @@ const OrderPage = () => {
                 className="btn-primary"
                 disabled={submitting || uploading}
               >
-                {submitting ? 'Submitting...' : uploading ? 'Uploading...' : 'MAKE MY ORDER'}
+                {submitting
+                  ? 'Submitting...'
+                  : uploading
+                    ? 'Uploading...'
+                    : 'MAKE MY ORDER'}
               </button>
             </form>
           </div>
         </div>
       </div>
 
-      {/* LOGIN MODAL */}
       {showLoginModal && (
         <div
           className={styles.successOverlay}
@@ -632,7 +645,16 @@ const OrderPage = () => {
               className={styles.closeModalBtn}
               onClick={() => setShowLoginModal(false)}
               aria-label="Close"
-              style={{ position: 'absolute', top: '1rem', right: '1rem', width: 32, height: 32, padding: 0, borderRadius: '50%', background: '#f5f5f5' }}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                width: 32,
+                height: 32,
+                padding: 0,
+                borderRadius: '50%',
+                background: '#f5f5f5'
+              }}
             >
               <FaTimes />
             </button>
@@ -640,7 +662,9 @@ const OrderPage = () => {
             <div className={styles.successIconWrap}>
               <div
                 className={styles.successIcon}
-                style={{ background: 'linear-gradient(135deg, #ad1380, #df006e)' }}
+                style={{
+                  background: 'linear-gradient(135deg, #ad1380, #df006e)'
+                }}
               >
                 <FaLock />
               </div>
@@ -648,10 +672,14 @@ const OrderPage = () => {
 
             <h2 className={styles.successTitle}>Sign in to submit your order</h2>
             <p className={styles.successSubtitle}>
-              Your details are <strong>saved</strong>. Log in to finish submitting — we'll bring you right back.
+              Your details are <strong>saved</strong>. Log in to finish
+              submitting — we'll bring you right back.
             </p>
 
-            <div className={styles.successActions} style={{ flexDirection: 'column' }}>
+            <div
+              className={styles.successActions}
+              style={{ flexDirection: 'column' }}
+            >
               <button
                 type="button"
                 onClick={handleGoogle}
@@ -684,7 +712,6 @@ const OrderPage = () => {
         </div>
       )}
 
-      {/* SUCCESS MODAL */}
       {successRef && (
         <div className={styles.successOverlay} onClick={closeSuccess}>
           <div
@@ -697,25 +724,37 @@ const OrderPage = () => {
 
             <h2 className={styles.successTitle}>Order Submitted!</h2>
             <p className={styles.successSubtitle}>
-              Thanks {successName ? `, ${successName}` : ''} — we've received your order and will contact you within 24 hours.
+              Thanks {successName ? `, ${successName}` : ''} — we've received
+              your order and will contact you within 24 hours.
             </p>
 
             <div className={styles.refBox}>
               <span className={styles.refLabel}>Your Booking Reference</span>
               <div className={styles.refRow}>
                 <span className={styles.refValue}>{successRef}</span>
-                <button type="button" onClick={copyRef} className={styles.copyBtn}>
+                <button
+                  type="button"
+                  onClick={copyRef}
+                  className={styles.copyBtn}
+                >
                   {copied ? '✓ Copied' : 'Copy'}
                 </button>
               </div>
               <p className={styles.refHint}>
-                Save this ref to track your order anytime at <strong>/manage</strong>
+                Save this ref to track your order anytime at{' '}
+                <strong>/manage</strong>
               </p>
             </div>
 
             <div className={styles.successActions}>
-              <a href="/manage" className={styles.trackBtn}>Track My Order</a>
-              <button type="button" onClick={closeSuccess} className={styles.closeModalBtn}>
+              <a href="/manage" className={styles.trackBtn}>
+                Track My Order
+              </a>
+              <button
+                type="button"
+                onClick={closeSuccess}
+                className={styles.closeModalBtn}
+              >
                 Close
               </button>
             </div>
